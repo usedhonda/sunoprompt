@@ -14,6 +14,7 @@ class SunopromptExtension {
         
         // Don't auto-initialize - will be called from HTML
         this.init();
+        this.setupCopyButtons();
     }
 
     async init() {
@@ -1704,31 +1705,31 @@ ${data.response?.substring(0, 500) || 'N/A'}${data.response?.length > 500 ? '...
         
         // ラップ・ヒップホップ系は長め
         if (genreNames.some(g => ['rap', 'hip hop', 'hip-hop', 'trap', 'drill', 'boom bap', 'conscious rap', 'old school hip hop', 'alternative hip hop', 'cloud rap', 'grime'].includes(g))) {
-            return "【歌詞分量指定】ラップ・ヒップホップジャンルのため、各Verseは8-12行、各Chorusは4-6行の十分な分量で作成してください。ワードフローとリズムを重視した豊富な歌詞量が必要です。";
+            return "Verse sections: 8-12 lines each, Chorus sections: 4-6 lines each. Focus on wordflow and rhythm with rich lyrical content.";
         }
         
         // R&B・ソウル系はやや長め
         if (genreNames.some(g => ['r&b', 'rnb', 'soul', 'neo-soul', 'contemporary r&b', 'alternative r&b', 'gospel', 'funk'].includes(g))) {
-            return "【歌詞分量指定】R&B・ソウルジャンルのため、各Verseは6-8行、各Chorusは4-6行で、感情表現を豊かにする歌詞量で作成してください。";
+            return "Verse sections: 6-8 lines each, Chorus sections: 4-6 lines each. Rich emotional expression with appropriate lyrical content.";
         }
         
         // ロック・メタル系はやや長め
         if (genreNames.some(g => ['rock', 'metal', 'punk', 'hardcore', 'alternative', 'indie rock', 'progressive rock'].includes(g))) {
-            return "【歌詞分量指定】ロック・メタルジャンルのため、各Verseは6-8行、各Chorusは4-6行で、力強いメッセージを伝える歌詞量で作成してください。";
+            return "Verse sections: 6-8 lines each, Chorus sections: 4-6 lines each. Powerful and meaningful lyrical content.";
         }
         
         // ポップ系は標準
         if (genreNames.some(g => ['pop', 'indie pop', 'electropop', 'synthpop', 'k-pop', 'j-pop', 'c-pop'].includes(g))) {
-            return "【歌詞分量指定】ポップジャンルのため、各Verseは4-6行、各Chorusは3-4行のキャッチーで覚えやすい分量で作成してください。";
+            return "Verse sections: 4-6 lines each, Chorus sections: 3-4 lines each. Catchy and memorable lyrical content.";
         }
         
         // アンビエント・エレクトロニック系は短め
         if (genreNames.some(g => ['ambient', 'electronic', 'techno', 'house', 'trance', 'dubstep', 'drum & bass'].includes(g))) {
-            return "【歌詞分量指定】エレクトロニック・アンビエントジャンルのため、各Verseは3-5行、各Chorusは2-4行の簡潔で印象的な分量で作成してください。音楽重視のジャンルです。";
+            return "Verse sections: 3-5 lines each, Chorus sections: 2-4 lines each. Concise and impactful lyrics for music-focused genre.";
         }
         
         // その他は標準
-        return "【歌詞分量指定】各Verseは4-6行、各Chorusは3-5行の適切な分量で作成してください。";
+        return "Verse sections: 4-6 lines each, Chorus sections: 3-5 lines each. Appropriate lyrical length.";
     }
 
     buildPromptText(formData) {
@@ -1767,6 +1768,7 @@ ${formData.custom_structure ? `カスタム構成: ${formData.custom_structure}`
 - Style & Feelセクションでは、必ず選択されたジャンルの音楽的特徴を具体的に説明してください
 
 【歌詞品質向上のための特別指示】
+- ${this.getLyricsLengthGuidance(formData.genres)}
 - 韻律を意識した高品質な歌詞を作成してください
 - 行末韻（end rhyme）、頭韻（alliteration）、内韻（internal rhyme）を積極的に使用してください
 - ダブルミーニング（二重の意味）を持つ言葉やフレーズを巧妙に織り込んでください
@@ -1805,7 +1807,6 @@ Style & Feelセクションは必ず英語のみで、Sunoの文字数制限に�
 [テーマに基づいたキャッチーな曲名（引用符やクォーテーションマークは使用しない）]
 
 【Lyrics】
-${this.getLyricsLengthGuidance(formData.genres)}
 ${energyBasedStructure}
 
 【Lyrics Analysis】
@@ -1917,14 +1918,200 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
 
     async sendToSuno(result) {
         try {
-            // クリップボードに全ての結果をコピー
-            const textToCopy = `Style: ${result.style}\n\nSong Name: ${result.songName}\n\nLyrics:\n${result.lyrics}`;
-            await navigator.clipboard.writeText(textToCopy);
+            // Chrome APIが利用できない場合は、メッセージで親ページに送信
+            if (typeof chrome === 'undefined' || !chrome.tabs || !chrome.scripting) {
+                this.sendMessageToParentPage(result);
+                return;
+            }
+
+            // Sunoサイト上で実行されることを前提
+            const tabs = await chrome.tabs.query({active: true, currentWindow: true});
+            const currentTab = tabs[0];
             
-            this.showNotification('📋 クリップボードにコピーしました！Sunoサイトで貼り付けしてください');
+            if (!currentTab || !currentTab.url || !currentTab.url.includes('suno.com')) {
+                this.showNotification('⚠️ この機能はSunoサイト上でのみ利用できます');
+                return;
+            }
+
+            // 現在のSunoページのフォームに直接入力
+            await this.fillSunoForm(currentTab.id, result);
+            this.showNotification('🎵 Sunoフォームに情報を反映中...');
         } catch (error) {
-            console.error('Clipboard error:', error);
-            this.showNotification('❌ クリップボードへのコピーに失敗しました');
+            console.error('Suno integration error:', error);
+            this.showNotification('❌ フォーム入力でエラーが発生しました');
+        }
+    }
+    
+    // メッセージ通信による代替方法
+    sendMessageToParentPage(result) {
+        try {
+            // Sunoに送信するデータ（歌詞の解析は除外）
+            const sunoData = {
+                songName: result.songName,
+                style: result.style,
+                lyrics: result.lyrics  // 解析は含めない
+            };
+            
+            // 親ページ（Sunoサイト）にメッセージを送信
+            window.parent.postMessage({
+                type: 'SUNOPROMPT_FILL_FORM',
+                data: sunoData
+            }, '*');
+            
+            this.showNotification('🎵 Sunoフォームに反映中...');
+            
+            // 3秒後にオーバーレイを閉じる
+            setTimeout(() => {
+                if (window.hideSunoprompt) {
+                    window.hideSunoprompt();
+                }
+            }, 3000);
+            
+        } catch (error) {
+            console.error('Message send error:', error);
+            this.showNotification('❌ データ送信でエラーが発生しました');
+        }
+    }
+
+    async fillSunoForm(tabId, result) {
+        try {
+            // Chrome scripting APIの利用可能性をチェック
+            if (typeof chrome === 'undefined' || !chrome.scripting) {
+                this.showNotification('❌ Chrome Scripting API が利用できません');
+                return;
+            }
+            
+            // Sunoに送信するデータ（歌詞の解析は除外）
+            const sunoData = {
+                songName: result.songName,
+                style: result.style,
+                lyrics: result.lyrics  // 解析は含めない
+            };
+            
+            // Sunoページに情報を注入
+            const injectionResult = await chrome.scripting.executeScript({
+                target: { tabId: tabId },
+                func: (data) => {
+                    // Sunoサイト特有のセレクタを優先して試行
+                    const selectors = {
+                        title: [
+                            // Suno実際のセレクタ（最優先）
+                            'input[placeholder*="Enter song title"]',
+                            'input[data-slot="input"][placeholder*="Enter song title"]',
+                            'input[maxlength="100"][placeholder*="Enter song title"]',
+                            // Suno特有のセレクタ（フォールバック）
+                            'input[placeholder*="Song title"]',
+                            'input[placeholder*="Title"]',
+                            '[data-testid*="title"] input',
+                            '[class*="title"] input',
+                            // 一般的なセレクタ
+                            'input[placeholder*="title"]',
+                            'input[placeholder*="song"]',
+                            'input[name*="title"]',
+                            'input[id*="title"]',
+                            'textarea[placeholder*="title"]'
+                        ],
+                        lyrics: [
+                            // Suno実際のセレクタ（最優先）
+                            'textarea[data-testid="lyrics-input-textarea"]',
+                            'textarea[placeholder*="Add your own lyrics here"]',
+                            // Suno特有のセレクタ（フォールバック）
+                            'textarea[placeholder*="Enter your lyrics"]',
+                            'textarea[placeholder*="Lyrics"]',
+                            '[data-testid*="lyrics"] textarea',
+                            '[class*="lyrics"] textarea',
+                            'div[contenteditable="true"][class*="lyrics"]',
+                            // 一般的なセレクタ
+                            'textarea[placeholder*="lyrics"]',
+                            'textarea[name*="lyrics"]',
+                            'textarea[id*="lyrics"]',
+                            'div[contenteditable="true"]'
+                        ],
+                        style: [
+                            // Suno実際のセレクタ（最優先）
+                            'textarea[data-testid="tag-input-textarea"]',
+                            'textarea[placeholder*="Enter style tags"]',
+                            // Suno特有のセレクタ（フォールバック）
+                            'input[placeholder*="Style of Music"]',
+                            'input[placeholder*="Genre"]',
+                            '[data-testid*="style"] input',
+                            '[data-testid*="genre"] input',
+                            '[class*="style"] input',
+                            // 一般的なセレクタ
+                            'input[placeholder*="style"]',
+                            'input[placeholder*="genre"]',
+                            'input[name*="style"]',
+                            'input[id*="style"]',
+                            'textarea[placeholder*="style"]'
+                        ]
+                    };
+
+                    let filled = {title: false, lyrics: false, style: false};
+
+                    // タイトルを入力
+                    for (const selector of selectors.title) {
+                        const element = document.querySelector(selector);
+                        if (element) {
+                            element.value = data.songName;
+                            element.dispatchEvent(new Event('input', { bubbles: true }));
+                            element.dispatchEvent(new Event('change', { bubbles: true }));
+                            filled.title = true;
+                            break;
+                        }
+                    }
+
+                    // 歌詞を入力
+                    for (const selector of selectors.lyrics) {
+                        const element = document.querySelector(selector);
+                        if (element) {
+                            if (element.tagName === 'DIV') {
+                                element.textContent = data.lyrics;
+                            } else {
+                                element.value = data.lyrics;
+                            }
+                            element.dispatchEvent(new Event('input', { bubbles: true }));
+                            element.dispatchEvent(new Event('change', { bubbles: true }));
+                            filled.lyrics = true;
+                            break;
+                        }
+                    }
+
+                    // スタイルを入力
+                    for (const selector of selectors.style) {
+                        const element = document.querySelector(selector);
+                        if (element) {
+                            element.value = data.style;
+                            element.dispatchEvent(new Event('input', { bubbles: true }));
+                            element.dispatchEvent(new Event('change', { bubbles: true }));
+                            filled.style = true;
+                            break;
+                        }
+                    }
+
+                    // 結果をコンソールに出力（デバッグ用）
+                    console.log('Sunoprompt: フィールド入力結果', filled);
+                    console.log('Sunoprompt: 送信データ', data);
+
+                    return filled;
+                },
+                args: [sunoData]
+            });
+
+            if (injectionResult && injectionResult[0] && injectionResult[0].result) {
+                const filled = injectionResult[0].result;
+                const successCount = Object.values(filled).filter(Boolean).length;
+                if (successCount > 0) {
+                    this.showNotification(`✅ ${successCount}個のフィールドに反映完了！`);
+                } else {
+                    this.showNotification('⚠️ 対象のフィールドが見つかりませんでした');
+                }
+            } else {
+                this.showNotification('⚠️ スクリプト実行に問題がありました');
+            }
+            
+        } catch (error) {
+            console.error('Fill form error:', error);
+            this.showNotification('❌ フォーム入力でエラーが発生しました');
         }
     }
 
@@ -2085,14 +2272,35 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
         }
     }
 
+    // ===== Setup Copy Button Event Listeners =====
+    setupCopyButtons() {
+        // Individual copy buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('copy-btn')) {
+                const targetId = e.target.getAttribute('data-copy-target');
+                if (targetId) {
+                    this.copyToClipboard(targetId, e.target);
+                }
+            }
+        });
+        
+        // Copy all button
+        const copyAllBtn = document.getElementById('copyAllBtn');
+        if (copyAllBtn) {
+            copyAllBtn.addEventListener('click', () => {
+                this.copyAllResults(copyAllBtn);
+            });
+        }
+    }
+
     // ===== Copy Functions =====
-    async copyToClipboard(elementId) {
+    async copyToClipboard(elementId, buttonElement = null) {
         const element = document.getElementById(elementId);
         const text = element.textContent;
         
         try {
             await navigator.clipboard.writeText(text);
-            this.showCopySuccess(event.target);
+            this.showCopySuccess(buttonElement);
         } catch (error) {
             // Fallback
             const textarea = document.createElement('textarea');
@@ -2101,11 +2309,11 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
             textarea.select();
             document.execCommand('copy');
             document.body.removeChild(textarea);
-            this.showCopySuccess(event.target);
+            this.showCopySuccess(buttonElement);
         }
     }
 
-    async copyAllResults() {
+    async copyAllResults(buttonElement = null) {
         const style = document.getElementById('styleResult').textContent;
         const songName = document.getElementById('songNameResult').textContent;
         const lyrics = document.getElementById('lyricsResult').textContent;
@@ -2115,7 +2323,7 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
         
         try {
             await navigator.clipboard.writeText(allText);
-            this.showNotification('全ての結果をクリップボードにコピーしました');
+            this.showCopySuccess(buttonElement);
         } catch (error) {
             const textarea = document.createElement('textarea');
             textarea.value = allText;
@@ -2123,7 +2331,7 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
             textarea.select();
             document.execCommand('copy');
             document.body.removeChild(textarea);
-            this.showNotification('全ての結果をクリップボードにコピーしました');
+            this.showCopySuccess(buttonElement);
         }
     }
 
@@ -2157,6 +2365,8 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
     }
 
     showCopySuccess(button) {
+        if (!button) return;
+        
         const originalText = button.textContent;
         button.textContent = '✅ コピー完了';
         button.style.background = '#28a745';

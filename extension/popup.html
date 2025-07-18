@@ -201,7 +201,7 @@
             <div class="result-section">
                 <div class="result-header">
                     <h2>生成結果</h2>
-                    <button class="copy-all-btn" onclick="copyAllResults()" style="display: none;">📋 全てをコピー</button>
+                    <button class="copy-all-btn" id="copyAllBtn" style="display: none;">📋 全てをコピー</button>
                 </div>
                 <div id="loadingSpinner" class="spinner hidden">
                     <div class="spinner-content">
@@ -217,28 +217,28 @@
                     <div class="result-item">
                         <div class="result-item-header">
                             <h3>Style & Feel</h3>
-                            <button class="copy-btn" onclick="copyToClipboard('styleResult')">📋</button>
+                            <button class="copy-btn" data-copy-target="styleResult">📋</button>
                         </div>
                         <pre id="styleResult"></pre>
                     </div>
                     <div class="result-item">
                         <div class="result-item-header">
                             <h3>Song Name</h3>
-                            <button class="copy-btn" onclick="copyToClipboard('songNameResult')">📋</button>
+                            <button class="copy-btn" data-copy-target="songNameResult">📋</button>
                         </div>
                         <pre id="songNameResult"></pre>
                     </div>
                     <div class="result-item">
                         <div class="result-item-header">
                             <h3>Lyrics</h3>
-                            <button class="copy-btn" onclick="copyToClipboard('lyricsResult')">📋</button>
+                            <button class="copy-btn" data-copy-target="lyricsResult">📋</button>
                         </div>
                         <pre id="lyricsResult"></pre>
                     </div>
                     <div class="result-item">
                         <div class="result-item-header">
                             <h3>Lyrics Analysis</h3>
-                            <button class="copy-btn" onclick="copyToClipboard('analysisResult')">📋</button>
+                            <button class="copy-btn" data-copy-target="analysisResult">📋</button>
                         </div>
                         <pre id="analysisResult"></pre>
                     </div>
