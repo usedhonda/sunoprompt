@@ -15,10 +15,7 @@
   },
   "permissions": [
     "storage",
-    "activeTab",
-    "scripting",
-    "contextMenus",
-    "notifications"
+    "contextMenus"
   ],
   "host_permissions": [
     "https://api.openai.com/*"
@@ -26,12 +23,6 @@
   "background": {
     "service_worker": "background.js"
   },
-  "web_accessible_resources": [
-    {
-      "resources": ["popup.html", "styles-scoped.css", "theme-presets.js", "genres.js", "musical-keys.js", "instruments.js", "popup.js"],
-      "matches": ["<all_urls>"]
-    }
-  ],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';"
   }
