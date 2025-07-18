@@ -1,9 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "__MSG_appName__",
+  "name": "Sunoprompt Extension",
   "version": "1.0.3",
-  "description": "__MSG_appDescription__",
-  "default_locale": "en",
+  "description": "Suno AI用の高品質な音楽プロンプトを生成するChrome拡張機能",
   "action": {
     "default_title": "Sunoprompt",
     "default_popup": "popup.html"
@@ -15,7 +14,10 @@
   },
   "permissions": [
     "storage",
-    "contextMenus"
+    "activeTab",
+    "scripting",
+    "contextMenus",
+    "notifications"
   ],
   "host_permissions": [
     "https://api.openai.com/*"
@@ -23,6 +25,12 @@
   "background": {
     "service_worker": "background.js"
   },
+  "web_accessible_resources": [
+    {
+      "resources": ["popup.html", "styles-scoped.css", "theme-presets.js", "genres.js", "musical-keys.js", "instruments.js", "popup.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';"
   }
