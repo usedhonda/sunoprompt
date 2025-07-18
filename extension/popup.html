@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunoprompt</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎵 Sunoprompt</h1>
+            <p>Suno AI用の高品質な音楽プロンプトを生成</p>
+        </header>
+
+        <div class="main-content">
+            <div class="form-section">
+                <h2>プロンプト生成</h2>
+                <form id="promptForm" method="post">
+                    <div class="form-group">
+                        <label for="apiKey">OpenAI API Key *</label>
+                        <div class="api-key-container">
+                            <input type="password" id="apiKey" placeholder="OpenAI API キーを入力" required>
+                            <button type="button" class="toggle-visibility" id="toggleApiKey">👁️</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="apiModel">OpenAI Model</label>
+                        <select id="apiModel" name="apiModel">
+                            <optgroup label="GPT-4.1 Series (最新・100万トークン対応)">
+                                <option value="gpt-4.1-mini">GPT-4.1 Mini (推奨・バランス重視)</option>
+                                <option value="gpt-4.1">GPT-4.1 (最高品質・フラッグシップ)</option>
+                                <option value="gpt-4.1-nano">GPT-4.1 Nano (最速・最安・$0.10/1M tokens)</option>
+                            </optgroup>
+                            <optgroup label="GPT-4o Series">
+                                <option value="gpt-4o-mini">GPT-4o Mini (高速・低コスト)</option>
+                                <option value="gpt-4o">GPT-4o (高品質・バランス)</option>
+                            </optgroup>
+                            <optgroup label="GPT-4 Series">
+                                <option value="gpt-4-turbo">GPT-4 Turbo (高品質・安定)</option>
+                                <option value="gpt-4">GPT-4 (従来版)</option>
+                            </optgroup>
+                            <optgroup label="GPT-3.5 Series">
+                                <option value="gpt-3.5-turbo">GPT-3.5 Turbo (高速・低コスト・軽量)</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="theme">テーマ・コンセプト *</label>
+                        <div class="theme-mode-selector">
+                            <button type="button" class="theme-mode-btn active" data-mode="preset">📚 プリセットから選択</button>
+                            <button type="button" class="theme-mode-btn" data-mode="custom">✏️ カスタムテーマ入力</button>
+                        </div>
+                        
+                        <div class="theme-preset-container" id="presetThemeContainer">
+                            <div class="theme-selection" id="themeSelection">
+                                <div class="theme-categories" id="themeCategories">
+                                    <!-- テーマカテゴリがJavaScriptで動的に生成されます -->
+                                </div>
+                                <div class="selected-themes" id="selectedThemes">
+                                    <div class="selected-themes-label">選択されたテーマ:</div>
+                                    <div class="selected-themes-list" id="selectedThemesList">
+                                        <!-- 選択されたテーマがここに表示されます -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="custom-theme-container" id="customThemeContainer" style="display: none;">
+                            <textarea id="theme" name="theme" rows="5"
+                                      placeholder="独自のテーマ・コンセプトを入力してください...
+例: 深夜のコンビニで偶然出会った人との短い会話。蛍光灯の下で交わされる言葉に隠された人間的な温かさ。都市の孤独の中で見つける一瞬のつながり。"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="keywords">詩的キーワード（歌詞に必須）</label>
+                        <input type="text" id="keywords" name="keywords" 
+                               placeholder="例: noise, filter, plastic, screen light, 画面の光, ノイズ">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="genres">ジャンル（最大3つまで選択可能）</label>
+                        <div class="genre-selection">
+                            <div class="genre-categories" id="genreCategories">
+                                <!-- ジャンルカテゴリがJavaScriptで動的に生成されます -->
+                            </div>
+                            <div class="selected-genres" id="selectedGenres">
+                                <div class="selected-genres-label">選択されたジャンル:</div>
+                                <div class="selected-genres-list" id="selectedGenresList">
+                                    <!-- 選択されたジャンルがここに表示されます -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="key">キー</label>
+                        <div class="key-selection">
+                            <div class="key-type-toggle">
+                                <button type="button" class="key-type-btn active" data-type="major">メジャー</button>
+                                <button type="button" class="key-type-btn" data-type="minor">マイナー</button>
+                            </div>
+                            <select id="key" name="key">
+                                <!-- キーがJavaScriptで動的に生成されます -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bpm">BPM: <span id="bpmValue">120</span></label>
+                        <input type="range" id="bpm" name="bpm" min="60" max="200" value="120">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mood">ムード</label>
+                        <select id="mood" name="mood">
+                            <option value="Happy">Happy</option>
+                            <option value="Sad">Sad</option>
+                            <option value="Energetic">Energetic</option>
+                            <option value="Calm">Calm</option>
+                            <option value="Nostalgic">Nostalgic</option>
+                            <option value="Uplifting">Uplifting</option>
+                            <option value="Melancholic">Melancholic</option>
+                            <option value="Dreamy">Dreamy</option>
+                            <option value="Mysterious">Mysterious</option>
+                            <option value="Powerful">Powerful</option>
+                            <option value="Gentle">Gentle</option>
+                            <option value="Intense">Intense</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="default_vocal_style">デフォルトボーカルスタイル</label>
+                        <select id="default_vocal_style" name="default_vocal_style">
+                            <option value="Male Solo">Male Solo</option>
+                            <option value="Female Solo">Female Solo</option>
+                            <option value="Male & Female Duet">Male & Female Duet</option>
+                            <option value="Female & Female Duet">Female & Female Duet</option>
+                            <option value="Male & Male Duet">Male & Male Duet</option>
+                            <option value="Mixed Choir">Mixed Choir</option>
+                            <option value="Male Choir">Male Choir</option>
+                            <option value="Female Choir">Female Choir</option>
+                            <option value="Solo with Backup">Solo with Backup</option>
+                            <option value="Call and Response">Call and Response</option>
+                            <option value="Rap with Singing">Rap with Singing</option>
+                            <option value="Instrumental">Instrumental</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="languageRatio">言語比率: <span id="languageRatioText">Japanese 50% - English 50%</span></label>
+                        <div class="language-slider-container">
+                            <span class="language-label">Japanese</span>
+                            <input type="range" id="languageRatio" name="languageRatio" min="0" max="100" value="50">
+                            <span class="language-label">English</span>
+                        </div>
+                        <div class="language-description" id="languageDescription">
+                            日本語と英語が半々の構成
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="song_structure">曲構成テンプレート</label>
+                        <select id="song_structure" name="song_structure">
+                            <option value="detailed" selected>詳細（Intro → Verse → Pre-Chorus → Chorus → Verse → Pre-Chorus → Chorus → Bridge → Final → Outro）</option>
+                            <option value="simple">シンプル（Verse → Chorus → Verse → Chorus → Bridge → Chorus）</option>
+                            <option value="ballad">バラード（Intro → Verse → Chorus → Verse → Chorus → Bridge → Chorus → Final → Outro）</option>
+                            <option value="pop_anthem">ポップアンセム（Intro → Verse → Pre-Chorus → Chorus → Verse → Pre-Chorus → Chorus → Bridge → Final Chorus → Outro）</option>
+                            <option value="electronic_dance">エレクトロニック/ダンス（Intro → Build → Drop → Verse → Pre-Drop → Drop → Breakdown → Drop → Outro）</option>
+                            <option value="rock_progressive">ロック/プログレッシブ（Intro → Verse → Chorus → Verse → Chorus → Solo → Bridge → Chorus → Final → Outro）</option>
+                            <option value="custom">カスタム（手動で構成を作成）</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group song-parts-group">
+                        <label>詳細楽曲構成</label>
+                        <div class="song-parts-container" id="songPartsContainer">
+                            <!-- パートカードがここに動的に生成されます -->
+                        </div>
+                        <div class="song-parts-actions">
+                            <button type="button" class="add-part-btn" id="addPartBtn">➕ パート追加</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="instruments">楽器（カンマ区切り）</label>
+                        <input type="text" id="instruments" name="instruments" 
+                               placeholder="例: Piano, Guitar, Strings" value="Piano, Guitar">
+                        <div class="instrument-categories" id="instrumentCategories">
+                            <!-- 楽器カテゴリがJavaScriptで動的に生成されます -->
+                        </div>
+                    </div>
+
+                    <button type="submit" id="generateBtn">🎵 プロンプト生成</button>
+                </form>
+            </div>
+
+            <div class="result-section">
+                <div class="result-header">
+                    <h2>生成結果</h2>
+                    <button class="copy-all-btn" onclick="copyAllResults()" style="display: none;">📋 全てをコピー</button>
+                </div>
+                <div id="loadingSpinner" class="spinner hidden">
+                    <div class="spinner-content">
+                        <div class="loading-icon"></div>
+                        <div class="loading-text">🎵 高品質なプロンプトを生成中</div>
+                        <div class="loading-dots" data-dots=""></div>
+                        <div style="font-size: 14px; opacity: 0.9; margin-top: 10px;">
+                            AIが最適な音楽プロンプトを作成しています...
+                        </div>
+                    </div>
+                </div>
+                <div id="results" class="results hidden">
+                    <div class="result-item">
+                        <div class="result-item-header">
+                            <h3>Style & Feel</h3>
+                            <button class="copy-btn" onclick="copyToClipboard('styleResult')">📋</button>
+                        </div>
+                        <pre id="styleResult"></pre>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-header">
+                            <h3>Song Name</h3>
+                            <button class="copy-btn" onclick="copyToClipboard('songNameResult')">📋</button>
+                        </div>
+                        <pre id="songNameResult"></pre>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-header">
+                            <h3>Lyrics</h3>
+                            <button class="copy-btn" onclick="copyToClipboard('lyricsResult')">📋</button>
+                        </div>
+                        <pre id="lyricsResult"></pre>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-item-header">
+                            <h3>Lyrics Analysis</h3>
+                            <button class="copy-btn" onclick="copyToClipboard('analysisResult')">📋</button>
+                        </div>
+                        <pre id="analysisResult"></pre>
+                    </div>
+                </div>
+                <div id="errorMessage" class="error-message hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="theme-presets.js"></script>
+    <script src="genres.js"></script>
+    <script src="musical-keys.js"></script>
+    <script src="instruments.js"></script>
+    <script>
+        // Ensure all scripts are loaded before initializing
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, checking scripts...');
+            console.log('THEME_CATEGORIES:', !!window.THEME_CATEGORIES);
+            console.log('THEME_PRESETS:', !!window.THEME_PRESETS);
+            console.log('GENRES:', !!window.GENRES);
+            console.log('MUSICAL_KEYS:', !!window.MUSICAL_KEYS);
+            console.log('INSTRUMENT_CATEGORIES:', !!window.INSTRUMENT_CATEGORIES);
+            
+            // Small delay to ensure all scripts are processed
+            setTimeout(() => {
+                window.sunopromptExtension = new SunopromptExtension();
+            }, 100);
+        });
+    </script>
+    <script src="popup.js"></script>
+</body>
+</html>

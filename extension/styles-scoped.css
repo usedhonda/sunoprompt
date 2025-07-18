@@ -1,0 +1,1277 @@
+/* Chrome Extension Styles - Suno風デザイン統一版 (拡張機能オーバーレイ内のみ) */
+
+/* 拡張機能オーバーレイ内の全要素にのみ適用 */
+#sunoprompt-extension-overlay * {
+    box-sizing: border-box;
+    color: #ffffff !important;
+}
+
+/* 拡張機能オーバーレイ内の背景とボーダーをSuno風に統一 */
+#sunoprompt-extension-overlay div, 
+#sunoprompt-extension-overlay section, 
+#sunoprompt-extension-overlay article, 
+#sunoprompt-extension-overlay aside, 
+#sunoprompt-extension-overlay nav, 
+#sunoprompt-extension-overlay main, 
+#sunoprompt-extension-overlay header, 
+#sunoprompt-extension-overlay footer, 
+#sunoprompt-extension-overlay form, 
+#sunoprompt-extension-overlay fieldset {
+    background: transparent !important;
+    border-color: #333 !important;
+}
+
+/* 拡張機能オーバーレイ内のボタンとインタラクティブ要素のSuno風スタイル */
+#sunoprompt-extension-overlay button, 
+#sunoprompt-extension-overlay .btn, 
+#sunoprompt-extension-overlay .theme-btn, 
+#sunoprompt-extension-overlay .genre-btn, 
+#sunoprompt-extension-overlay .key-btn, 
+#sunoprompt-extension-overlay .instrument-btn {
+    background: #2a2a2a !important;
+    color: #ffffff !important;
+    border: 1px solid #444 !important;
+    transition: all 0.2s ease !important;
+}
+
+#sunoprompt-extension-overlay button:hover, 
+#sunoprompt-extension-overlay .btn:hover, 
+#sunoprompt-extension-overlay .theme-btn:hover, 
+#sunoprompt-extension-overlay .genre-btn:hover, 
+#sunoprompt-extension-overlay .key-btn:hover, 
+#sunoprompt-extension-overlay .instrument-btn:hover {
+    background: #3a3a3a !important;
+    border-color: #ff4081 !important;
+}
+
+#sunoprompt-extension-overlay button.selected, 
+#sunoprompt-extension-overlay .btn.selected, 
+#sunoprompt-extension-overlay .theme-btn.selected, 
+#sunoprompt-extension-overlay .genre-btn.selected, 
+#sunoprompt-extension-overlay .key-btn.selected, 
+#sunoprompt-extension-overlay .instrument-btn.selected {
+    background: #ff4081 !important;
+    color: #ffffff !important;
+    border-color: #ff4081 !important;
+    font-weight: 700 !important;
+    box-shadow: 0 0 0 2px rgba(255, 64, 129, 0.3) !important;
+    transform: scale(1.05) !important;
+}
+
+/* 拡張機能オーバーレイ内の入力フィールドのSuno風スタイル */
+#sunoprompt-extension-overlay input, 
+#sunoprompt-extension-overlay textarea, 
+#sunoprompt-extension-overlay select {
+    background: #2a2a2a !important;
+    color: #ffffff !important;
+    border: 1px solid #444 !important;
+}
+
+#sunoprompt-extension-overlay input:focus, 
+#sunoprompt-extension-overlay textarea:focus, 
+#sunoprompt-extension-overlay select:focus {
+    border-color: #ff4081 !important;
+    box-shadow: 0 0 0 2px rgba(255, 64, 129, 0.2) !important;
+}
+
+#sunoprompt-extension-overlay {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+    line-height: 1.6 !important;
+    background: #0a0a0a !important;
+    color: #ffffff !important;
+}
+
+#sunoprompt-extension-overlay .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#sunoprompt-extension-overlay header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #ffffff !important;
+}
+
+#sunoprompt-extension-overlay header h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    color: #ffffff !important;
+    text-shadow: none;
+}
+
+#sunoprompt-extension-overlay header p {
+    font-size: 1.2rem;
+    margin: 10px 0 0 0;
+    opacity: 0.9;
+}
+
+/* API Key Section */
+#sunoprompt-extension-overlay .api-key-section {
+    background: #1a1a1a !important;
+    border: 1px solid #333 !important;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+#sunoprompt-extension-overlay .api-key-section h3 {
+    color: #ffffff !important;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    border-bottom: 2px solid #ff4081 !important;
+    padding-bottom: 8px;
+}
+
+#sunoprompt-extension-overlay .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#sunoprompt-extension-overlay .key-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#sunoprompt-extension-overlay .key-input-wrapper input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #e1e5e9;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: monospace;
+    transition: border-color 0.3s ease;
+}
+
+#sunoprompt-extension-overlay .key-input-wrapper input:focus {
+    outline: none;
+    border-color: #ff4081 !important;
+}
+
+#sunoprompt-extension-overlay #toggle-key-visibility {
+    background: none;
+    border: 2px solid #e1e5e9;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+#sunoprompt-extension-overlay #toggle-key-visibility:hover {
+    background: #2a2a2a !important;
+    border-color: #ff4081 !important;
+}
+
+#sunoprompt-extension-overlay .key-status {
+    margin-top: 10px;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 500;
+}
+
+#sunoprompt-extension-overlay .key-status.valid {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+#sunoprompt-extension-overlay .key-status.invalid {
+    background: #3a1a1a !important;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+#sunoprompt-extension-overlay .main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+#sunoprompt-extension-overlay .form-section, #sunoprompt-extension-overlay .result-section {
+    background: #1a1a1a !important;
+    border: 1px solid #333 !important;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+}
+
+#sunoprompt-extension-overlay .form-section h2 {
+    color: #ffffff !important;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    border-bottom: 3px solid #ff4081 !important;
+    padding-bottom: 10px;
+}
+
+#sunoprompt-extension-overlay .result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #ff4081 !important;
+    padding-bottom: 10px;
+}
+
+#sunoprompt-extension-overlay .result-section h2 {
+    color: #ffffff !important;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+#sunoprompt-extension-overlay .result-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#sunoprompt-extension-overlay .result-item-header h3 {
+    margin: 0;
+    color: #ffffff !important;
+    font-size: 1.2rem;
+}
+
+#sunoprompt-extension-overlay .result-item-header .copy-btn {
+    padding: 4px 8px;
+    font-size: 12px;
+    min-width: auto;
+    height: auto;
+    background: #2a2a2a !important;
+    border: 1px solid #444 !important;
+    color: #ffffff !important;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#sunoprompt-extension-overlay .result-item-header .copy-btn:hover {
+    background: #3a3a3a !important;
+    border-color: #ff4081 !important;
+}
+
+#sunoprompt-extension-overlay .form-group {
+    margin-bottom: 20px;
+}
+
+#sunoprompt-extension-overlay .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+#sunoprompt-extension-overlay label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #ffffff !important;
+}
+
+#sunoprompt-extension-overlay input[type="text"], #sunoprompt-extension-overlay input[type="range"], #sunoprompt-extension-overlay select, #sunoprompt-extension-overlay textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #e1e5e9;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+#sunoprompt-extension-overlay textarea {
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+}
+
+#sunoprompt-extension-overlay input[type="text"]:focus, #sunoprompt-extension-overlay select:focus, #sunoprompt-extension-overlay textarea:focus {
+    outline: none;
+    border-color: #ff4081 !important;
+}
+
+/* テーマモード選択 */
+#sunoprompt-extension-overlay .theme-mode-selector {
+    display: flex;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid #e1e5e9;
+}
+
+#sunoprompt-extension-overlay .theme-mode-btn {
+    flex: 1;
+    padding: 12px 16px;
+    background: #1a1a1a !important;
+    border: 1px solid #444 !important;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-right: 1px solid #444;
+    color: #cccccc !important;
+    opacity: 0.7;
+}
+
+#sunoprompt-extension-overlay .theme-mode-btn:last-child {
+    border-right: none;
+}
+
+#sunoprompt-extension-overlay .theme-mode-btn:hover {
+    background: #2a2a2a !important;
+}
+
+#sunoprompt-extension-overlay .theme-mode-btn.active {
+    background: #ff4081 !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    box-shadow: 0 0 0 2px rgba(255, 64, 129, 0.3) !important;
+    transform: scale(1.02) !important;
+    opacity: 1 !important;
+    border-color: #ff4081 !important;
+}
+
+/* テーマ・ジャンル・楽器選択 */
+#sunoprompt-extension-overlay .theme-categories, 
+#sunoprompt-extension-overlay .genre-categories,
+#sunoprompt-extension-overlay .instrument-categories {
+    height: auto;
+    overflow: visible;
+    border: 1px solid #e1e5e9;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+#sunoprompt-extension-overlay .theme-category, 
+#sunoprompt-extension-overlay .genre-category,
+#sunoprompt-extension-overlay .instrument-category {
+    margin-bottom: 10px;
+    border: 1px solid #e1e5e9;
+    border-radius: 6px;
+    background: #1a1a1a !important;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+#sunoprompt-extension-overlay .theme-category.collapsed .theme-category-content,
+#sunoprompt-extension-overlay .genre-category.collapsed .genre-category-content,
+#sunoprompt-extension-overlay .instrument-category.collapsed .instrument-category-content {
+    max-height: 0;
+    padding: 0 15px;
+    overflow: hidden;
+}
+
+#sunoprompt-extension-overlay .theme-category.has-selected,
+#sunoprompt-extension-overlay .genre-category.has-selected,
+#sunoprompt-extension-overlay .instrument-category.has-selected {
+    border-color: #ff4081 !important;
+    background: #2a2a2a !important;
+}
+
+#sunoprompt-extension-overlay .theme-category-title, 
+#sunoprompt-extension-overlay .genre-category-title,
+#sunoprompt-extension-overlay .instrument-category-title {
+    background: #2a2a2a !important;
+    padding: 12px 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e1e5e9;
+    transition: background-color 0.3s ease;
+    font-weight: 600;
+    color: #ffffff !important;
+}
+
+#sunoprompt-extension-overlay .theme-category-title:hover, #sunoprompt-extension-overlay .genre-category-title:hover {
+    background: #e9ecef;
+}
+
+#sunoprompt-extension-overlay .theme-category.has-selected .theme-category-title,
+#sunoprompt-extension-overlay .genre-category.has-selected .genre-category-title {
+    background: #667eea;
+    color: white;
+}
+
+#sunoprompt-extension-overlay .toggle-icon {
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+    font-size: 14px;
+}
+
+#sunoprompt-extension-overlay .theme-category.collapsed .toggle-icon,
+#sunoprompt-extension-overlay .genre-category.collapsed .toggle-icon {
+    transform: rotate(-90deg);
+}
+
+#sunoprompt-extension-overlay .theme-category-content, #sunoprompt-extension-overlay .genre-category-content {
+    padding: 15px;
+    height: auto;
+    overflow: visible;
+    transition: padding 0.3s ease;
+}
+
+#sunoprompt-extension-overlay .theme-buttons, #sunoprompt-extension-overlay .genre-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+#sunoprompt-extension-overlay .theme-btn, #sunoprompt-extension-overlay .genre-btn {
+    padding: 8px 12px;
+    background: #2a2a2a !important;
+    border: 1px solid #dee2e6;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+#sunoprompt-extension-overlay .theme-btn:hover, #sunoprompt-extension-overlay .genre-btn:hover {
+    background: #e9ecef;
+    transform: translateY(-1px);
+}
+
+#sunoprompt-extension-overlay .theme-btn.selected, #sunoprompt-extension-overlay .genre-btn.selected {
+    background: #667eea;
+    color: white;
+    border-color: #ff4081 !important;
+}
+
+#sunoprompt-extension-overlay .theme-btn.selected:hover, #sunoprompt-extension-overlay .genre-btn.selected:hover {
+    background: #5a6fd8;
+}
+
+#sunoprompt-extension-overlay .genre-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#sunoprompt-extension-overlay .genre-btn.disabled:hover {
+    transform: none;
+}
+
+/* 選択されたテーマ・ジャンル */
+#sunoprompt-extension-overlay .selected-themes, #sunoprompt-extension-overlay .selected-genres {
+    margin-top: 15px;
+    padding: 15px;
+    background: #2a2a2a !important;
+    border-radius: 8px;
+    border: 1px solid #e1e5e9;
+}
+
+#sunoprompt-extension-overlay .selected-themes-label, #sunoprompt-extension-overlay .selected-genres-label {
+    font-weight: 600;
+    color: #ffffff !important;
+    margin-bottom: 10px;
+}
+
+#sunoprompt-extension-overlay .selected-themes-list, #sunoprompt-extension-overlay .selected-genres-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+#sunoprompt-extension-overlay .selected-theme-item, #sunoprompt-extension-overlay .selected-genre-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: #667eea;
+    color: white;
+    border-radius: 15px;
+    font-size: 13px;
+}
+
+#sunoprompt-extension-overlay .selected-theme-remove, #sunoprompt-extension-overlay .selected-genre-remove {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+#sunoprompt-extension-overlay .selected-theme-remove:hover, #sunoprompt-extension-overlay .selected-genre-remove:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* キー選択 */
+#sunoprompt-extension-overlay .key-type-toggle {
+    display: flex;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 2px solid #e1e5e9;
+}
+
+#sunoprompt-extension-overlay .key-type-btn {
+    flex: 1;
+    padding: 8px 12px;
+    background: #1a1a1a !important;
+    border: 1px solid #444 !important;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    border-right: 1px solid #444;
+    color: #cccccc !important;
+    opacity: 0.7;
+}
+
+#sunoprompt-extension-overlay .key-type-btn:last-child {
+    border-right: none;
+}
+
+#sunoprompt-extension-overlay .key-type-btn:hover {
+    background: #2a2a2a !important;
+}
+
+#sunoprompt-extension-overlay .key-type-btn.active {
+    background: #ff4081 !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    box-shadow: 0 0 0 2px rgba(255, 64, 129, 0.3) !important;
+    transform: scale(1.02) !important;
+    opacity: 1 !important;
+    border-color: #ff4081 !important;
+}
+
+/* 言語スライダー */
+#sunoprompt-extension-overlay .language-slider-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+#sunoprompt-extension-overlay .language-label {
+    font-size: 14px;
+    color: #cccccc !important;
+    min-width: 70px;
+}
+
+#sunoprompt-extension-overlay .language-description {
+    font-size: 14px;
+    color: #ff4081 !important;
+    font-style: italic;
+}
+
+#sunoprompt-extension-overlay input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: #e1e5e9;
+    border-radius: 3px;
+    outline: none;
+    border: none;
+    padding: 0;
+}
+
+#sunoprompt-extension-overlay input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #667eea;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+#sunoprompt-extension-overlay input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #667eea;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* 曲構成パート */
+#sunoprompt-extension-overlay .song-parts-container {
+    margin-bottom: 15px;
+}
+
+#sunoprompt-extension-overlay .song-part-card {
+    background: #2a2a2a !important;
+    border: 1px solid #444 !important;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    overflow: hidden;
+    transition: all 0.4s ease, transform 0.4s ease;
+    position: relative;
+}
+
+/* カード移動時のアニメーション */
+#sunoprompt-extension-overlay .song-part-card.moving {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 64, 129, 0.3) !important;
+    border-color: #ff4081 !important;
+    z-index: 10;
+}
+
+/* カード交換アニメーション */
+#sunoprompt-extension-overlay .song-part-card.swapping {
+    transition: transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1) !important;
+    box-shadow: 0 12px 30px rgba(255, 64, 129, 0.4) !important;
+    border-color: #ff4081 !important;
+    transform-origin: center !important;
+}
+
+/* 交換完了後のハイライト */
+#sunoprompt-extension-overlay .song-part-card.highlight-swap {
+    animation: swapHighlight 0.5s ease-out;
+}
+
+@keyframes swapHighlight {
+    0% {
+        background: rgba(255, 64, 129, 0.2) !important;
+        border-color: #ff4081 !important;
+        box-shadow: 0 0 0 3px rgba(255, 64, 129, 0.4) !important;
+        transform: scale(1.02);
+    }
+    100% {
+        background: #2a2a2a !important;
+        border-color: #444 !important;
+        box-shadow: none !important;
+        transform: scale(1);
+    }
+}
+
+#sunoprompt-extension-overlay .song-part-card.slide-up {
+    animation: slideUp 0.4s ease;
+}
+
+#sunoprompt-extension-overlay .song-part-card.slide-down {
+    animation: slideDown 0.4s ease;
+}
+
+@keyframes slideUp {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px) scale(1.02);
+        box-shadow: 0 8px 25px rgba(255, 64, 129, 0.4);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(20px) scale(1.02);
+        box-shadow: 0 8px 25px rgba(255, 64, 129, 0.4);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+#sunoprompt-extension-overlay .song-part-card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+#sunoprompt-extension-overlay .song-part-header {
+    background: #1a1a1a !important;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #444;
+}
+
+#sunoprompt-extension-overlay .song-part-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #ffffff !important;
+}
+
+#sunoprompt-extension-overlay .song-part-title span {
+    color: #ff4081 !important;
+}
+
+#sunoprompt-extension-overlay .song-part-actions {
+    display: flex;
+    gap: 5px;
+}
+
+#sunoprompt-extension-overlay .song-part-action-btn {
+    background: #2a2a2a !important;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 6px 8px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+#sunoprompt-extension-overlay .song-part-action-btn:hover {
+    background: #e9ecef;
+}
+
+#sunoprompt-extension-overlay .song-part-action-btn.delete {
+    background: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
+
+#sunoprompt-extension-overlay .song-part-action-btn.delete:hover {
+    background: #c82333;
+}
+
+#sunoprompt-extension-overlay .song-part-action-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+#sunoprompt-extension-overlay .song-part-action-btn:active {
+    transform: scale(0.9);
+    background: #ff4081 !important;
+    color: white !important;
+}
+
+#sunoprompt-extension-overlay .song-part-content {
+    padding: 10px 12px;
+}
+
+#sunoprompt-extension-overlay .song-part-field {
+    margin-bottom: 8px;
+}
+
+/* Inline layout for compact design */
+#sunoprompt-extension-overlay .song-part-inline-fields {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+#sunoprompt-extension-overlay .song-part-field-inline {
+    flex: 1;
+    min-width: 180px;
+}
+
+/* レスポンシブ: 小さい画面では縦積み */
+@media (max-width: 768px) {
+    #sunoprompt-extension-overlay .song-part-inline-fields {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    #sunoprompt-extension-overlay .song-part-field-inline {
+        min-width: auto;
+    }
+}
+
+#sunoprompt-extension-overlay .song-part-field-inline label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 600;
+    color: #ffffff !important;
+    font-size: 0.9rem;
+}
+
+#sunoprompt-extension-overlay .song-part-field-inline select {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid #444 !important;
+    border-radius: 4px;
+    background: #1a1a1a !important;
+    color: #ffffff !important;
+    font-size: 0.9rem;
+}
+
+/* Energy Level Control */
+#sunoprompt-extension-overlay .energy-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#sunoprompt-extension-overlay .energy-slider {
+    flex: 1;
+    height: 6px;
+    background: #333 !important;
+    border-radius: 3px;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+#sunoprompt-extension-overlay .energy-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #ff4081 !important;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+#sunoprompt-extension-overlay .energy-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: #ff4081 !important;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+#sunoprompt-extension-overlay .energy-slider::-webkit-slider-track {
+    background: linear-gradient(to right, #333 0%, #ff4081 100%);
+    height: 6px;
+    border-radius: 3px;
+}
+
+#sunoprompt-extension-overlay .energy-value {
+    font-size: 0.85rem;
+    color: #ffffff !important;
+    font-weight: 600;
+    min-width: 35px;
+    text-align: center;
+}
+
+/* Collapsible Instructions */
+#sunoprompt-extension-overlay .instruction-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 8px 12px;
+    margin: 0 -12px 6px -12px;
+    color: #cccccc !important;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+    background: transparent !important;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+#sunoprompt-extension-overlay .instruction-toggle:hover {
+    color: #ff4081 !important;
+    background: rgba(255, 64, 129, 0.15) !important;
+    border: 1px solid rgba(255, 64, 129, 0.3) !important;
+    transform: translateX(2px);
+    box-shadow: 0 2px 8px rgba(255, 64, 129, 0.2);
+}
+
+#sunoprompt-extension-overlay .instruction-toggle:active {
+    transform: translateX(1px) scale(0.98);
+}
+
+#sunoprompt-extension-overlay .instruction-toggle .toggle-icon {
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+}
+
+#sunoprompt-extension-overlay .instruction-toggle:hover .toggle-icon {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+#sunoprompt-extension-overlay .instruction-field {
+    width: 100%;
+    min-height: 60px;
+    max-height: 120px;
+    padding: 8px;
+    border: 1px solid #444 !important;
+    border-radius: 4px;
+    background: #1a1a1a !important;
+    color: #ffffff !important;
+    font-size: 0.9rem;
+    resize: vertical;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+#sunoprompt-extension-overlay .instruction-field.collapsed {
+    max-height: 0;
+    min-height: 0;
+    padding: 0 8px;
+    border: none;
+    margin-top: 0;
+}
+
+#sunoprompt-extension-overlay .song-part-field label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #ffffff !important;
+    margin-bottom: 5px;
+}
+
+#sunoprompt-extension-overlay .song-part-field select,
+#sunoprompt-extension-overlay .song-part-field input,
+#sunoprompt-extension-overlay .song-part-field textarea {
+    font-size: 14px;
+    padding: 8px;
+}
+
+#sunoprompt-extension-overlay .energy-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+#sunoprompt-extension-overlay .energy-bars {
+    display: flex;
+    gap: 2px;
+}
+
+#sunoprompt-extension-overlay .energy-bar {
+    width: 12px;
+    height: 16px;
+    background: #e1e5e9;
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+}
+
+#sunoprompt-extension-overlay .energy-bar.filled {
+    background: #667eea;
+}
+
+#sunoprompt-extension-overlay .energy-display span {
+    font-size: 14px;
+    color: #ff4081 !important;
+    font-weight: 600;
+}
+
+#sunoprompt-extension-overlay .song-part-instruction {
+    margin-top: 15px;
+}
+
+#sunoprompt-extension-overlay .song-part-instruction textarea {
+    min-height: 60px;
+    resize: vertical;
+}
+
+#sunoprompt-extension-overlay .add-part-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#sunoprompt-extension-overlay .add-part-btn:hover {
+    background: #218838;
+    transform: translateY(-1px);
+}
+
+/* 楽器選択 */
+#sunoprompt-extension-overlay .instrument-selection {
+    margin-bottom: 15px;
+}
+
+#sunoprompt-extension-overlay .instrument-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+#sunoprompt-extension-overlay .instrument-btn {
+    padding: 8px 12px;
+    background: #2a2a2a !important;
+    border: 1px solid #dee2e6;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+#sunoprompt-extension-overlay .instrument-btn:hover {
+    background: #e9ecef;
+    transform: translateY(-1px);
+}
+
+/* 生成ボタン */
+#sunoprompt-extension-overlay #generateBtn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    margin-top: 20px;
+}
+
+#sunoprompt-extension-overlay #generateBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+#sunoprompt-extension-overlay #generateBtn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ローディング */
+#sunoprompt-extension-overlay .spinner {
+    text-align: center;
+    padding: 40px;
+}
+
+#sunoprompt-extension-overlay .spinner-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+#sunoprompt-extension-overlay .loading-icon {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#sunoprompt-extension-overlay .loading-text {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ff4081 !important;
+}
+
+#sunoprompt-extension-overlay .loading-dots::after {
+    content: attr(data-dots);
+    animation: dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+    0%, 20% { content: ''; }
+    40% { content: '.'; }
+    60% { content: '..'; }
+    80%, 100% { content: '...'; }
+}
+
+/* 結果表示 */
+#sunoprompt-extension-overlay .result-item {
+    margin-bottom: 20px;
+    border: 1px solid #e1e5e9;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#sunoprompt-extension-overlay .result-item h3 {
+    background: #2a2a2a !important;
+    padding: 12px 15px;
+    margin: 0;
+    color: #ffffff !important;
+    font-size: 16px;
+    border-bottom: 1px solid #e1e5e9;
+}
+
+#sunoprompt-extension-overlay .result-item pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #ffffff !important;
+    margin: 0;
+    padding: 15px;
+    background: #1a1a1a !important;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#sunoprompt-extension-overlay .copy-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    margin: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+#sunoprompt-extension-overlay .copy-btn:hover {
+    background: #5a6fd8;
+    transform: translateY(-1px);
+}
+
+#sunoprompt-extension-overlay .result-actions {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#sunoprompt-extension-overlay .copy-all-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+#sunoprompt-extension-overlay .copy-all-btn:hover {
+    background: #218838;
+    transform: translateY(-1px);
+}
+
+/* Suno Integration Button */
+#sunoprompt-extension-overlay .suno-integration-btn {
+    display: block;
+    width: 100%;
+    margin: 20px 0 0 0;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, #ff4081 0%, #ff6b9d 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 64, 129, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+#sunoprompt-extension-overlay .suno-integration-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+#sunoprompt-extension-overlay .suno-integration-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 64, 129, 0.5);
+    background: linear-gradient(135deg, #ff6b9d 0%, #ff4081 100%) !important;
+}
+
+#sunoprompt-extension-overlay .suno-integration-btn:hover::before {
+    left: 100%;
+}
+
+#sunoprompt-extension-overlay .suno-integration-btn:active {
+    transform: translateY(0px);
+    box-shadow: 0 4px 15px rgba(255, 64, 129, 0.3);
+}
+
+/* エラーメッセージ */
+#sunoprompt-extension-overlay .error-message {
+    background: #3a1a1a !important;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #f5c6cb;
+    margin-bottom: 20px;
+}
+
+/* ユーティリティ */
+#sunoprompt-extension-overlay .hidden {
+    display: none !important;
+}
+
+#sunoprompt-extension-overlay .disabled-during-generation {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    #sunoprompt-extension-overlay .main-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    #sunoprompt-extension-overlay .form-section, #sunoprompt-extension-overlay .result-section {
+        padding: 20px;
+    }
+    
+    #sunoprompt-extension-overlay header h1 {
+        font-size: 2rem;
+    }
+    
+    #sunoprompt-extension-overlay .theme-buttons, #sunoprompt-extension-overlay .genre-buttons {
+        gap: 6px;
+    }
+    
+    #sunoprompt-extension-overlay .theme-btn, #sunoprompt-extension-overlay .genre-btn {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+}
+
+/* スクロールバーのスタイル */
+#sunoprompt-extension-overlay ::-webkit-scrollbar {
+    width: 8px;
+}
+
+#sunoprompt-extension-overlay ::-webkit-scrollbar-track {
+    background: #2a2a2a !important;
+    border-radius: 4px;
+}
+
+#sunoprompt-extension-overlay ::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+#sunoprompt-extension-overlay ::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
