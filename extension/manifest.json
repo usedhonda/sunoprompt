@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Sunoprompt Extension",
+  "name": "__MSG_appName__",
   "version": "1.0.3",
-  "description": "Suno AI用の高品質な音楽プロンプトを生成するChrome拡張機能",
+  "description": "__MSG_appDescription__",
+  "default_locale": "en",
   "action": {
     "default_title": "Sunoprompt",
     "default_popup": "popup.html"
