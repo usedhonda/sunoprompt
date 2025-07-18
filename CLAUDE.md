@@ -56,3 +56,4 @@ sunoprompt/
 ## Distribution
 - Chrome Web Storeでの配布を想定
 - .zipファイルによる手動配布も可能
+
