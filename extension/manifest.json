@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Sunoprompt Extension",
+  "version": "1.0.0",
+  "description": "Suno AI用の高品質な音楽プロンプトを生成するChrome拡張機能",
+  "description_locale": {
+    "en": "Generate high-quality music prompts for Suno AI with advanced theme selection and genre categorization"
+  },
+  "action": {
+    "default_title": "Sunoprompt",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://api.openai.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
+}

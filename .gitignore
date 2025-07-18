@@ -1,0 +1,17 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Chrome extension
+*.crx
+*.pem
+*.zip
+!sunoprompt-extension-v*.zip
+
+# Secrets
+.env
+.env.local
