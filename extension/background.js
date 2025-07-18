@@ -1,73 +1,22 @@
-// Chrome Extension Background Service Worker
-// 右クリックメニューと拡張機能アイコンでSunoサイト上にオーバーレイ表示
+// Chrome Extension Background Service Worker - Simplified for popup-only extension
 
-// 拡張機能がインストール時にコンテキストメニューを作成
+// Create context menu when extension is installed
 chrome.runtime.onInstalled.addListener(() => {
-  // Sunoサイト限定の右クリックメニューを作成
+  console.log('Sunoprompt Extension installed');
+  
+  // Create context menu
   chrome.contextMenus.create({
-    id: "openSunoprompt",
-    title: "🎵 Sunopromptで音楽プロンプト生成",
-    contexts: ["page", "selection"],
-    documentUrlPatterns: ["*://suno.com/*", "*://*.suno.com/*"]
+    id: 'sunoprompt-open',
+    title: '🎵 Open Sunoprompt',
+    contexts: ['all']
   });
 });
 
-// コンテキストメニューがクリックされた時の処理
-chrome.contextMenus.onClicked.addListener(async (info, tab) => {
-  if (info.menuItemId === "openSunoprompt") {
-    // 現在のタブにオーバーレイでSunopromptを表示
-    await showSunopromptOnCurrentTab(tab.id);
+// Context menu click handler
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId === 'sunoprompt-open') {
+    // Open the extension popup (Note: chrome.action.openPopup() only works in certain contexts)
+    // For now, this will just log. Users can click the extension icon to open popup.
+    console.log('Sunoprompt context menu clicked');
   }
 });
-
-// 拡張機能のアイコンがクリックされた時の処理は無効
-// default_popupが設定されているため、ポップアップが表示される
-
-// 現在のタブにSunopromptをオーバーレイ表示する関数
-async function showSunopromptOnCurrentTab(tabId) {
-  try {
-    // コンテンツスクリプトにメッセージを送信してSunopromptを表示/非表示
-    await chrome.tabs.sendMessage(tabId, { action: "toggleSunoprompt" });
-  } catch (error) {
-    // コンテンツスクリプトが読み込まれていない場合は注入
-    console.log('Injecting scripts...');
-    
-    // データファイルを先に注入
-    await chrome.scripting.executeScript({
-      target: { tabId: tabId },
-      files: ['theme-presets.js']
-    });
-    
-    await chrome.scripting.executeScript({
-      target: { tabId: tabId },
-      files: ['genres.js']
-    });
-    
-    await chrome.scripting.executeScript({
-      target: { tabId: tabId },
-      files: ['musical-keys.js']
-    });
-    
-    await chrome.scripting.executeScript({
-      target: { tabId: tabId },
-      files: ['popup.js']
-    });
-    
-    // CSSは不要（content.jsで動的スタイル適用）
-    
-    // 最後にコンテンツスクリプトを注入
-    await chrome.scripting.executeScript({
-      target: { tabId: tabId },
-      files: ['content.js']
-    });
-    
-    // 少し待ってからメッセージを送信
-    setTimeout(async () => {
-      try {
-        await chrome.tabs.sendMessage(tabId, { action: "toggleSunoprompt" });
-      } catch (e) {
-        console.log('Message failed, scripts may still be loading');
-      }
-    }, 1000);
-  }
-}
