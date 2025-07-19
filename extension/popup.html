@@ -118,36 +118,36 @@
                     <div class="form-group">
                         <label for="mood" class="tooltip" data-tooltip="楽曲の基本的な雰囲気・感情を設定します。選択したムードが歌詞や音楽スタイルに反映されます。">ムード</label>
                         <select id="mood" name="mood">
-                            <option value="Happy">Happy</option>
-                            <option value="Sad">Sad</option>
-                            <option value="Energetic">Energetic</option>
-                            <option value="Calm">Calm</option>
-                            <option value="Nostalgic">Nostalgic</option>
-                            <option value="Uplifting">Uplifting</option>
-                            <option value="Melancholic">Melancholic</option>
-                            <option value="Dreamy">Dreamy</option>
-                            <option value="Mysterious">Mysterious</option>
-                            <option value="Powerful">Powerful</option>
-                            <option value="Gentle">Gentle</option>
-                            <option value="Intense">Intense</option>
+                            <option value="Happy">ハッピー</option>
+                            <option value="Sad">悲しい</option>
+                            <option value="Energetic">エネルギッシュ</option>
+                            <option value="Calm">穏やか</option>
+                            <option value="Nostalgic">ノスタルジック</option>
+                            <option value="Uplifting">高揚感</option>
+                            <option value="Melancholic">憂鬱</option>
+                            <option value="Dreamy">夢想的</option>
+                            <option value="Mysterious">神秘的</option>
+                            <option value="Powerful">力強い</option>
+                            <option value="Gentle">優しい</option>
+                            <option value="Intense">激しい</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="default_vocal_style" class="tooltip" data-tooltip="楽曲全体の基本的なボーカルスタイルを設定します。各パートで個別に変更することも可能です。">デフォルトボーカルスタイル</label>
                         <select id="default_vocal_style" name="default_vocal_style">
-                            <option value="Male Solo">Male Solo</option>
-                            <option value="Female Solo">Female Solo</option>
-                            <option value="Male & Female Duet">Male & Female Duet</option>
-                            <option value="Female & Female Duet">Female & Female Duet</option>
-                            <option value="Male & Male Duet">Male & Male Duet</option>
-                            <option value="Mixed Choir">Mixed Choir</option>
-                            <option value="Male Choir">Male Choir</option>
-                            <option value="Female Choir">Female Choir</option>
-                            <option value="Solo with Backup">Solo with Backup</option>
-                            <option value="Call and Response">Call and Response</option>
-                            <option value="Rap with Singing">Rap with Singing</option>
-                            <option value="Instrumental">Instrumental</option>
+                            <option value="Male Solo">男性ソロ</option>
+                            <option value="Female Solo">女性ソロ</option>
+                            <option value="Male & Female Duet">男女デュエット</option>
+                            <option value="Female & Female Duet">女性デュエット</option>
+                            <option value="Male & Male Duet">男性デュエット</option>
+                            <option value="Mixed Choir">混声合唱</option>
+                            <option value="Male Choir">男声合唱</option>
+                            <option value="Female Choir">女声合唱</option>
+                            <option value="Solo with Backup">ソロ+バックアップ</option>
+                            <option value="Call and Response">コール&レスポンス</option>
+                            <option value="Rap with Singing">ラップ+歌唱</option>
+                            <option value="Instrumental">インストゥルメンタル</option>
                         </select>
                     </div>
 
@@ -257,13 +257,6 @@
     <script>
         // Ensure all scripts are loaded before initializing
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, checking scripts...');
-            console.log('THEME_CATEGORIES:', !!window.THEME_CATEGORIES);
-            console.log('THEME_PRESETS:', !!window.THEME_PRESETS);
-            console.log('GENRES:', !!window.GENRES);
-            console.log('MUSICAL_KEYS:', !!window.MUSICAL_KEYS);
-            console.log('INSTRUMENT_CATEGORIES:', !!window.INSTRUMENT_CATEGORIES);
-            
             // Small delay to ensure all scripts are processed
             setTimeout(() => {
                 window.sunopromptExtension = new SunopromptExtension();

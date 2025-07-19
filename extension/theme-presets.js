@@ -1,70 +1,76 @@
 // Chrome Extension用 - テーマプリセット (export削除版)
 // テーマプリセットカテゴリ
 const THEME_CATEGORIES = {
+    // 1. 基本感情・人間関係
     love_general: {
-        name: "恋愛・人間関係",
+        name: "💕 恋愛・人間関係",
         color: "#f093fb",
-        themes: ["nostalgic_love", "first_crush", "long_distance", "coffee_shop_meeting", "text_message_love", "summer_festival", "silent_understanding", "long_distance_longing", "social_media_checking", "gift_giving_anxiety", "meeting_parents", "unrequited_love", "confession_moment", "new_relationship", "honeymoon_phase", "relationship_doubt"]
+        themes: ["nostalgic_love", "first_crush", "long_distance", "coffee_shop_meeting", "text_message_love", "summer_festival", "silent_understanding", "gift_giving_anxiety", "meeting_parents", "unrequited_love", "confession_moment", "new_relationship", "honeymoon_phase", "relationship_doubt"]
     },
+    emotions: {
+        name: "❤️ 感情・心境",
+        color: "#ff9a9e",
+        themes: ["深夜の涙", "溢れる喜び", "静かな怒り", "突然の孤独", "穏やかな受容", "緊張と興奮", "美しい憂鬱", "絶望的希望", "ほろ苦い別れ"]
+    },
+    
+    // 2. 性別視点
     love_male: {
-        name: "恋愛・人間関係（男性視点）",
+        name: "👨 男性視点の恋愛",
         color: "#4a90e2",
         themes: ["guy_shy_confession", "protective_instinct", "male_vulnerability", "guy_heartbreak", "jealous_boyfriend", "commitment_fear", "providing_pressure", "emotional_walls", "guy_first_love", "midnight_thinking"]
     },
     love_female: {
-        name: "恋愛・人間関係（女性視点）",
+        name: "👩 女性視点の恋愛",
         color: "#e91e63",
         themes: ["girl_intuition", "emotional_support", "independence_vs_love", "female_strength", "nurturing_love", "girl_heartbreak", "romantic_dreams", "emotional_expression", "girl_confidence", "maternal_feelings"]
     },
-    urban: {
-        name: "都市・現代生活",
-        color: "#667eea",
-        themes: ["digital_detox", "urban_solitude", "office_escape", "crowded_station", "late_night_convenience", "rooftop_view", "elevator_silence", "cafe_working", "delivery_waiting", "subway_poetry", "neon_reflection", "apartment_isolation"]
-    },
-    nature: {
-        name: "季節・自然",
-        color: "#4facfe",
-        themes: ["spring_awakening", "summer_night", "autumn_leaves", "winter_solitude", "rainy_reflection", "morning_sunshine", "cherry_blossom_anxiety", "humid_summer_lethargy", "first_snow_magic", "typhoon_solitude"]
-    },
+    
+    // 3. 時間・成長
     growth: {
-        name: "成長・人生",
+        name: "🌱 成長・人生の変化",
         color: "#43e97b",
         themes: ["coming_of_age", "quarter_life_crisis", "dream_chaser", "self_acceptance", "independence", "mentor_encounter", "comfort_zone_exit", "failure_recovery", "identity_search", "wisdom_gained", "キャリア岐路", "技術習得", "仕事情熱"]
     },
-    travel: {
-        name: "旅・冒険",
-        color: "#fa709a",
-        themes: ["midnight_drive", "train_journey", "airport_departure", "backpack_adventure", "lighthouse_beacon", "mountain_hiking", "seaside_wandering", "foreign_city_discovery", "camping_under_stars", "road_trip_freedom"]
-    },
-    dream: {
-        name: "夢・幻想",
-        color: "#a8edea",
-        themes: ["lucid_dream", "stargazing", "magic_hour", "parallel_universe", "dream_within_dream", "floating_consciousness", "time_loop_escape", "mirror_world", "childhood_imaginary_friend", "recurring_nightmare"]
-    },
-    social: {
-        name: "社会・時代",
-        color: "#fda085",
-        themes: ["social_media_fatigue", "remote_work_isolation", "climate_anxiety", "generation_gap", "gig_economy_struggle", "subscription_fatigue", "privacy_paradox", "influencer_burnout", "digital_minimalism", "algorithm_resistance", "残業疲れ", "職場の友情", "初仕事不安", "昇進重圧"]
-    },
-    healing: {
-        name: "癒し・内省",
-        color: "#d299c2",
-        themes: ["meditation_moment", "forest_therapy", "hot_spring_serenity", "yoga_flow", "candlelight_reflection", "journal_writing", "breath_awareness", "temple_visit", "sound_healing", "moonlight_meditation"]
-    },
-    creative: {
-        name: "創造・芸術",
-        color: "#ffecd2",
-        themes: ["creative_flow", "art_gallery_visit", "music_discovery", "street_performance", "midnight_painting", "poetry_writing", "craft_workshop", "dance_expression", "photography_walk", "ceramic_creation"]
-    },
     memory: {
-        name: "記憶・ノスタルジア",
+        name: "⏰ 記憶・ノスタルジア",
         color: "#b19cd9",
         themes: ["古い写真", "学生時代", "幼馴染", "初アパート", "昔の日記", "オルゴール", "故郷の駅", "夕焼けの記憶", "手紙再発見", "タイムカプセル"]
     },
-    emotions: {
-        name: "感情・心境",
-        color: "#ff9a9e",
-        themes: ["深夜の涙", "溢れる喜び", "静かな怒り", "突然の孤独", "穏やかな受容", "緊張と興奮", "美しい憂鬱", "絶望的希望", "ほろ苦い別れ", "無言の理解"]
+    
+    // 4. 環境・場所
+    nature: {
+        name: "🌿 季節・自然",
+        color: "#4facfe",
+        themes: ["spring_awakening", "summer_night", "autumn_leaves", "winter_solitude", "rainy_reflection", "morning_sunshine", "cherry_blossom_anxiety", "humid_summer_lethargy", "first_snow_magic", "typhoon_solitude"]
+    },
+    modern_life: {
+        name: "🏙️ 現代社会・都市生活",
+        color: "#667eea",
+        themes: ["digital_detox", "urban_solitude", "office_escape", "crowded_station", "late_night_convenience", "rooftop_view", "elevator_silence", "cafe_working", "delivery_waiting", "subway_poetry", "neon_reflection", "social_media_fatigue", "climate_anxiety", "generation_gap", "gig_economy_struggle", "subscription_fatigue", "privacy_paradox", "influencer_burnout", "digital_minimalism", "algorithm_resistance"]
+    },
+    travel: {
+        name: "✈️ 旅・冒険・移動",
+        color: "#fa709a",
+        themes: ["midnight_drive", "train_journey", "airport_departure", "backpack_adventure", "lighthouse_beacon", "mountain_hiking", "seaside_wandering", "foreign_city_discovery", "camping_under_stars", "road_trip_freedom"]
+    },
+    
+    // 5. 内面・精神
+    healing: {
+        name: "🧘 癒し・内省・瞑想",
+        color: "#d299c2",
+        themes: ["meditation_moment", "forest_therapy", "hot_spring_serenity", "yoga_flow", "candlelight_reflection", "journal_writing", "breath_awareness", "temple_visit", "sound_healing", "moonlight_meditation"]
+    },
+    dream: {
+        name: "✨ 夢・幻想・超自然",
+        color: "#a8edea",
+        themes: ["lucid_dream", "stargazing", "magic_hour", "parallel_universe", "dream_within_dream", "floating_consciousness", "time_loop_escape", "mirror_world", "childhood_imaginary_friend", "recurring_nightmare"]
+    },
+    
+    // 6. 創造・表現
+    creative: {
+        name: "🎨 創造・芸術・表現",
+        color: "#ffecd2",
+        themes: ["creative_flow", "art_gallery_visit", "music_discovery", "street_performance", "painting_creation", "poetry_writing", "craft_workshop", "dance_expression", "photography_walk", "ceramic_creation"]
     }
 };
 

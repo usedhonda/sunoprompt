@@ -22,7 +22,6 @@ class SunopromptExtension {
 
     async init() {
         try {
-            console.log('🚀 Starting initialization...');
             
             await this.loadApiKey();
             await this.waitForScripts();
@@ -42,7 +41,6 @@ class SunopromptExtension {
             await this.applySavedDataToUI();
             this.initializeDebugMode();
             
-            console.log('✅ Initialization completed');
         } catch (error) {
             console.error('💥 Initialization failed:', error);
         }
@@ -50,7 +48,6 @@ class SunopromptExtension {
     
     async waitForScripts() {
         // Skip waiting - directly initialize without checking
-        console.log('Skipping script loading wait');
         return;
     }
 
@@ -77,7 +74,6 @@ class SunopromptExtension {
                         this.songParts = data.songParts;
                     }
                     
-                    console.log('📥 Pre-loaded saved data');
                 }
             }
         } catch (error) {
@@ -151,11 +147,9 @@ class SunopromptExtension {
                     }
                     if (typeof data.scrollPosition === 'number') {
                         window.scrollTo(0, data.scrollPosition);
-                        console.log('🔄 Scroll position restored:', data.scrollPosition);
                     }
                 }, 200);
                 
-                console.log('✅ UI state applied successfully');
             }
         } catch (error) {
             console.error('⚠️ Failed to apply saved data to UI:', error);
@@ -183,7 +177,6 @@ class SunopromptExtension {
                     this.updateKeyStatus('valid', 'API キーが保存されています');
                 }
             } else {
-                console.log('Chrome storage API not available, skipping API key load');
             }
         } catch (error) {
             console.error('Failed to load API key:', error);
@@ -198,7 +191,6 @@ class SunopromptExtension {
                 await chrome.storage.sync.set({ openaiApiKey: obfuscatedKey });
                 this.updateKeyStatus('valid', 'API キーが保存されました');
             } else {
-                console.log('Chrome storage API not available, API key not saved');
                 this.updateKeyStatus('valid', 'API キーが設定されました（保存は無効）');
             }
         } catch (error) {
@@ -223,7 +215,6 @@ class SunopromptExtension {
             statusElement.textContent = message;
             statusElement.className = `key-status ${status}`;
         } else {
-            console.log(`API Key Status: ${status} - ${message}`);
         }
     }
 
@@ -248,7 +239,6 @@ class SunopromptExtension {
             return;
         }
         
-        console.log('✅ Theme DOM elements found, initializing combined theme mode...');
         
         // 両方のコンテナを常に表示（組み合わせモード）
         presetContainer.style.display = 'block';
@@ -324,6 +314,12 @@ class SunopromptExtension {
             crowded_station: '🚉 満員駅',
             late_night_convenience: '🏪 深夜コンビニ',
             rooftop_view: '🏔️ 屋上の眺め',
+            elevator_silence: '🛗 エレベーターの静寂',
+            cafe_working: '☕ カフェワーク',
+            delivery_waiting: '📦 配達待ち',
+            subway_poetry: '🚇 地下鉄の詩',
+            neon_reflection: '🌈 ネオン反射',
+            apartment_isolation: '🏠 アパート孤立',
             
             // 恋愛・人間関係系
             nostalgic_love: '💕 ノスタルジック・ラブ',
@@ -340,6 +336,10 @@ class SunopromptExtension {
             winter_solitude: '❄️ 冬の孤独',
             rainy_reflection: '🌧️ 雨の日の内省',
             morning_sunshine: '☀️ 朝の陽射し',
+            cherry_blossom_anxiety: '🌸 桜の不安',
+            humid_summer_lethargy: '🌡️ 梅雨の倦怠感',
+            first_snow_magic: '❄️ 初雪の魔法',
+            typhoon_solitude: '🌀 台風の孤独',
             
             // 成長・人生系
             coming_of_age: '🌱 成長と自立',
@@ -347,6 +347,11 @@ class SunopromptExtension {
             dream_chaser: '✨ 夢追い人',
             self_acceptance: '🤗 自己受容',
             independence: '🗝️ 独立',
+            mentor_encounter: '👨‍🏫 師匠との出会い',
+            comfort_zone_exit: '🚪 快適圏脱出',
+            failure_recovery: '🔄 失敗からの回復',
+            identity_search: '🔍 アイデンティティ探し',
+            wisdom_gained: '💡 得た知恵',
             
             // 旅・冒険系
             midnight_drive: '🚗 深夜ドライブ',
@@ -354,30 +359,59 @@ class SunopromptExtension {
             airport_departure: '✈️ 空港出発',
             backpack_adventure: '🎒 バックパック冒険',
             lighthouse_beacon: '🗼 灯台の光',
+            mountain_hiking: '⛰️ 山登り',
+            seaside_wandering: '🌊 海辺散策',
+            foreign_city_discovery: '🗺️ 異国都市発見',
+            camping_under_stars: '⭐ 星空キャンプ',
+            road_trip_freedom: '🛣️ ロードトリップ',
             
             // 夢・幻想系
             lucid_dream: '💭 明晰夢',
             stargazing: '⭐ 星空観測',
             magic_hour: '🌅 マジックアワー',
             parallel_universe: '🌌 パラレル宇宙',
+            dream_within_dream: '🌀 夢の中の夢',
+            floating_consciousness: '☁️ 浮遊意識',
+            time_loop_escape: '🔄 タイムループ脱出',
+            mirror_world: '🪞 鏡の世界',
+            childhood_imaginary_friend: '🧸 幼馴染の想像友達',
+            recurring_nightmare: '😱 繰り返す悪夢',
             
             // 社会・時代系
             social_media_fatigue: '📱 SNS疲れ',
             remote_work_isolation: '💻 リモート孤独',
             climate_anxiety: '🌍 環境不安',
             generation_gap: '👥 世代間ギャップ',
+            gig_economy_struggle: '💼 ギグエコノミー苦闘',
+            subscription_fatigue: '💳 サブスク疲れ',
+            privacy_paradox: '🔒 プライバシーパラドックス',
+            influencer_burnout: '📸 インフルエンサー燃尽',
+            digital_minimalism: '📱 デジタルミニマリズム',
+            algorithm_resistance: '🤖 アルゴリズム抵抗',
             
             // 癒し・内省系
             meditation_moment: '🧘 瞑想の時間',
             forest_therapy: '🌲 森林療法',
             hot_spring_serenity: '♨️ 温泉の安らぎ',
             yoga_flow: '🧘‍♀️ ヨガフロー',
+            candlelight_reflection: '🕯️ キャンドル内省',
+            journal_writing: '📖 日記執筆',
+            breath_awareness: '🫁 呼吸意識',
+            temple_visit: '⛩️ 寺院参拝',
+            sound_healing: '🎵 音響ヒーリング',
+            moonlight_meditation: '🌙 月光瞑想',
             
             // 創造・芸術系
             creative_flow: '🎨 創造的フロー',
             art_gallery_visit: '🖼️ 美術館訪問',
             music_discovery: '🎵 音楽発見',
             street_performance: '🎭 ストリート演奏',
+            midnight_painting: '🎨 深夜の絵画',
+            poetry_writing: '✍️ 詩作',
+            craft_workshop: '🔨 工芸ワークショップ',
+            dance_expression: '💃 ダンス表現',
+            photography_walk: '📷 写真散歩',
+            ceramic_creation: '🏺 陶芸創作',
             
             // 男性視点恋愛系
             guy_shy_confession: '😊 内気な告白',
@@ -541,7 +575,6 @@ class SunopromptExtension {
             return;
         }
         
-        console.log('✅ Genre DOM elements found, initializing...');
         
         // 🎯 Check which categories should start expanded based on pre-loaded data
         const categoriesToExpand = new Set();
@@ -1199,7 +1232,6 @@ class SunopromptExtension {
         }
         
         if (!window.INSTRUMENT_CATEGORIES) {
-            console.log('INSTRUMENT_CATEGORIES not loaded, defining inline...');
             // Define inline as fallback
             window.INSTRUMENT_CATEGORIES = {
                 keyboard: {
@@ -1469,7 +1501,6 @@ class SunopromptExtension {
                     container.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             } catch (error) {
-                console.log('Scroll attempt failed:', error);
             }
             
             this.generatePrompt();
@@ -1491,10 +1522,8 @@ class SunopromptExtension {
                 
                 // フォーカス変更時にも保存
                 element.addEventListener('focus', () => {
-                    console.log('🎯 Focus gained:', id);
                 });
                 element.addEventListener('blur', () => {
-                    console.log('👋 Focus lost from:', id);
                     this.saveCurrentInput(); // フォーカスを失う時に確実に保存
                 });
                 
@@ -1680,7 +1709,6 @@ class SunopromptExtension {
 
     toggleDebugMode() {
         this.debugMode = !this.debugMode;
-        console.log(`🔍 Debug mode ${this.debugMode ? 'ON' : 'OFF'}`);
         
         // 控えめな視覚的フィードバック（ヘッダーテキストのみ変更、色は変更しない）
         const header = document.querySelector('header h1');
@@ -2101,7 +2129,6 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
 
     displayResults(result) {
         try {
-            console.log('🎵 Displaying results...');
             
             // 結果の表示
             document.getElementById('styleResult').textContent = result.style;
@@ -2118,7 +2145,6 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
                 copyAllBtn.style.display = 'block';
             }
             
-            console.log('✅ Results displayed successfully');
             
             // Sunoに反映ボタンを追加（エラー処理付き）
             try {
@@ -2339,8 +2365,6 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
                     }
 
                     // 結果をコンソールに出力（デバッグ用）
-                    console.log('Sunoprompt: フィールド入力結果', filled);
-                    console.log('Sunoprompt: 送信データ', data);
 
                     return filled;
                 },
@@ -2429,53 +2453,63 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
         // 500ms後に保存実行（ユーザーの入力が止まってから保存）
         this.saveTimer = setTimeout(() => {
             this.saveCurrentInput();
-            console.log('⚡ Debounced save executed');
         }, 500);
     }
 
     // ===== Data Persistence =====
     async saveCurrentInput() {
-        // フォーカス状態とカーソル位置を取得
-        const focusState = this.getCurrentFocusState();
-        
-        const formData = {
-            selectedThemes: this.selectedThemes,
-            selectedGenres: this.selectedGenres.map(g => ({ id: g.id, name: g.name, category: g.category })),
-            currentKeyType: this.currentKeyType,
-            songParts: this.songParts,
-            customStructureSequence: this.customStructureSequence,
-            theme: document.getElementById('theme').value,
-            keywords: document.getElementById('keywords').value,
-            bpm: document.getElementById('bpm').value,
-            key: document.getElementById('key').value,
-            languageRatio: document.getElementById('languageRatio').value,
-            default_vocal_style: document.getElementById('default_vocal_style').value,
-            instruments: document.getElementById('instruments').value,
-            song_structure: document.getElementById('song_structure').value,
-            apiModel: document.getElementById('apiModel').value,
-            // フォーカス状態とUI状態を保存
-            focusState: focusState,
+        // コンテキスト無効化チェック
+        if (!this.isExtensionContextValid()) {
+            if (!this.contextInvalidatedWarned) {
+                this.showContextInvalidatedWarning();
+                this.contextInvalidatedWarned = true;
+            }
+            return;
+        }
+
+        try {
+            // フォーカス状態とカーソル位置を取得
+            const focusState = this.getCurrentFocusState();
+            
+            const formData = {
+                selectedThemes: this.selectedThemes,
+                selectedGenres: this.selectedGenres.map(g => ({ id: g.id, name: g.name, category: g.category })),
+                currentKeyType: this.currentKeyType,
+                songParts: this.songParts,
+                customStructureSequence: this.customStructureSequence,
+                theme: document.getElementById('theme')?.value || '',
+                keywords: document.getElementById('keywords')?.value || '',
+                bpm: document.getElementById('bpm')?.value || 120,
+                key: document.getElementById('key')?.value || 'C Major',
+                languageRatio: document.getElementById('languageRatio')?.value || 50,
+                default_vocal_style: document.getElementById('default_vocal_style')?.value || 'Female Solo',
+                instruments: document.getElementById('instruments')?.value || '',
+                song_structure: document.getElementById('song_structure')?.value || 'detailed',
+                apiModel: document.getElementById('apiModel')?.value || 'gpt-4.1-mini',
+                // フォーカス状態とUI状態を保存
+                focusState: focusState,
             scrollPosition: window.scrollY,
             timestamp: Date.now()
-        };
+            };
         
-        // Data saved automatically
-        
-        try {
+            // Double-check context before saving
+            if (!this.isExtensionContextValid()) {
+                return;
+            }
+
+            // Data saved automatically
             if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
                 await chrome.storage.local.set({ formData });
             } else {
-                console.log('Chrome storage API not available, form data not saved');
             }
         } catch (error) {
             console.error('Failed to save form data:', error);
             
-            // Extension context invalidated時のユーザーフレンドリーなメッセージ
+            // Extension context invalidated時の処理
             if (error.message && error.message.includes('Extension context invalidated')) {
-                // 一度だけ警告を表示（頻繁な表示を避ける）
                 if (!this.contextInvalidatedWarned) {
+                    this.showContextInvalidatedWarning();
                     this.contextInvalidatedWarned = true;
-                    this.showContextInvalidatedMessage();
                 }
             }
         }
@@ -2506,7 +2540,6 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
 
     setupPopupStability() {
         // ポップアップの適切なライフサイクル管理
-        console.log('🔧 Setting up popup stability measures...');
         
         // 1. 正常なクリーンアップハンドラー
         window.addEventListener('beforeunload', (e) => {
@@ -2551,17 +2584,14 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
         let focusLost = false;
         window.addEventListener('blur', () => {
             focusLost = true;
-            console.log('📉 Popup lost focus');
         });
         
         window.addEventListener('focus', () => {
             if (focusLost) {
-                console.log('📈 Popup regained focus');
                 focusLost = false;
             }
         });
         
-        console.log('✅ Popup stability measures activated');
     }
 
     cleanup() {
@@ -2581,9 +2611,12 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
                 this.saveTimer = null;
             }
             
-            // 最終データ保存
-            if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+            // 最終データ保存（コンテキスト有効時のみ）
+            if (this.isExtensionContextValid() && typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+                console.log('🧹 Attempting final data save during cleanup...');
                 this.saveCurrentInput();
+            } else {
+                console.log('🧹 Skipping final save - extension context invalidated');
             }
             
             console.log('✅ Cleanup completed');
@@ -2763,6 +2796,112 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
             button.textContent = originalText;
             button.style.background = '';
         }, 2000);
+    }
+
+    // ===== Extension Context Management =====
+    isExtensionContextValid() {
+        try {
+            // Multiple checks for extension context validity
+            if (typeof chrome === 'undefined') return false;
+            if (!chrome.runtime) return false;
+            
+            // Try to access chrome.runtime.id - this will throw if context is invalidated
+            const runtimeId = chrome.runtime.id;
+            if (!runtimeId) return false;
+            
+            // Try to access chrome.storage to ensure it's available
+            if (!chrome.storage || !chrome.storage.local) return false;
+            
+            return true;
+        } catch (error) {
+            // Any error means context is invalidated
+            console.warn('⚠️ Extension context is invalidated:', error.message);
+            return false;
+        }
+    }
+
+    showContextInvalidatedWarning() {
+        const message = `拡張機能のコンテキストが無効化されました。設定の自動保存が一時的に無効になっています。\n拡張機能を再読み込みするか、ポップアップを閉じて再度開いてください。`;
+        
+        // Console warning first
+        console.warn('🔄 Extension context invalidated. Auto-save disabled.');
+        
+        // Try to show visual notification safely
+        try {
+            this.showNotification(message);
+        } catch (error) {
+            console.warn('Failed to show context invalidated notification:', error);
+            // Fallback to simple alert if DOM manipulation fails
+            try {
+                alert(message);
+            } catch (alertError) {
+                console.warn('Alert also failed:', alertError);
+            }
+        }
+    }
+
+    showNotification(message) {
+        try {
+            // Check if document and body are available
+            if (!document || !document.body || !document.createElement) {
+                throw new Error('Document or body not available');
+            }
+
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 10px;
+                left: 10px;
+                right: 10px;
+                background: #ff9800;
+                color: white;
+                padding: 12px;
+                border-radius: 6px;
+                z-index: 10000;
+                font-size: 13px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                line-height: 1.4;
+            `;
+            
+            // Safe innerHTML setting
+            const messageText = String(message).replace(/\n/g, '<br>');
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 16px;">⚠️</span>
+                    <span>${messageText}</span>
+                    <button style="
+                        margin-left: auto;
+                        background: rgba(255,255,255,0.2);
+                        border: none;
+                        color: white;
+                        padding: 4px 8px;
+                        border-radius: 3px;
+                        cursor: pointer;
+                        font-size: 12px;
+                    " onclick="this.parentElement.parentElement.remove()">✕</button>
+                </div>
+            `;
+
+            // Try to add to body
+            document.body.appendChild(notification);
+            console.log('✅ Context warning notification shown');
+
+            // Auto-remove after 8 seconds
+            setTimeout(() => {
+                try {
+                    if (notification && notification.parentElement) {
+                        notification.remove();
+                    }
+                } catch (removeError) {
+                    console.warn('Failed to auto-remove notification:', removeError);
+                }
+            }, 8000);
+
+        } catch (error) {
+            console.warn('Failed to create visual notification:', error);
+            throw error; // Re-throw so caller can handle fallback
+        }
     }
 }
 
