@@ -1524,7 +1524,10 @@ class SunopromptExtension {
                 element.addEventListener('focus', () => {
                 });
                 element.addEventListener('blur', () => {
-                    this.saveCurrentInput(); // フォーカスを失う時に確実に保存
+                    // フォーカスを失う時に保存（コンテキスト確認付き）
+                    if (this.isExtensionContextValid()) {
+                        this.saveCurrentInput();
+                    }
                 });
                 
                 // キーボード入力でも保存（特にテキストエリア用）
@@ -2487,7 +2490,10 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
         
         // 500ms後に保存実行（ユーザーの入力が止まってから保存）
         this.saveTimer = setTimeout(() => {
-            this.saveCurrentInput();
+            // コンテキストが有効な場合のみ保存
+            if (this.isExtensionContextValid()) {
+                this.saveCurrentInput();
+            }
         }, 500);
     }
 
@@ -2856,23 +2862,17 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
     }
 
     showContextInvalidatedWarning() {
-        const message = `拡張機能のコンテキストが無効化されました。設定の自動保存が一時的に無効になっています。\n拡張機能を再読み込みするか、ポップアップを閉じて再度開いてください。`;
+        // Only log to console - avoid any DOM operations when context is invalidated
+        const message = '拡張機能のコンテキストが無効化されました。自動保存が無効になっています。';
         
-        // Console warning first
+        // Simple console warning only
         console.warn('🔄 Extension context invalidated. Auto-save disabled.');
         
-        // Try to show visual notification safely
-        try {
-            this.showNotification(message);
-        } catch (error) {
-            console.warn('Failed to show context invalidated notification:', error);
-            // Fallback to simple alert if DOM manipulation fails
-            try {
-                alert(message);
-            } catch (alertError) {
-                console.warn('Alert also failed:', alertError);
-            }
-        }
+        // Mark that warning was shown to prevent repeated calls
+        this.contextInvalidatedWarned = true;
+        
+        // Don't attempt any DOM operations or notifications when context is invalid
+        // User will see this in console if they check developer tools
     }
 
     showNotification(message) {
