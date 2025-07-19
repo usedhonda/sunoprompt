@@ -18,7 +18,7 @@
                 <h2>プロンプト生成</h2>
                 <form id="promptForm" method="post">
                     <div class="form-group">
-                        <label for="apiKey">OpenAI API Key *</label>
+                        <label for="apiKey" class="tooltip" data-tooltip="sk-で始まるOpenAI APIキーを入力（プロンプト生成に必要）">OpenAI API Key *</label>
                         <div class="api-key-container">
                             <input type="password" id="apiKey" placeholder="OpenAI API キーを入力" required>
                             <button type="button" class="toggle-visibility" id="toggleApiKey">👁️</button>
@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="apiModel">OpenAI Model</label>
+                        <label for="apiModel" class="tooltip" data-tooltip="使用するモデルを選択（GPT-4.1 Mini推奨）">OpenAI Model</label>
                         <select id="apiModel" name="apiModel">
                             <optgroup label="GPT-4.1 Series (最新・100万トークン対応)">
                                 <option value="gpt-4.1-mini">GPT-4.1 Mini (推奨・バランス重視)</option>
@@ -48,10 +48,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="theme">テーマ・コンセプト *</label>
+                        <label for="theme" class="tooltip" data-tooltip="楽曲の主題・世界観を設定（プリセットまたはカスタム文章）">テーマ・コンセプト *</label>
                         <div class="theme-mode-selector">
                             <button type="button" class="theme-mode-btn active" data-mode="preset">📚 プリセットから選択</button>
-                            <button type="button" class="theme-mode-btn" data-mode="custom">✏️ カスタムテーマ入力</button>
+                            <button type="button" class="theme-mode-btn tooltip" data-mode="custom" data-tooltip="独自のテーマを詳細な文章で記述できます。情景、感情、ストーリー、世界観を自由に表現して、オリジナルの楽曲コンセプトを作成しましょう。">✏️ カスタムテーマ入力</button>
                         </div>
                         
                         <div class="theme-preset-container" id="presetThemeContainer">
@@ -70,19 +70,22 @@
                         
                         <div class="custom-theme-container" id="customThemeContainer" style="display: none;">
                             <textarea id="theme" name="theme" rows="5"
-                                      placeholder="独自のテーマ・コンセプトを入力してください...
-例: 深夜のコンビニで偶然出会った人との短い会話。蛍光灯の下で交わされる言葉に隠された人間的な温かさ。都市の孤独の中で見つける一瞬のつながり。"></textarea>
+                                      placeholder="独自のテーマ・コンセプトを詳細に入力してください...
+
+例: 深夜のコンビニで偶然出会った人との短い会話。蛍光灯の下で交わされる言葉に隠された人間的な温かさ。都市の孤独の中で見つける一瞬のつながり。現代社会の疎外感と、それでも残る人と人とのささやかな絆を歌った楽曲。"></textarea>
+                            <small class="help-text">💡 詳細な文章でテーマを記述できます。情景、感情、ストーリー、世界観などを自由に表現してください。</small>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="keywords">詩的キーワード（歌詞に必須）</label>
+                        <label for="keywords" class="tooltip" data-tooltip="歌詞に織り込みたい特定のキーワードやフレーズを指定">🎵 歌詞に含めたい言葉（参考）</label>
                         <input type="text" id="keywords" name="keywords" 
-                               placeholder="例: noise, filter, plastic, screen light, 画面の光, ノイズ">
+                               placeholder="例: 夜景, ネオンライト, 孤独, 温かさ（テーマ選択で自動入力）">
+                        <small class="help-text">テーマ選択時に関連キーワードが自動入力されます。手動で編集も可能です。</small>
                     </div>
 
                     <div class="form-group">
-                        <label for="genres">ジャンル（最大3つまで選択可能）</label>
+                        <label for="genres" class="tooltip" data-tooltip="楽曲スタイルを最大3つまで選択（複数選択で独創的なスタイルを作成）">ジャンル（最大3つまで選択可能）</label>
                         <div class="genre-selection">
                             <div class="genre-categories" id="genreCategories">
                                 <!-- ジャンルカテゴリがJavaScriptで動的に生成されます -->
@@ -97,7 +100,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="key">キー</label>
+                        <label for="key" class="tooltip" data-tooltip="楽曲の調性設定（メジャー：明るい、マイナー：暗い）">キー</label>
                         <div class="key-selection">
                             <div class="key-type-toggle">
                                 <button type="button" class="key-type-btn active" data-type="major">メジャー</button>
@@ -110,12 +113,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="bpm">BPM: <span id="bpmValue">120</span></label>
+                        <label for="bpm" class="tooltip" data-tooltip="楽曲のテンポ（1分間の拍数）を設定します。60-90：スロー、90-120：ミディアム、120-140：アップテンポ、140以上：高速">BPM: <span id="bpmValue">120</span></label>
                         <input type="range" id="bpm" name="bpm" min="60" max="200" value="120">
                     </div>
 
                     <div class="form-group">
-                        <label for="mood">ムード</label>
+                        <label for="mood" class="tooltip" data-tooltip="楽曲の基本的な雰囲気・感情を設定します。選択したムードが歌詞や音楽スタイルに反映されます。">ムード</label>
                         <select id="mood" name="mood">
                             <option value="Happy">Happy</option>
                             <option value="Sad">Sad</option>
@@ -133,7 +136,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="default_vocal_style">デフォルトボーカルスタイル</label>
+                        <label for="default_vocal_style" class="tooltip" data-tooltip="楽曲全体の基本的なボーカルスタイルを設定します。各パートで個別に変更することも可能です。">デフォルトボーカルスタイル</label>
                         <select id="default_vocal_style" name="default_vocal_style">
                             <option value="Male Solo">Male Solo</option>
                             <option value="Female Solo">Female Solo</option>
@@ -151,7 +154,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="languageRatio">言語比率: <span id="languageRatioText">Japanese 50% - English 50%</span></label>
+                        <label for="languageRatio" class="tooltip" data-tooltip="歌詞の日本語・英語混合比率を調整">言語比率: <span id="languageRatioText">Japanese 50% - English 50%</span></label>
                         <div class="language-slider-container">
                             <span class="language-label">Japanese</span>
                             <input type="range" id="languageRatio" name="languageRatio" min="0" max="100" value="50">
@@ -160,10 +163,11 @@
                         <div class="language-description" id="languageDescription">
                             日本語と英語が半々の構成
                         </div>
+                        <small class="help-text">💡 日本語歌詞は音声合成の精度向上のため、自動でひらがな表記になります</small>
                     </div>
 
                     <div class="form-group">
-                        <label for="song_structure">曲構成テンプレート</label>
+                        <label for="song_structure" class="tooltip" data-tooltip="楽曲の基本的な構成パターンを選択します。詳細モードでは各パートを個別にカスタマイズできます。">曲構成テンプレート</label>
                         <select id="song_structure" name="song_structure">
                             <option value="detailed" selected>詳細（Intro → Verse → Pre-Chorus → Chorus → Verse → Pre-Chorus → Chorus → Bridge → Final → Outro）</option>
                             <option value="simple">シンプル（Verse → Chorus → Verse → Chorus → Bridge → Chorus）</option>
@@ -176,7 +180,7 @@
                     </div>
                     
                     <div class="form-group song-parts-group">
-                        <label>詳細楽曲構成</label>
+                        <label class="tooltip" data-tooltip="楽曲の各パート（Intro、Verse、Chorusなど）を個別に設定できます。各パートのエネルギーレベル、ボーカルスタイル、長さを細かく調整して理想的な楽曲構成を作成できます。">詳細楽曲構成</label>
                         <div class="song-parts-container" id="songPartsContainer">
                             <!-- パートカードがここに動的に生成されます -->
                         </div>
@@ -186,9 +190,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="instruments">楽器（カンマ区切り）</label>
+                        <label for="instruments" class="tooltip" data-tooltip="楽曲で使用したい楽器を指定します。カンマ区切りで複数指定可能。下のボタンからも選択できます。">楽器（カンマ区切り）</label>
                         <input type="text" id="instruments" name="instruments" 
-                               placeholder="例: Piano, Guitar, Strings" value="Piano, Guitar">
+                               placeholder="例: Piano, Guitar, Strings">
                         <div class="instrument-categories" id="instrumentCategories">
                             <!-- 楽器カテゴリがJavaScriptで動的に生成されます -->
                         </div>
@@ -200,7 +204,7 @@
 
             <div class="result-section">
                 <div class="result-header">
-                    <h2>生成結果</h2>
+                    <h2 class="tooltip" data-tooltip="OpenAI APIを使用して生成されたSuno AI用の音楽プロンプトが表示されます。各セクションをクリップボードにコピーしてSuno AIで使用できます。">生成結果</h2>
                     <button class="copy-all-btn" id="copyAllBtn" style="display: none;">📋 全てをコピー</button>
                 </div>
                 <div id="loadingSpinner" class="spinner hidden">
