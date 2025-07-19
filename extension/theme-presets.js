@@ -29,7 +29,7 @@ const THEME_CATEGORIES = {
     growth: {
         name: "成長・人生",
         color: "#43e97b",
-        themes: ["coming_of_age", "quarter_life_crisis", "dream_chaser", "self_acceptance", "independence", "mentor_encounter", "comfort_zone_exit", "failure_recovery", "identity_search", "wisdom_gained", "career_crossroads", "skill_mastery", "work_passion_discovery"]
+        themes: ["coming_of_age", "quarter_life_crisis", "dream_chaser", "self_acceptance", "independence", "mentor_encounter", "comfort_zone_exit", "failure_recovery", "identity_search", "wisdom_gained", "キャリア岐路", "技術習得", "仕事情熱"]
     },
     travel: {
         name: "旅・冒険",
@@ -44,7 +44,7 @@ const THEME_CATEGORIES = {
     social: {
         name: "社会・時代",
         color: "#fda085",
-        themes: ["social_media_fatigue", "remote_work_isolation", "climate_anxiety", "generation_gap", "gig_economy_struggle", "subscription_fatigue", "privacy_paradox", "influencer_burnout", "digital_minimalism", "algorithm_resistance", "overtime_exhaustion", "workplace_friendship", "first_job_anxiety", "promotion_pressure"]
+        themes: ["social_media_fatigue", "remote_work_isolation", "climate_anxiety", "generation_gap", "gig_economy_struggle", "subscription_fatigue", "privacy_paradox", "influencer_burnout", "digital_minimalism", "algorithm_resistance", "残業疲れ", "職場の友情", "初仕事不安", "昇進重圧"]
     },
     healing: {
         name: "癒し・内省",
@@ -59,12 +59,12 @@ const THEME_CATEGORIES = {
     memory: {
         name: "記憶・ノスタルジア",
         color: "#b19cd9",
-        themes: ["old_photograph", "school_days", "childhood_friend", "first_apartment", "old_diary", "music_box", "hometown_station", "sunset_memory", "letter_rediscovery", "time_capsule"]
+        themes: ["古い写真", "学生時代", "幼馴染", "初アパート", "昔の日記", "オルゴール", "故郷の駅", "夕焼けの記憶", "手紙再発見", "タイムカプセル"]
     },
     emotions: {
         name: "感情・心境",
         color: "#ff9a9e",
-        themes: ["midnight_tears", "overwhelming_joy", "quiet_anger", "sudden_loneliness", "peaceful_acceptance", "nervous_excitement", "melancholic_beauty", "hope_against_hope", "bittersweet_goodbye", "silent_understanding"]
+        themes: ["深夜の涙", "溢れる喜び", "静かな怒り", "突然の孤独", "穏やかな受容", "緊張と興奮", "美しい憂鬱", "絶望的希望", "ほろ苦い別れ", "無言の理解"]
     }
 };
 
@@ -123,7 +123,7 @@ const THEME_PRESETS = {
     },
     rooftop_view: {
         theme: "高層ビルの屋上から見下ろす街並み。風に吹かれながら感じる自由と孤独。都市の喧騒を離れて見つける自分だけの時間。",
-        keywords: "rooftop, wind, freedom, cityscape, 屋上, 風, 自由, 街並み",
+        keywords: "屋上, 風, 自由, 街並み, 高層ビル, 都市, 孤独",
         genres: ["Ambient", "Electronic", "Indie Rock"],
         mood: "Dreamy",
         energy: 4,
@@ -195,7 +195,7 @@ const THEME_PRESETS = {
     // 恋愛・人間関係系
     nostalgic_love: {
         theme: "昔の恋人との思い出を振り返る。古いアルバムや手紙を見つけて、甘酸っぱい記憶がよみがえる。時間の経過とともに美化された過去への憧憬と、現在の自分を受け入れる成熟した感情を描く。",
-        keywords: "memories, photographs, letters, time, 思い出, 写真, 手紙, 時間",
+        keywords: "思い出, 写真, 手紙, 時間, 記憶, アルバム, 過去",
         genres: ["Indie Folk", "Acoustic", "Singer-songwriter"],
         mood: "Nostalgic",
         energy: 3,
@@ -205,7 +205,7 @@ const THEME_PRESETS = {
     },
     first_crush: {
         theme: "初恋の甘酸っぱい記憶。学校の廊下で見かけた人への憧れ。純粋で一途な想いが胸を焦がす青春の1ページ。",
-        keywords: "first love, school, corridor, pure, 初恋, 学校, 廊下, 純粋",
+        keywords: "初恋, 学校, 廊下, 純粋, 憧れ, 青春, 甘酸っぱい",
         genres: ["Pop", "Indie Pop", "Acoustic"],
         mood: "Happy",
         energy: 5,
@@ -215,7 +215,7 @@ const THEME_PRESETS = {
     },
     long_distance: {
         theme: "遠距離恋愛の切なさ。スマートフォンの画面越しに見る恋人の顔。距離が作り出す想いの強さと不安を描く現代的なラブストーリー。",
-        keywords: "distance, phone, screen, longing, 距離, 電話, 画面, 憧憬",
+        keywords: "距離, 電話, 画面, 憧憬, 恋人, 遠距離, 想い",
         genres: ["Indie Pop", "Electronic", "Alternative"],
         mood: "Melancholic",
         energy: 4,
@@ -225,7 +225,7 @@ const THEME_PRESETS = {
     },
     coffee_shop_meeting: {
         theme: "カフェで偶然再会した昔の友人。コーヒーカップを挟んで語り合う時間。変わったこと、変わらないこと、そして新しい発見。",
-        keywords: "coffee, cafe, reunion, conversation, コーヒー, カフェ, 再会, 会話",
+        keywords: "コーヒー, カフェ, 再会, 会話, 出会い, 偶然, 温かさ",
         genres: ["Acoustic", "Indie Folk", "Jazz"],
         mood: "Calm",
         energy: 3,
@@ -235,7 +235,7 @@ const THEME_PRESETS = {
     },
     text_message_love: {
         theme: "深夜のメッセージ交換。短い文章に込められた想い。既読スルーの不安と、返信が来た時の喜び。デジタル時代の恋愛模様。",
-        keywords: "text, message, midnight, digital, メッセージ, 深夜, デジタル, 既読",
+        keywords: "メッセージ, 深夜, デジタル, 既読, 携帯, 通知, スマホ",
         genres: ["Electronic", "Indie Pop", "Synthpop"],
         mood: "Energetic",
         energy: 6,
@@ -245,7 +245,7 @@ const THEME_PRESETS = {
     },
     summer_festival: {
         theme: "夏祭りの夜。浴衣を着て歩く石畳の道。花火の音と屋台の匂い。特別な人と過ごす夏の夜の魔法のような時間。",
-        keywords: "festival, summer, fireworks, yukata, 祭り, 夏, 花火, 浴衣",
+        keywords: "祭り, 夏, 花火, 浴衣, 縁日, 思い出, 夏祭り",
         genres: ["Pop", "Folk", "Traditional"],
         mood: "Happy",
         energy: 7,
@@ -257,7 +257,7 @@ const THEME_PRESETS = {
     // 季節・自然系
     spring_awakening: {
         theme: "桜の季節の到来。新しい生命の息吹と共に心も軽やかになる。変化への期待と不安を抱きながら、新しい章の始まりを迎える。",
-        keywords: "cherry blossoms, spring, new life, change, 桜, 春, 新生, 変化",
+        keywords: "桜, 春, 新生, 変化, 出会い, 別れ, 新学期",
         genres: ["Pop", "Indie Folk", "Acoustic"],
         mood: "Uplifting",
         energy: 6,
@@ -267,7 +267,7 @@ const THEME_PRESETS = {
     },
     summer_night: {
         theme: "夏の夜の海辺。波の音と星空の下で感じる無限の可能性。青春の1ページを飾る忘れられない夜の物語。",
-        keywords: "beach, waves, stars, possibility, 海辺, 波, 星, 可能性",
+        keywords: "海辺, 波, 星, 可能性, 夏の夜, 砂浜, 潮風",
         genres: ["Indie Pop", "Electronic", "Ambient"],
         mood: "Dreamy",
         energy: 5,
@@ -277,7 +277,7 @@ const THEME_PRESETS = {
     },
     autumn_leaves: {
         theme: "紅葉の季節。散りゆく葉を見つめながら感じる時の流れ。美しい終わりと新しい始まりの予感を描く叙情的な物語。",
-        keywords: "autumn, leaves, time, beauty, 秋, 葉, 時間, 美しさ",
+        keywords: "秋, 葉, 時間, 美しさ, 紅葉, 落ち葉, 季節",
         genres: ["Indie Folk", "Acoustic", "Alternative"],
         mood: "Nostalgic",
         energy: 3,
@@ -287,7 +287,7 @@ const THEME_PRESETS = {
     },
     winter_solitude: {
         theme: "雪の降る静かな街。白い世界に包まれた孤独感と安らぎ。寒さの中で感じる心の温かさを描く冬の詩。",
-        keywords: "snow, winter, solitude, warmth, 雪, 冬, 孤独, 温かさ",
+        keywords: "雪, 冬, 孤独, 温かさ, 静寂, 白い世界, 寒さ",
         genres: ["Ambient", "Electronic", "Neo-Classical"],
         mood: "Calm",
         energy: 2,
@@ -297,7 +297,7 @@ const THEME_PRESETS = {
     },
     rainy_reflection: {
         theme: "雨の日の部屋で過ごす静かな時間。窓を打つ雨音を聞きながら、人生の様々な出来事を振り返る。喜びも悲しみも受け入れ、穏やかな気持ちで現在を見つめ直す瞑想的な時間。",
-        keywords: "rain, window, silence, reflection, 雨, 窓, 静寂, 内省",
+        keywords: "雨, 窓, 静寂, 内省, 雨音, 憂鬱, 思考",
         genres: ["Ambient", "Lo-Fi", "Acoustic"],
         mood: "Calm",
         energy: 2,
@@ -307,7 +307,7 @@ const THEME_PRESETS = {
     },
     morning_sunshine: {
         theme: "朝の陽射しが部屋に差し込む瞬間。新しい一日の始まりに感じる希望と可能性。昨日までの悩みが軽やかに感じられる朝の魔法。",
-        keywords: "morning, sunshine, hope, possibility, 朝, 陽射し, 希望, 可能性",
+        keywords: "朝, 陽射し, 希望, 可能性, 新しい日, 光, 明るさ",
         genres: ["Pop", "Indie Pop", "Acoustic"],
         mood: "Happy",
         energy: 7,
@@ -359,7 +359,7 @@ const THEME_PRESETS = {
     // 成長・人生系
     coming_of_age: {
         theme: "青春の終わりと大人への移行期。学校を卒業し、新しい環境に飛び込む不安と期待。過去の自分と決別し、未来への希望を抱きながら一歩ずつ成長していく姿を描く。",
-        keywords: "graduation, future, hope, fear, 卒業, 未来, 希望, 不安",
+        keywords: "卒業, 未来, 希望, 不安, 新生活, 別れ, 旅立ち",
         genres: ["Pop", "Indie Rock", "Alternative"],
         mood: "Uplifting",
         energy: 6,
@@ -369,7 +369,7 @@ const THEME_PRESETS = {
     },
     quarter_life_crisis: {
         theme: "20代半ばの迷い。思い描いていた理想と現実のギャップに悩む日々。それでも前向きに歩き続ける意志を描く現代的な成長物語。",
-        keywords: "crisis, reality, ideal, growth, 危機, 現実, 理想, 成長",
+        keywords: "危機, 現実, 理想, 成長, 迷い, 岐路, 選択",
         genres: ["Indie Rock", "Alternative", "Pop"],
         mood: "Melancholic",
         energy: 5,
@@ -379,7 +379,7 @@ const THEME_PRESETS = {
     },
     dream_chaser: {
         theme: "夢を追いかける情熱と挫折。諦めそうになった時に思い出す初心の気持ち。困難を乗り越えて前進する強い意志を歌う。",
-        keywords: "dream, passion, perseverance, determination, 夢, 情熱, 忍耐, 決意",
+        keywords: "夢, 情熱, 忍耐, 決意, 挑戦, 目標, 努力",
         genres: ["Rock", "Pop", "Alternative"],
         mood: "Energetic",
         energy: 8,
@@ -389,7 +389,7 @@ const THEME_PRESETS = {
     },
     self_acceptance: {
         theme: "ありのままの自分を受け入れる瞬間。他人と比較することから解放され、自分だけの価値を見つける。内面の美しさに気づく自己肯定の物語。",
-        keywords: "acceptance, self-love, beauty, worth, 受容, 自己愛, 美しさ, 価値",
+        keywords: "受容, 自己愛, 美しさ, 価値, 自分らしさ, 肯定, 心",
         genres: ["Indie Pop", "Alternative", "Soul"],
         mood: "Uplifting",
         energy: 6,
@@ -399,7 +399,7 @@ const THEME_PRESETS = {
     },
     independence: {
         theme: "一人暮らしを始めた日。親元を離れて感じる自由と不安。新しい環境で自分らしく生きる決意を固める成長の物語。",
-        keywords: "independence, freedom, anxiety, growth, 独立, 自由, 不安, 成長",
+        keywords: "独立, 自由, 不安, 成長, 一人暮らし, 新生活, 責任",
         genres: ["Indie Pop", "Folk", "Alternative"],
         mood: "Uplifting",
         energy: 5,
@@ -457,7 +457,7 @@ const THEME_PRESETS = {
         bpm: 75,
         key: "E Minor"
     },
-    career_crossroads: {
+    "キャリア岐路": {
         theme: "キャリアの分岐点に立つ瞬間。安定した道か挑戦的な道か。人生を左右する決断を前にした深い内省と覚悟。",
         keywords: "キャリア, 分岐点, 安定, 挑戦, 決断, 人生, 内省, 覚悟",
         genres: ["Alternative", "Indie Rock", "Folk"],
@@ -467,7 +467,7 @@ const THEME_PRESETS = {
         bpm: 100,
         key: "D Minor"
     },
-    skill_mastery: {
+    "技術習得": {
         theme: "長年の努力が実を結ぶ瞬間。技術を習得する喜びと、まだ見ぬ高みへの憧れ。成長し続ける人生の充実感。",
         keywords: "努力, 実を結ぶ, 技術, 習得, 喜び, 高み, 憧れ, 充実感",
         genres: ["Pop", "Indie Pop", "Rock"],
@@ -477,7 +477,7 @@ const THEME_PRESETS = {
         bpm: 115,
         key: "A Major"
     },
-    work_passion_discovery: {
+    "仕事情熱": {
         theme: "仕事に情熱を見つけた日。労働が使命に変わる瞬間。やりがいを感じながら歩む新しい人生の始まり。",
         keywords: "仕事, 情熱, 労働, 使命, やりがい, 人生, 始まり",
         genres: ["Pop", "Alternative", "Indie Rock"],
@@ -491,7 +491,7 @@ const THEME_PRESETS = {
     // 旅・冒険系
     midnight_drive: {
         theme: "深夜の高速道路を一人で運転する解放感。日常から逃避し、風を感じながら新しい自分を発見する旅路。エンジン音と共に流れる景色が心の奥底にある感情を呼び覚ます。",
-        keywords: "highway, freedom, wind, escape, 高速道路, 自由, 風, 逃避",
+        keywords: "高速道路, 自由, 風, 逃避, ドライブ, 夜, 解放感",
         genres: ["Synthwave", "Electronic", "Indie Pop"],
         mood: "Energetic",
         energy: 7,
@@ -501,7 +501,7 @@ const THEME_PRESETS = {
     },
     train_journey: {
         theme: "窓の外に流れる景色を眺めながらの電車の旅。目的地へ向かう期待と、過ぎ去る風景への郷愁。移り変わる景色と共に心も旅をする。",
-        keywords: "train, window, scenery, journey, 電車, 窓, 景色, 旅",
+        keywords: "電車, 窓, 景色, 旅, 移動, 車窓, 流れる",
         genres: ["Indie Folk", "Acoustic", "Ambient"],
         mood: "Dreamy",
         energy: 4,
@@ -511,7 +511,7 @@ const THEME_PRESETS = {
     },
     airport_departure: {
         theme: "空港での別れと旅立ち。新しい場所への期待と、残していくものへの想い。飛行機の窓から見下ろす街並みと雲海。",
-        keywords: "airport, departure, clouds, journey, 空港, 出発, 雲, 旅",
+        keywords: "空港, 出発, 雲, 旅, 飛行機, 別れ, 新天地",
         genres: ["Electronic", "Ambient", "Indie Pop"],
         mood: "Melancholic",
         energy: 4,
@@ -521,7 +521,7 @@ const THEME_PRESETS = {
     },
     backpack_adventure: {
         theme: "バックパック一つで始まる冒険。地図にない道を歩き、偶然の出会いを楽しむ。自由な旅路で見つける新しい自分。",
-        keywords: "backpack, adventure, map, discovery, バックパック, 冒険, 地図, 発見",
+        keywords: "バックパック, 冒険, 地図, 発見, 一人旅, 探検, 未知",
         genres: ["Folk", "Indie Rock", "World"],
         mood: "Energetic",
         energy: 7,
@@ -531,7 +531,7 @@ const THEME_PRESETS = {
     },
     lighthouse_beacon: {
         theme: "海辺の灯台。嵐の夜に船を導く光のように、困難な時に希望を見つける物語。一人で立つ灯台の孤独と使命感。",
-        keywords: "lighthouse, beacon, storm, hope, 灯台, 光, 嵐, 希望",
+        keywords: "灯台, 光, 嵐, 希望, 海, 導き, 孤独",
         genres: ["Indie Folk", "Alternative", "Ambient"],
         mood: "Dreamy",
         energy: 3,
@@ -593,7 +593,7 @@ const THEME_PRESETS = {
     // 夢・幻想系
     lucid_dream: {
         theme: "明晰夢の世界。現実と夢の境界が曖昧になる不思議な体験。夢の中で自由に飛び回り、現実では不可能なことを体験する。",
-        keywords: "lucid, dream, reality, flight, 明晰夢, 現実, 飛行, 境界",
+        keywords: "明晰夢, 現実, 飛行, 境界, 意識, 夢世界, 自由",
         genres: ["Electronic", "Ambient", "Synthwave"],
         mood: "Dreamy",
         energy: 5,
@@ -603,7 +603,7 @@ const THEME_PRESETS = {
     },
     stargazing: {
         theme: "満天の星空を見上げる夜。宇宙の広さに比べた自分の小ささを感じながらも、星座に込められた物語に想いを馳せる。",
-        keywords: "stars, universe, constellation, infinity, 星, 宇宙, 星座, 無限",
+        keywords: "星, 宇宙, 星座, 無限, 夜空, 神秘, 永遠",
         genres: ["Ambient", "Electronic", "Neo-Classical"],
         mood: "Dreamy",
         energy: 3,
@@ -613,7 +613,7 @@ const THEME_PRESETS = {
     },
     magic_hour: {
         theme: "夕焼けの美しいマジックアワー。一日の終わりに空が見せる芸術的な色彩。この瞬間だけは時間が止まったかのような感覚。",
-        keywords: "sunset, magic hour, colors, moment, 夕焼け, マジックアワー, 色彩, 瞬間",
+        keywords: "夕焼け, マジックアワー, 色彩, 瞬間, 黄昏, 空, 美しさ",
         genres: ["Ambient", "Electronic", "Indie Pop"],
         mood: "Dreamy",
         energy: 4,
@@ -623,7 +623,7 @@ const THEME_PRESETS = {
     },
     parallel_universe: {
         theme: "もう一つの自分が存在する平行世界。違う選択をした自分と出会う想像。現実と可能性の間で揺れ動く心。",
-        keywords: "parallel, universe, choice, possibility, 平行, 宇宙, 選択, 可能性",
+        keywords: "平行, 宇宙, 選択, 可能性, 別の人生, 運命, もしも",
         genres: ["Electronic", "Synthwave", "Alternative"],
         mood: "Melancholic",
         energy: 5,
@@ -695,7 +695,7 @@ const THEME_PRESETS = {
     // 社会・時代系
     social_media_fatigue: {
         theme: "SNSに疲れた心。いいねの数に一喜一憂する日々から解放されたい願望。本当の自分を取り戻す物語。",
-        keywords: "social media, likes, fatigue, authenticity, SNS, いいね, 疲労, 本当の自分",
+        keywords: "エスエヌエス, いいね, 疲労, 本当の自分, ソーシャル, 承認欲求, デジタル",
         genres: ["Indie Pop", "Electronic", "Alternative"],
         mood: "Melancholic",
         energy: 4,
@@ -705,7 +705,7 @@ const THEME_PRESETS = {
     },
     remote_work_isolation: {
         theme: "リモートワークの孤独感。画面越しのコミュニケーションと、家の中で過ごす単調な日々。新しい働き方への適応と人間関係の変化。",
-        keywords: "remote work, isolation, screen, adaptation, リモートワーク, 孤独, 画面, 適応",
+        keywords: "リモートワーク, 孤独, 画面, 適応, 在宅, テレワーク, 隔離",
         genres: ["Electronic", "Indie Pop", "Lo-Fi"],
         mood: "Melancholic",
         energy: 3,
@@ -715,7 +715,7 @@ const THEME_PRESETS = {
     },
     climate_anxiety: {
         theme: "環境問題への不安。地球の未来を憂い、今できることを考える若い世代の心境。小さな行動でも意味があることを信じる希望。",
-        keywords: "climate, anxiety, future, action, 環境, 不安, 未来, 行動",
+        keywords: "環境, 不安, 未来, 行動, 地球, 危機感, 責任",
         genres: ["Indie Folk", "Alternative", "Ambient"],
         mood: "Melancholic",
         energy: 4,
@@ -725,7 +725,7 @@ const THEME_PRESETS = {
     },
     generation_gap: {
         theme: "世代間のコミュニケーションギャップ。デジタルネイティブと従来世代の価値観の違い。理解し合う努力と歩み寄りの物語。",
-        keywords: "generation, gap, communication, understanding, 世代, ギャップ, コミュニケーション, 理解",
+        keywords: "世代, ギャップ, コミュニケーション, 理解, 価値観, 違い, 歩み寄り",
         genres: ["Pop", "Indie Rock", "Folk"],
         mood: "Uplifting",
         energy: 5,
@@ -793,7 +793,7 @@ const THEME_PRESETS = {
         bpm: 135,
         key: "A Minor"
     },
-    overtime_exhaustion: {
+    "残業疲れ": {
         theme: "残業続きの疲労感。蛍光灯の下で過ごす深夜のオフィス。家族への申し訳なさと、仕事への責任感の間で揺れる心境。",
         keywords: "残業, 疲労感, 蛍光灯, 深夜, オフィス, 家族, 責任感",
         genres: ["Indie Folk", "Alternative", "Lo-Fi"],
@@ -803,7 +803,7 @@ const THEME_PRESETS = {
         bpm: 70,
         key: "F Minor"
     },
-    workplace_friendship: {
+    "職場の友情": {
         theme: "職場で芽生えた友情。お昼休みの何気ない会話から生まれる絆。仕事の愚痴を言い合える貴重な存在への感謝。",
         keywords: "職場, 友情, お昼休み, 会話, 絆, 愚痴, 感謝",
         genres: ["Pop", "Indie Pop", "Folk"],
@@ -813,7 +813,7 @@ const THEME_PRESETS = {
         bpm: 110,
         key: "C Major"
     },
-    first_job_anxiety: {
+    "初仕事不安": {
         theme: "初めての就職への不安。社会人としてやっていけるかという恐怖。新しいスーツを着た鏡の中の自分への複雑な思い。",
         keywords: "初めて, 就職, 不安, 社会人, 恐怖, スーツ, 鏡, 複雑",
         genres: ["Indie Pop", "Alternative", "Folk"],
@@ -823,7 +823,7 @@ const THEME_PRESETS = {
         bpm: 95,
         key: "G Minor"
     },
-    promotion_pressure: {
+    "昇進重圧": {
         theme: "昇進への重圧。責任の増加と期待の重さ。成功への階段を上りながらも、失うものへの不安と葛藤。",
         keywords: "昇進, 重圧, 責任, 期待, 階段, 成功, 失う, 葛藤",
         genres: ["Alternative", "Rock", "Electronic"],
@@ -837,7 +837,7 @@ const THEME_PRESETS = {
     // 癒し・内省系
     meditation_moment: {
         theme: "瞑想の時間。呼吸に意識を向け、心を静める。忙しい日常から離れて自分自身と向き合う貴重な時間。",
-        keywords: "meditation, breath, silence, peace, 瞑想, 呼吸, 静寂, 平和",
+        keywords: "瞑想, 呼吸, 静寂, 平和, 内観, 心, 落ち着き",
         genres: ["Ambient", "New Age", "Lo-Fi"],
         mood: "Calm",
         energy: 1,
@@ -847,7 +847,7 @@ const THEME_PRESETS = {
     },
     forest_therapy: {
         theme: "森林浴の癒し。木々の間を歩き、自然の音に耳を傾ける。都市の喧騒から離れて見つける心の平安。",
-        keywords: "forest, therapy, nature, healing, 森林, 癒し, 自然, 平安",
+        keywords: "森林, 癒し, 自然, 平安, 木々, 緑, マイナスイオン",
         genres: ["Ambient", "Folk", "New Age"],
         mood: "Calm",
         energy: 2,
@@ -857,7 +857,7 @@ const THEME_PRESETS = {
     },
     hot_spring_serenity: {
         theme: "温泉での至福の時間。湯船に浸かりながら感じる身体と心の解放。山間の静けさと温かさに包まれる癒しの時間。",
-        keywords: "hot spring, serenity, warmth, healing, 温泉, 静寂, 温かさ, 癒し",
+        keywords: "温泉, 静寂, 温かさ, 癒し, 湯けむり, リラックス, 疲れ",
         genres: ["Ambient", "New Age", "Traditional"],
         mood: "Calm",
         energy: 2,
@@ -867,7 +867,7 @@ const THEME_PRESETS = {
     },
     yoga_flow: {
         theme: "ヨガの流れるような動き。呼吸と身体の調和。心身のバランスを整える朝のルーティン。",
-        keywords: "yoga, flow, breath, balance, ヨガ, 流れ, 呼吸, バランス",
+        keywords: "ヨガ, 流れ, 呼吸, バランス, 心身, 調和, 朝",
         genres: ["Ambient", "Electronic", "World"],
         mood: "Calm",
         energy: 3,
@@ -939,7 +939,7 @@ const THEME_PRESETS = {
     // 創造・芸術系
     creative_flow: {
         theme: "創作活動に没頭する時間。絵を描く、文章を書く、音楽を作る。時間を忘れて集中する至福の創造的瞬間。",
-        keywords: "creative, flow, focus, inspiration, 創作, 集中, インスピレーション, 没頭",
+        keywords: "創作, 集中, インスピレーション, 没頭, 創造, 作品, 時間忘れ",
         genres: ["Indie Pop", "Electronic", "Alternative"],
         mood: "Energetic",
         energy: 6,
@@ -949,7 +949,7 @@ const THEME_PRESETS = {
     },
     art_gallery_visit: {
         theme: "美術館での芸術との出会い。絵画や彫刻から受ける感動と刺激。アーティストの魂に触れる瞬間。",
-        keywords: "art, gallery, painting, inspiration, 美術, ギャラリー, 絵画, インスピレーション",
+        keywords: "美術, ギャラリー, 絵画, インスピレーション, 芸術, 作品, 感動",
         genres: ["Indie Pop", "Alternative", "Neo-Classical"],
         mood: "Dreamy",
         energy: 4,
@@ -959,7 +959,7 @@ const THEME_PRESETS = {
     },
     music_discovery: {
         theme: "新しい音楽との出会い。偶然聴いた曲に心を奪われる瞬間。音楽が人生に与える影響と感動。",
-        keywords: "music, discovery, emotion, impact, 音楽, 発見, 感動, 影響",
+        keywords: "音楽, 発見, 感動, 影響, 新しい音, 心に響く, 出会い",
         genres: ["Indie Pop", "Electronic", "Alternative"],
         mood: "Energetic",
         energy: 7,
@@ -969,7 +969,7 @@ const THEME_PRESETS = {
     },
     street_performance: {
         theme: "街角で見かけたストリートパフォーマンス。通りすがりの人々を魅了する音楽や芸術。日常に彩りを添える瞬間。",
-        keywords: "street, performance, music, audience, 街角, パフォーマンス, 音楽, 観客",
+        keywords: "街角, パフォーマンス, 音楽, 観客, 通りすがり, 才能, 日常",
         genres: ["Folk", "Indie Pop", "World"],
         mood: "Energetic",
         energy: 6,
@@ -1243,7 +1243,7 @@ const THEME_PRESETS = {
     },
     
     // 共通恋愛テーマ
-    silent_understanding: {
+    "無言の理解": {
         theme: "言葉にしなくても通じ合う心。目を見つめるだけで分かり合える特別な関係。静かな理解の美しさ。",
         keywords: "沈黙, 理解, つながり, テレパシー, 通じ合う, 特別, 美しさ",
         genres: ["Ambient", "Indie Pop", "Neo-Soul"],
@@ -1265,7 +1265,7 @@ const THEME_PRESETS = {
     },
     social_media_checking: {
         theme: "SNSで相手の動向をチェックしてしまう現代の恋愛。既読スルーの不安と、投稿に一喜一憂する心。",
-        keywords: "SNS, チェック, 不安, デジタル, 既読, 投稿, 一喜一憂",
+        keywords: "エスエヌエス, チェック, 不安, デジタル, 既読, 投稿, 一喜一憂",
         genres: ["Electronic", "Indie Pop", "Synthpop"],
         mood: "Energetic",
         energy: 5,
@@ -1345,7 +1345,7 @@ const THEME_PRESETS = {
     },
     
     // 記憶・ノスタルジア系
-    old_photograph: {
+    "古い写真": {
         theme: "色あせた古い写真を見つめる午後。そこに写る笑顔の自分と友人たち。時間の経過と共に変わってしまった関係への複雑な思い。",
         keywords: "古い写真, 色あせた, 笑顔, 友人, 時間, 関係, 複雑",
         genres: ["Indie Folk", "Acoustic", "Singer-songwriter"],
@@ -1355,7 +1355,7 @@ const THEME_PRESETS = {
         bpm: 75,
         key: "G Major"
     },
-    school_days: {
+    "学生時代": {
         theme: "卒業アルバムをめくる夜。制服姿の自分と、あの頃夢見ていた未来。現実との違いに苦笑いしながらも、純粋だった日々への愛おしさ。",
         keywords: "卒業アルバム, 制服, 夢, 未来, 現実, 苦笑い, 純粋",
         genres: ["Pop", "Indie Pop", "Acoustic"],
@@ -1365,7 +1365,7 @@ const THEME_PRESETS = {
         bpm: 95,
         key: "C Major"
     },
-    childhood_friend: {
+    "幼馴染": {
         theme: "幼馴染との久しぶりの再会。変わったところと変わらないところ。秘密基地で交わした約束を覚えているかと聞けない気持ち。",
         keywords: "幼馴染, 再会, 変わった, 変わらない, 秘密基地, 約束, 気持ち",
         genres: ["Folk", "Indie Pop", "Alternative"],
@@ -1375,7 +1375,7 @@ const THEME_PRESETS = {
         bpm: 85,
         key: "F Major"
     },
-    first_apartment: {
+    "初アパート": {
         theme: "初めての一人暮らしのアパート。がらんとした部屋に響く足音。不安と自由が入り混じった新生活の始まり。",
         keywords: "初めて, 一人暮らし, アパート, がらんとした, 足音, 不安, 自由",
         genres: ["Indie Folk", "Alternative", "Lo-Fi"],
@@ -1385,7 +1385,7 @@ const THEME_PRESETS = {
         bpm: 80,
         key: "A Minor"
     },
-    old_diary: {
+    "昔の日記": {
         theme: "昔の日記を読み返す深夜。恥ずかしい思い出と一緒に、その時の純粋な感情がよみがえる。過去の自分への優しさと理解。",
         keywords: "昔の日記, 読み返す, 深夜, 恥ずかしい, 純粋, 感情, 優しさ",
         genres: ["Indie Folk", "Acoustic", "Lo-Fi"],
@@ -1395,7 +1395,7 @@ const THEME_PRESETS = {
         bpm: 70,
         key: "D Minor"
     },
-    music_box: {
+    "オルゴール": {
         theme: "古いオルゴールが奏でる懐かしいメロディー。子供の頃に大切にしていた宝物箱。今も心の奥で鳴り続ける記憶の音色。",
         keywords: "オルゴール, 懐かしい, メロディー, 子供の頃, 宝物箱, 記憶, 音色",
         genres: ["Neo-Classical", "Ambient", "Indie Folk"],
@@ -1405,7 +1405,7 @@ const THEME_PRESETS = {
         bpm: 60,
         key: "E Major"
     },
-    hometown_station: {
+    "故郷の駅": {
         theme: "故郷の小さな駅。電車を待つホームで感じる時間の止まったような静寂。都会に出て行った日の記憶と、今の自分への複雑な思い。",
         keywords: "故郷, 小さな駅, ホーム, 静寂, 都会, 出て行った, 複雑",
         genres: ["Folk", "Country", "Indie Rock"],
@@ -1415,7 +1415,7 @@ const THEME_PRESETS = {
         bpm: 85,
         key: "B Minor"
     },
-    sunset_memory: {
+    "夕焼けの記憶": {
         theme: "あの日見た夕焼けの記憶。大切な人と一緒に眺めた空の色。時間は過ぎても心に残り続ける美しい瞬間への憧憬。",
         keywords: "あの日, 夕焼け, 記憶, 大切な人, 空の色, 美しい瞬間, 憧憬",
         genres: ["Indie Pop", "Acoustic", "Alternative"],
@@ -1425,7 +1425,7 @@ const THEME_PRESETS = {
         bpm: 90,
         key: "D Major"
     },
-    letter_rediscovery: {
+    "手紙再発見": {
         theme: "引っ越しの際に見つけた古い手紙。丁寧な文字で綴られた思い。デジタル時代に失われつつあるアナログなコミュニケーションの温かさ。",
         keywords: "引っ越し, 古い手紙, 丁寧な文字, 思い, デジタル, アナログ, 温かさ",
         genres: ["Folk", "Singer-songwriter", "Acoustic"],
@@ -1435,7 +1435,7 @@ const THEME_PRESETS = {
         bpm: 75,
         key: "G Major"
     },
-    time_capsule: {
+    "タイムカプセル": {
         theme: "学校で埋めたタイムカプセルを開ける日。未来の自分へのメッセージと、今の現実のギャップ。それでも続いている夢への愛着。",
         keywords: "タイムカプセル, 学校, 埋めた, 未来, メッセージ, 現実, ギャップ, 夢",
         genres: ["Pop", "Indie Pop", "Alternative"],
@@ -1447,7 +1447,7 @@ const THEME_PRESETS = {
     },
     
     // 感情・心境系
-    midnight_tears: {
+    "深夜の涙": {
         theme: "深夜にひとり流す涙。誰にも見せられない弱さと、それを受け入れる強さ。暗闇の中で見つける本当の自分との対話。",
         keywords: "深夜, ひとり, 涙, 弱さ, 強さ, 暗闇, 本当の自分, 対話",
         genres: ["Ballad", "Indie Folk", "Alternative"],
@@ -1457,7 +1457,7 @@ const THEME_PRESETS = {
         bpm: 65,
         key: "F Minor"
     },
-    overwhelming_joy: {
+    "溢れる喜び": {
         theme: "抑えきれない喜びが心を満たす瞬間。飛び跳ねたくなるような幸せと、この気持ちを誰かと分かち合いたい衝動。",
         keywords: "抑えきれない, 喜び, 満たす, 飛び跳ねたい, 幸せ, 分かち合い, 衝動",
         genres: ["Pop", "Indie Pop", "Electronic"],
@@ -1467,7 +1467,7 @@ const THEME_PRESETS = {
         bpm: 140,
         key: "C Major"
     },
-    quiet_anger: {
+    "静かな怒り": {
         theme: "静かに燃える怒り。声を荒げることなく心の奥で煮えたぎる感情。冷静さを保ちながらも消えない正義感への葛藤。",
         keywords: "静かに燃える, 怒り, 声を荒げる, 煮えたぎる, 冷静さ, 正義感, 葛藤",
         genres: ["Alternative", "Rock", "Electronic"],
@@ -1477,7 +1477,7 @@ const THEME_PRESETS = {
         bpm: 115,
         key: "E Minor"
     },
-    sudden_loneliness: {
+    "突然の孤独": {
         theme: "突然襲ってくる孤独感。人に囲まれていても感じる心の空洞。この感情の正体を理解しようとする内なる探求。",
         keywords: "突然, 襲ってくる, 孤独感, 人に囲まれて, 心の空洞, 正体, 内なる探求",
         genres: ["Indie Folk", "Alternative", "Ambient"],
@@ -1487,7 +1487,7 @@ const THEME_PRESETS = {
         bpm: 80,
         key: "A Minor"
     },
-    peaceful_acceptance: {
+    "穏やかな受容": {
         theme: "すべてを受け入れる静かな心境。抵抗することをやめて得られた平和。流れに身を任せる穏やかな悟りの境地。",
         keywords: "受け入れる, 静かな心境, 抵抗, 平和, 流れ, 身を任せる, 悟り",
         genres: ["Ambient", "Folk", "Meditation"],
@@ -1497,7 +1497,7 @@ const THEME_PRESETS = {
         bpm: 70,
         key: "F Major"
     },
-    nervous_excitement: {
+    "緊張と興奮": {
         theme: "緊張と興奮が入り混じる心境。新しい挑戦を前にした高鳴る鼓動。不安と期待が共存する複雑な感情の波。",
         keywords: "緊張, 興奮, 入り混じる, 挑戦, 高鳴る鼓動, 不安, 期待, 感情の波",
         genres: ["Pop", "Electronic", "Indie Rock"],
@@ -1507,7 +1507,7 @@ const THEME_PRESETS = {
         bpm: 125,
         key: "G Major"
     },
-    melancholic_beauty: {
+    "美しい憂鬱": {
         theme: "美しい憂鬱に包まれる午後。悲しみの中に見つける詩的な美しさ。痛みさえも愛おしく感じる複雑な心の状態。",
         keywords: "美しい憂鬱, 午後, 悲しみ, 詩的, 美しさ, 痛み, 愛おしい, 複雑",
         genres: ["Indie Folk", "Alternative", "Neo-Classical"],
@@ -1517,7 +1517,7 @@ const THEME_PRESETS = {
         bpm: 75,
         key: "D Minor"
     },
-    hope_against_hope: {
+    "絶望的希望": {
         theme: "絶望的な状況でも消えない希望の光。理性では諦めるべきと分かっていても、心の奥で燃え続ける小さな炎。",
         keywords: "絶望的, 消えない希望, 光, 理性, 諦める, 心の奥, 燃え続ける, 小さな炎",
         genres: ["Alternative", "Rock", "Indie Pop"],
@@ -1527,7 +1527,7 @@ const THEME_PRESETS = {
         bpm: 100,
         key: "A Major"
     },
-    bittersweet_goodbye: {
+    "ほろ苦い別れ": {
         theme: "ほろ苦い別れの瞬間。感謝と寂しさが混在する複雑な心境。新しい出発への期待と失うものへの惜別。",
         keywords: "ほろ苦い, 別れ, 感謝, 寂しさ, 混在, 複雑, 出発, 期待, 惜別",
         genres: ["Ballad", "Indie Folk", "Pop"],
@@ -1537,7 +1537,7 @@ const THEME_PRESETS = {
         bpm: 85,
         key: "E Major"
     },
-    silent_understanding: {
+    "無言の理解": {
         theme: "言葉を交わさなくても伝わる深い理解。目と目で通じ合う心の繋がり。沈黙の中に宿る最も美しいコミュニケーション。",
         keywords: "言葉を交わさない, 深い理解, 目と目, 通じ合う, 心の繋がり, 沈黙, コミュニケーション",
         genres: ["Ambient", "Indie Folk", "Neo-Soul"],

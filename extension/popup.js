@@ -21,34 +21,159 @@ class SunopromptExtension {
     }
 
     async init() {
-        // Load saved API key
-        await this.loadApiKey();
-        
-        // Wait for all scripts to load
-        await this.waitForScripts();
-        
-        // Initialize UI components
-        this.initializeThemeSelection();
-        this.initializeGenreSelection();
-        this.initializeKeySelection();
-        this.initializeLanguageSlider();
-        this.initializeBPMSlider();
-        this.initializeSongStructure();
-        this.initializeInstrumentSelection();
-        this.initializeSongParts();
-        this.initializeEventListeners();
-        
-        // Load saved input
-        this.loadSavedInput();
-        
-        // Initialize debug mode
-        this.initializeDebugMode();
+        try {
+            console.log('🚀 Starting initialization process...');
+            
+            // Load saved API key
+            console.log('📱 Loading API key...');
+            await this.loadApiKey();
+            
+            // Wait for all scripts to load
+            console.log('⏳ Waiting for scripts...');
+            await this.waitForScripts();
+            
+            // 🚀 Load saved data FIRST before initializing UI
+            console.log('💾 Loading saved data...');
+            await this.loadSavedDataForInitialization();
+            
+            // Initialize UI components with knowledge of saved data
+            console.log('🎨 Initializing UI components...');
+            this.initializeThemeSelection();
+            console.log('✅ Theme selection initialized');
+            
+            this.initializeGenreSelection();
+            console.log('✅ Genre selection initialized');
+            
+            this.initializeKeySelection();
+            console.log('✅ Key selection initialized');
+            
+            this.initializeLanguageSlider();
+            console.log('✅ Language slider initialized');
+            
+            this.initializeBPMSlider();
+            console.log('✅ BPM slider initialized');
+            
+            this.initializeSongStructure();
+            console.log('✅ Song structure initialized');
+            
+            this.initializeInstrumentSelection();
+            console.log('✅ Instrument selection initialized');
+            
+            this.initializeSongParts();
+            console.log('✅ Song parts initialized');
+            
+            this.initializeEventListeners();
+            console.log('✅ Event listeners initialized');
+            
+            // Apply the loaded data to the now-initialized UI
+            console.log('🎯 Applying saved data to UI...');
+            await this.applySavedDataToUI();
+            
+            // Initialize debug mode
+            console.log('🐛 Initializing debug mode...');
+            this.initializeDebugMode();
+            
+            console.log('🎉 Initialization completed successfully!');
+        } catch (error) {
+            console.error('💥 Initialization failed:', error);
+            console.error('Stack:', error.stack);
+        }
     }
     
     async waitForScripts() {
         // Skip waiting - directly initialize without checking
         console.log('Skipping script loading wait');
         return;
+    }
+
+    async loadSavedDataForInitialization() {
+        console.log('🔄 Loading saved data before UI initialization...');
+        try {
+            if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+                const result = await chrome.storage.local.get(['formData']);
+                if (result.formData) {
+                    const data = result.formData;
+                    
+                    // Pre-load the data we need for intelligent UI initialization
+                    if (data.selectedThemes) {
+                        this.selectedThemes = data.selectedThemes;
+                        console.log('📥 Pre-loaded themes:', this.selectedThemes.length);
+                    }
+                    
+                    if (data.selectedGenres) {
+                        this.selectedGenres = data.selectedGenres;
+                        console.log('📥 Pre-loaded genres:', this.selectedGenres.length);
+                    }
+                    
+                    if (data.currentKeyType) {
+                        this.currentKeyType = data.currentKeyType;
+                    }
+                    
+                    if (data.songParts) {
+                        this.songParts = data.songParts;
+                    }
+                    
+                    console.log('✅ Saved data loaded successfully before UI initialization');
+                } else {
+                    console.log('🆕 No saved data found - starting fresh');
+                }
+            } else {
+                console.log('⚠️ Chrome storage not available, skipping data pre-load');
+            }
+        } catch (error) {
+            console.error('⚠️ Failed to load saved data:', error);
+        }
+    }
+
+    async applySavedDataToUI() {
+        console.log('🎨 Applying saved data to initialized UI...');
+        try {
+            const result = await chrome.storage.local.get(['formData']);
+            if (result.formData) {
+                const data = result.formData;
+                
+                // Apply basic form values
+                document.getElementById('theme').value = data.theme || '';
+                document.getElementById('keywords').value = data.keywords || '';
+                document.getElementById('bpm').value = data.bpm || 120;
+                document.getElementById('bpmValue').textContent = data.bpm || 120;
+                document.getElementById('key').value = data.key || 'C Major';
+                document.getElementById('languageRatio').value = data.languageRatio || 50;
+                document.getElementById('default_vocal_style').value = data.default_vocal_style || 'Female Solo';
+                document.getElementById('instruments').value = data.instruments || '';
+                document.getElementById('song_structure').value = data.song_structure || 'detailed';
+                document.getElementById('apiModel').value = data.apiModel || 'gpt-4.1-mini';
+                
+                // Update UI states for pre-loaded data
+                this.updateSelectedThemesDisplay();
+                this.updateThemeButtonStates();
+                
+                this.updateSelectedGenresDisplay();
+                this.updateGenreButtonStates(); // This should now work correctly since UI was built with correct expansion state
+                
+                // Restore language slider
+                const languageSlider = document.getElementById('languageRatio');
+                if (languageSlider) {
+                    languageSlider.dispatchEvent(new Event('input'));
+                }
+                
+                // Restore key type
+                if (data.currentKeyType) {
+                    const keyTypeBtn = document.querySelector(`.key-type-btn[data-type="${data.currentKeyType}"]`);
+                    if (keyTypeBtn) {
+                        document.querySelectorAll('.key-type-btn').forEach(btn => btn.classList.remove('active'));
+                        keyTypeBtn.classList.add('active');
+                        // Update key selection manually instead of calling undefined method
+                        this.currentKeyType = data.currentKeyType;
+                        this.updateKeyOptions();
+                    }
+                }
+                
+                console.log('✅ UI state applied successfully');
+            }
+        } catch (error) {
+            console.error('⚠️ Failed to apply saved data to UI:', error);
+        }
     }
 
     // ===== API Key Management =====
@@ -432,10 +557,27 @@ class SunopromptExtension {
         
         console.log('✅ Genre DOM elements found, initializing...');
         
+        // 🎯 Check which categories should start expanded based on pre-loaded data
+        const categoriesToExpand = new Set();
+        this.selectedGenres.forEach(genre => {
+            if (genre.category) {
+                categoriesToExpand.add(genre.category);
+            }
+        });
+        
+        console.log('📂 Categories to start expanded:', Array.from(categoriesToExpand));
+        
         Object.entries(GENRE_CATEGORIES).forEach(([categoryId, category]) => {
             const categoryDiv = document.createElement('div');
-            categoryDiv.className = 'genre-category collapsed';
+            const shouldExpand = categoriesToExpand.has(categoryId);
+            categoryDiv.className = `genre-category ${shouldExpand ? '' : 'collapsed'}`;
             categoryDiv.setAttribute('data-category-id', categoryId);
+            
+            console.log(`📁 ${categoryId}: ${shouldExpand ? 'EXPANDED' : 'collapsed'}`);
+            
+            if (shouldExpand) {
+                categoryDiv.classList.add('has-selected');
+            }
             
             const titleDiv = document.createElement('div');
             titleDiv.className = 'genre-category-title';
@@ -1254,22 +1396,55 @@ class SunopromptExtension {
 
     expandGenreCategoriesWithSelected() {
         // Expand genre categories that have selected items
-        console.log('expandGenreCategoriesWithSelected called, selectedGenres:', this.selectedGenres);
+        console.log('🔍 expandGenreCategoriesWithSelected called');
+        console.log('   selectedGenres count:', this.selectedGenres.length);
+        console.log('   selectedGenres data:', this.selectedGenres);
+        
+        if (this.selectedGenres.length === 0) {
+            console.log('   No genres selected, skipping expansion');
+            return;
+        }
+        
         const selectedCategoryIds = new Set();
         this.selectedGenres.forEach(genre => {
-            console.log('Processing genre:', genre);
-            if (genre.category) {
+            console.log('   Processing genre:', genre);
+            if (genre && genre.category) {
                 selectedCategoryIds.add(genre.category);
+                console.log(`   ✅ Added category: ${genre.category} for genre: ${genre.name}`);
+            } else {
+                console.log('   ⚠️ Genre missing category:', genre);
             }
         });
         
-        console.log('Selected category IDs:', Array.from(selectedCategoryIds));
+        console.log('   Selected category IDs:', Array.from(selectedCategoryIds));
+        
+        // Check if genre categories DOM is ready
+        const allCategoryDivs = document.querySelectorAll('[data-category-id]');
+        console.log('   Total category divs found:', allCategoryDivs.length);
+        
         selectedCategoryIds.forEach(categoryId => {
             const categoryDiv = document.querySelector(`[data-category-id="${categoryId}"]`);
-            console.log(`Looking for category: ${categoryId}, found:`, !!categoryDiv);
+            console.log(`   Looking for category: ${categoryId}, found:`, !!categoryDiv);
             if (categoryDiv) {
+                const wasCollapsed = categoryDiv.classList.contains('collapsed');
+                console.log(`   Before expansion - collapsed: ${wasCollapsed}`);
+                
+                // Force expansion
                 categoryDiv.classList.remove('collapsed');
-                console.log(`Expanded category: ${categoryId}`);
+                
+                // Verify expansion worked
+                const isStillCollapsed = categoryDiv.classList.contains('collapsed');
+                console.log(`   After expansion - collapsed: ${isStillCollapsed}`);
+                console.log(`   ${wasCollapsed ? '📂' : '📁'} Category ${categoryId}: ${wasCollapsed && !isStillCollapsed ? 'successfully expanded' : wasCollapsed ? 'expansion failed' : 'was already expanded'}`);
+                
+                // Also update toggle icon
+                const toggleIcon = categoryDiv.querySelector('.toggle-icon');
+                if (toggleIcon && !isStillCollapsed) {
+                    toggleIcon.textContent = '▼';
+                    console.log(`   🔄 Updated toggle icon for ${categoryId}`);
+                }
+            } else {
+                console.log(`   ❌ Category element not found: ${categoryId}`);
             }
         });
     }
@@ -2335,6 +2510,11 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
             timestamp: Date.now()
         };
         
+        console.log('💾 Saving formData:');
+        console.log('   selectedGenres count:', this.selectedGenres.length);
+        console.log('   selectedGenres data:', this.selectedGenres);
+        console.log('   mapped selectedGenres:', formData.selectedGenres);
+        
         try {
             if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
                 await chrome.storage.local.set({ formData });
@@ -2405,11 +2585,44 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
                 if (data.selectedGenres) {
                     this.selectedGenres = data.selectedGenres;
                     console.log('Restoring genres:', this.selectedGenres);
-                    setTimeout(() => {
-                        this.updateSelectedGenresDisplay();
-                        this.updateGenreButtonStates();
-                        this.expandGenreCategoriesWithSelected();
-                    }, 200);
+                    
+                    // Retry mechanism to ensure DOM is ready
+                    const restoreGenreState = (attempt = 1) => {
+                        console.log(`🔄 Genre restoration attempt ${attempt}`);
+                        const genreCategories = document.querySelectorAll('[data-category-id]');
+                        
+                        if (genreCategories.length === 0 && attempt < 5) {
+                            console.log(`   DOM not ready, retrying in ${100 * attempt}ms...`);
+                            setTimeout(() => restoreGenreState(attempt + 1), 100 * attempt);
+                            return;
+                        }
+                        
+                        console.log(`   ✅ DOM ready with ${genreCategories.length} categories`);
+                        
+                        // Ensure all categories start collapsed first
+                        genreCategories.forEach(cat => {
+                            cat.classList.add('collapsed');
+                            console.log(`   🔒 Collapsed category: ${cat.getAttribute('data-category-id')}`);
+                        });
+                        
+                        console.log(`   ⏱️ Waiting 50ms for DOM stability...`);
+                        
+                        // Small delay to ensure DOM is stable, then restore in correct order
+                        setTimeout(() => {
+                            console.log(`   🔄 Starting genre state restoration sequence...`);
+                            
+                            // Step 1: Update displays and button states WITHOUT auto-expansion
+                            this.updateSelectedGenresDisplay();
+                            this.updateGenreButtonStatesWithoutAutoExpansion();
+                            
+                            // Step 2: Explicitly expand only selected categories
+                            this.expandGenreCategoriesWithSelected();
+                            
+                            console.log(`   ✅ Genre restoration sequence completed`);
+                        }, 50);
+                    };
+                    
+                    setTimeout(() => restoreGenreState(), 200);
                 }
                 
                 // Update instrument button states after restoration
@@ -2478,39 +2691,47 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
     }
 
     setupPopupStability() {
-        // ポップアップの予期しない閉じを防ぐ対策
+        // ポップアップの適切なライフサイクル管理
         console.log('🔧 Setting up popup stability measures...');
         
-        // 1. ウィンドウのbeforeunloadイベントをリッスン
+        // 1. 正常なクリーンアップハンドラー
         window.addEventListener('beforeunload', (e) => {
-            console.warn('⚠️ Popup is about to close');
-            // ハートビートをクリーンアップ
-            if (this.heartbeatInterval) {
-                clearInterval(this.heartbeatInterval);
-            }
+            // 正常な終了処理 - エラーではない
+            this.cleanup();
         });
         
-        // 2. 定期的なハートビート（ポップアップが生きていることを確認）
-        this.heartbeatInterval = setInterval(() => {
-            console.debug('💓 Popup heartbeat');
-        }, 30000); // 30秒ごと
-        
-        // 3. エラーキャッチ（予期しないエラーをキャッチ）
+        // 2. 実際のエラー処理
         window.addEventListener('error', (e) => {
-            console.error('🚨 Popup window error:', e.error);
-            console.error('Error details:', {
-                message: e.message,
-                filename: e.filename,
-                lineno: e.lineno,
-                colno: e.colno
-            });
+            console.error('🚨 Uncaught error in popup:', e.error);
+            console.error('   File:', e.filename);
+            console.error('   Line:', e.lineno);
+            console.error('   Column:', e.colno);
         });
         
-        // 4. 未処理のPromise拒否をキャッチ
+        // 3. Promise rejection エラー処理
         window.addEventListener('unhandledrejection', (e) => {
             console.error('🚨 Unhandled promise rejection:', e.reason);
-            e.preventDefault(); // エラーによるクラッシュを防ぐ
+            console.error('   Promise:', e.promise);
         });
+        
+        // 4. Chrome extension context invalidation 検出
+        if (typeof chrome !== 'undefined' && chrome.runtime) {
+            try {
+                chrome.runtime.onConnect.addListener(() => {
+                    // Connection test
+                });
+            } catch (error) {
+                console.error('🚨 Chrome runtime context error:', error);
+            }
+        }
+        
+        // 5. 定期的なハートビート（必要に応じて）
+        this.heartbeatInterval = setInterval(() => {
+            // サイレントハートビート - デバッグ時のみ表示
+            if (this.debugMode) {
+                console.debug('💓 Popup heartbeat');
+            }
+        }, 30000);
         
         // 5. フォーカス状態の監視
         let focusLost = false;
@@ -2527,6 +2748,35 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
         });
         
         console.log('✅ Popup stability measures activated');
+    }
+
+    cleanup() {
+        // 正常な終了処理
+        console.log('🧹 Cleaning up popup resources...');
+        
+        try {
+            // ハートビートを停止
+            if (this.heartbeatInterval) {
+                clearInterval(this.heartbeatInterval);
+                this.heartbeatInterval = null;
+            }
+            
+            // 保存タイマーを停止
+            if (this.saveTimer) {
+                clearTimeout(this.saveTimer);
+                this.saveTimer = null;
+            }
+            
+            // 最終データ保存
+            if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+                this.saveCurrentInput();
+            }
+            
+            console.log('✅ Cleanup completed');
+        } catch (error) {
+            // クリーンアップ中のエラーは致命的ではないため、ログのみ
+            console.log('ℹ️ Cleanup warning:', error.message);
+        }
     }
 
     getCurrentFocusState() {
@@ -2589,8 +2839,19 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
 
     // ===== Copy Functions =====
     async copyToClipboard(elementId, buttonElement = null) {
+        console.log('🔍 copyToClipboard called with elementId:', elementId);
         const element = document.getElementById(elementId);
+        console.log('🔍 element found:', !!element, element);
+        
+        if (!element) {
+            console.error('❌ Element not found for ID:', elementId);
+            console.log('🔍 Available elements with IDs:', 
+                Array.from(document.querySelectorAll('[id]')).map(el => el.id));
+            return;
+        }
+        
         const text = element.textContent;
+        console.log('🔍 text content:', text ? text.substring(0, 50) + '...' : 'EMPTY');
         
         try {
             await navigator.clipboard.writeText(text);
@@ -2608,10 +2869,29 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
     }
 
     async copyAllResults(buttonElement = null) {
-        const style = document.getElementById('styleResult').textContent;
-        const songName = document.getElementById('songNameResult').textContent;
-        const lyrics = document.getElementById('lyricsResult').textContent;
-        const analysis = document.getElementById('analysisResult').textContent;
+        console.log('🔍 copyAllResults called');
+        
+        const styleEl = document.getElementById('styleResult');
+        const songNameEl = document.getElementById('songNameResult');
+        const lyricsEl = document.getElementById('lyricsResult');
+        const analysisEl = document.getElementById('analysisResult');
+        
+        console.log('🔍 Results elements found:', {
+            style: !!styleEl,
+            songName: !!songNameEl,
+            lyrics: !!lyricsEl,
+            analysis: !!analysisEl
+        });
+        
+        if (!styleEl || !songNameEl || !lyricsEl || !analysisEl) {
+            console.error('❌ Missing result elements');
+            return;
+        }
+        
+        const style = styleEl.textContent;
+        const songName = songNameEl.textContent;
+        const lyrics = lyricsEl.textContent;
+        const analysis = analysisEl.textContent;
         
         const allText = `【Style & Feel】\n${style}\n\n【Song Name】\n${songName}\n\n【Lyrics】\n${lyrics}\n\n【Lyrics Analysis】\n${analysis}`;
         
