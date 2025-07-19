@@ -49,11 +49,6 @@
 
                     <div class="form-group">
                         <label for="theme" class="tooltip" data-tooltip="楽曲の主題・世界観を設定（プリセットまたはカスタム文章）">テーマ・コンセプト *</label>
-                        <div class="theme-mode-selector">
-                            <button type="button" class="theme-mode-btn active" data-mode="preset">📚 プリセットから選択</button>
-                            <button type="button" class="theme-mode-btn tooltip" data-mode="custom" data-tooltip="独自のテーマを詳細な文章で記述できます。情景、感情、ストーリー、世界観を自由に表現して、オリジナルの楽曲コンセプトを作成しましょう。">✏️ カスタムテーマ入力</button>
-                        </div>
-                        
                         <div class="theme-preset-container" id="presetThemeContainer">
                             <div class="theme-selection" id="themeSelection">
                                 <div class="theme-categories" id="themeCategories">
@@ -68,17 +63,20 @@
                             </div>
                         </div>
                         
-                        <div class="custom-theme-container" id="customThemeContainer" style="display: none;">
-                            <textarea id="theme" name="theme" rows="5"
-                                      placeholder="独自のテーマ・コンセプトを詳細に入力してください...
+                        <div class="custom-theme-container" id="customThemeContainer">
+                            <div class="custom-theme-header">
+                                <label for="theme" class="custom-theme-label tooltip" data-tooltip="プリセットテーマに追加で独自の詳細テーマを記述できます。より具体的な世界観や情景を表現したい場合にご利用ください。">✏️ 追加カスタムテーマ（任意）</label>
+                            </div>
+                            <textarea id="theme" name="theme" rows="4"
+                                      placeholder="プリセットテーマに加えて、更に詳細なテーマ・コンセプトを入力できます（任意）...
 
-例: 深夜のコンビニで偶然出会った人との短い会話。蛍光灯の下で交わされる言葉に隠された人間的な温かさ。都市の孤独の中で見つける一瞬のつながり。現代社会の疎外感と、それでも残る人と人とのささやかな絆を歌った楽曲。"></textarea>
-                            <small class="help-text">💡 詳細な文章でテーマを記述できます。情景、感情、ストーリー、世界観などを自由に表現してください。</small>
+例: 深夜のコンビニで偶然出会った人との短い会話。蛍光灯の下で交わされる言葉に隠された人間的な温かさ。都市の孤独の中で見つける一瞬のつながり。"></textarea>
+                            <small class="help-text">💡 プリセットテーマが選択されていれば、こちらは空欄でも構いません。より詳細な世界観を表現したい場合にご利用ください。</small>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="keywords" class="tooltip" data-tooltip="歌詞に織り込みたい特定のキーワードやフレーズを指定">🎵 歌詞に含めたい言葉（参考）</label>
+                        <label for="keywords" class="tooltip" data-tooltip="歌詞に織り込みたい特定のキーワードやフレーズを指定。💡Tips: AIが自然な形で取り入れるよう試みますが、必ずしも全て含まれるとは限りません">🎵 歌詞に含めたい言葉（必ずしも含まれません）</label>
                         <input type="text" id="keywords" name="keywords" 
                                placeholder="例: 夜景, ネオンライト, 孤独, 温かさ（テーマ選択で自動入力）">
                         <small class="help-text">テーマ選択時に関連キーワードが自動入力されます。手動で編集も可能です。</small>

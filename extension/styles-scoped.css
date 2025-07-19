@@ -1398,3 +1398,50 @@
 #sunoprompt-extension-overlay ::-webkit-scrollbar-thumb:hover {
     background: #a8a8a8;
 }
+/* Custom Theme Container Styles */
+#sunoprompt-extension-overlay .custom-theme-container {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(255, 64, 129, 0.05) \!important;
+    border: 1px solid rgba(255, 64, 129, 0.2) \!important;
+    border-radius: 8px;
+}
+
+#sunoprompt-extension-overlay .custom-theme-header {
+    margin-bottom: 10px;
+}
+
+#sunoprompt-extension-overlay .custom-theme-label {
+    color: #ff4081 \!important;
+    font-weight: 600;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+#sunoprompt-extension-overlay .custom-theme-container textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 12px;
+    background: #2a2a2a \!important;
+    border: 1px solid #444 \!important;
+    border-radius: 6px;
+    color: #ffffff \!important;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.4;
+    resize: vertical;
+}
+
+#sunoprompt-extension-overlay .custom-theme-container textarea:focus {
+    outline: none;
+    border-color: #ff4081 \!important;
+    box-shadow: 0 0 0 2px rgba(255, 64, 129, 0.2);
+}
+
+#sunoprompt-extension-overlay .custom-theme-container .help-text {
+    font-size: 12px;
+    color: #999 \!important;
+    margin-top: 8px;
+    line-height: 1.3;
+}

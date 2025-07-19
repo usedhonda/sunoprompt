@@ -123,7 +123,6 @@ class SunopromptExtension {
     // ===== Theme Management =====
     initializeThemeSelection() {
         const themeContainer = document.getElementById('themeCategories');
-        const modeButtons = document.querySelectorAll('.theme-mode-btn');
         const presetContainer = document.getElementById('presetThemeContainer');
         const customContainer = document.getElementById('customThemeContainer');
         
@@ -138,33 +137,14 @@ class SunopromptExtension {
             return;
         }
         
-        console.log('✅ Theme DOM elements found, initializing...');
+        console.log('✅ Theme DOM elements found, initializing combined theme mode...');
         
-        // Mode toggle buttons
-        modeButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const mode = button.getAttribute('data-mode');
-                
-                modeButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                
-                if (mode === 'preset') {
-                    this.isCustomTheme = false;
-                    presetContainer.style.display = 'block';
-                    customContainer.style.display = 'none';
-                    document.getElementById('theme').value = '';
-                } else {
-                    this.isCustomTheme = true;
-                    presetContainer.style.display = 'none';
-                    customContainer.style.display = 'block';
-                    this.selectedThemes = [];
-                    this.updateSelectedThemesDisplay();
-                    this.updateThemeButtonStates();
-                    // カスタムモードでもキーワードフィールドは有効のまま
-                    document.getElementById('theme').focus();
-                }
-            });
-        });
+        // 両方のコンテナを常に表示（組み合わせモード）
+        presetContainer.style.display = 'block';
+        customContainer.style.display = 'block';
+        
+        // isCustomThemeを削除し、組み合わせモードに変更
+        this.isCustomTheme = false; // 基本はプリセット主体
         
         // Generate theme categories
         Object.entries(THEME_CATEGORIES).forEach(([categoryId, category]) => {
@@ -1274,17 +1254,22 @@ class SunopromptExtension {
 
     expandGenreCategoriesWithSelected() {
         // Expand genre categories that have selected items
+        console.log('expandGenreCategoriesWithSelected called, selectedGenres:', this.selectedGenres);
         const selectedCategoryIds = new Set();
         this.selectedGenres.forEach(genre => {
+            console.log('Processing genre:', genre);
             if (genre.category) {
                 selectedCategoryIds.add(genre.category);
             }
         });
         
+        console.log('Selected category IDs:', Array.from(selectedCategoryIds));
         selectedCategoryIds.forEach(categoryId => {
             const categoryDiv = document.querySelector(`[data-category-id="${categoryId}"]`);
+            console.log(`Looking for category: ${categoryId}, found:`, !!categoryDiv);
             if (categoryDiv) {
                 categoryDiv.classList.remove('collapsed');
+                console.log(`Expanded category: ${categoryId}`);
             }
         });
     }
@@ -1416,14 +1401,12 @@ class SunopromptExtension {
                 throw new Error('少なくとも1つのジャンルを選択してください');
             }
             
-            if (this.isCustomTheme) {
-                if (!formData.theme || formData.theme.trim() === '') {
-                    throw new Error('カスタムテーマを入力してください');
-                }
-            } else {
-                if (this.selectedThemes.length === 0) {
-                    throw new Error('少なくとも1つのテーマを選択してください');
-                }
+            // 新しいバリデーション：プリセット選択またはカスタムテキストのどちらかが必要
+            const hasPresetThemes = this.selectedThemes.length > 0;
+            const hasCustomText = formData.theme && formData.theme.trim() !== '';
+            
+            if (!hasPresetThemes && !hasCustomText) {
+                throw new Error('プリセットテーマを選択するか、カスタムテーマを入力してください');
             }
             
             const result = await this.callOpenAI(formData);
@@ -1454,17 +1437,25 @@ class SunopromptExtension {
             }
         });
         
-        // Build theme content
+        // Build theme content (組み合わせモード)
         let themeContent = '';
-        if (this.isCustomTheme) {
-            themeContent = document.getElementById('theme').value;
-        } else {
-            if (this.selectedThemes.length > 0) {
-                const combinedThemes = this.selectedThemes.map(themeId => {
-                    const themeData = THEME_PRESETS[themeId];
-                    return themeData ? themeData.theme : '';
-                }).filter(t => t).join('\n\n');
-                themeContent = combinedThemes;
+        const customText = document.getElementById('theme').value;
+        
+        // プリセットテーマがある場合
+        if (this.selectedThemes.length > 0) {
+            const presetThemes = this.selectedThemes.map(themeId => {
+                const themeData = THEME_PRESETS[themeId];
+                return themeData ? themeData.theme : '';
+            }).filter(t => t).join('\n\n');
+            themeContent = presetThemes;
+        }
+        
+        // カスタムテキストがある場合は追加
+        if (customText && customText.trim() !== '') {
+            if (themeContent) {
+                themeContent += '\n\n【追加詳細テーマ】\n' + customText.trim();
+            } else {
+                themeContent = customText.trim();
             }
         }
         
@@ -2326,7 +2317,6 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
         const formData = {
             selectedThemes: this.selectedThemes,
             selectedGenres: this.selectedGenres.map(g => ({ id: g.id, name: g.name, category: g.category })),
-            isCustomTheme: this.isCustomTheme,
             currentKeyType: this.currentKeyType,
             songParts: this.songParts,
             customStructureSequence: this.customStructureSequence,
@@ -2389,14 +2379,8 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
                     languageSlider.dispatchEvent(new Event('input'));
                 }
                 
-                // Restore theme mode
-                if (data.isCustomTheme) {
-                    this.isCustomTheme = true;
-                    const customModeBtn = document.querySelector('.theme-mode-btn[data-mode="custom"]');
-                    if (customModeBtn) {
-                        customModeBtn.click();
-                    }
-                }
+                // 組み合わせモードでは特別な復元処理は不要
+                // プリセットテーマとカスタムテキストは個別に復元される
                 
                 // Restore key type
                 if (data.currentKeyType) {
@@ -2420,11 +2404,12 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
                 // Restore genres
                 if (data.selectedGenres) {
                     this.selectedGenres = data.selectedGenres;
+                    console.log('Restoring genres:', this.selectedGenres);
                     setTimeout(() => {
                         this.updateSelectedGenresDisplay();
                         this.updateGenreButtonStates();
                         this.expandGenreCategoriesWithSelected();
-                    }, 100);
+                    }, 200);
                 }
                 
                 // Update instrument button states after restoration

@@ -19,42 +19,52 @@ const THEME_CATEGORIES = {
     urban: {
         name: "都市・現代生活",
         color: "#667eea",
-        themes: ["digital_detox", "urban_solitude", "office_escape", "crowded_station", "late_night_convenience", "rooftop_view"]
+        themes: ["digital_detox", "urban_solitude", "office_escape", "crowded_station", "late_night_convenience", "rooftop_view", "elevator_silence", "cafe_working", "delivery_waiting", "subway_poetry", "neon_reflection", "apartment_isolation"]
     },
     nature: {
         name: "季節・自然",
         color: "#4facfe",
-        themes: ["spring_awakening", "summer_night", "autumn_leaves", "winter_solitude", "rainy_reflection", "morning_sunshine"]
+        themes: ["spring_awakening", "summer_night", "autumn_leaves", "winter_solitude", "rainy_reflection", "morning_sunshine", "cherry_blossom_anxiety", "humid_summer_lethargy", "first_snow_magic", "typhoon_solitude"]
     },
     growth: {
         name: "成長・人生",
         color: "#43e97b",
-        themes: ["coming_of_age", "quarter_life_crisis", "dream_chaser", "self_acceptance", "independence"]
+        themes: ["coming_of_age", "quarter_life_crisis", "dream_chaser", "self_acceptance", "independence", "mentor_encounter", "comfort_zone_exit", "failure_recovery", "identity_search", "wisdom_gained", "career_crossroads", "skill_mastery", "work_passion_discovery"]
     },
     travel: {
         name: "旅・冒険",
         color: "#fa709a",
-        themes: ["midnight_drive", "train_journey", "airport_departure", "backpack_adventure", "lighthouse_beacon"]
+        themes: ["midnight_drive", "train_journey", "airport_departure", "backpack_adventure", "lighthouse_beacon", "mountain_hiking", "seaside_wandering", "foreign_city_discovery", "camping_under_stars", "road_trip_freedom"]
     },
     dream: {
         name: "夢・幻想",
         color: "#a8edea",
-        themes: ["lucid_dream", "stargazing", "magic_hour", "parallel_universe"]
+        themes: ["lucid_dream", "stargazing", "magic_hour", "parallel_universe", "dream_within_dream", "floating_consciousness", "time_loop_escape", "mirror_world", "childhood_imaginary_friend", "recurring_nightmare"]
     },
     social: {
         name: "社会・時代",
         color: "#fda085",
-        themes: ["social_media_fatigue", "remote_work_isolation", "climate_anxiety", "generation_gap"]
+        themes: ["social_media_fatigue", "remote_work_isolation", "climate_anxiety", "generation_gap", "gig_economy_struggle", "subscription_fatigue", "privacy_paradox", "influencer_burnout", "digital_minimalism", "algorithm_resistance", "overtime_exhaustion", "workplace_friendship", "first_job_anxiety", "promotion_pressure"]
     },
     healing: {
         name: "癒し・内省",
         color: "#d299c2",
-        themes: ["meditation_moment", "forest_therapy", "hot_spring_serenity", "yoga_flow"]
+        themes: ["meditation_moment", "forest_therapy", "hot_spring_serenity", "yoga_flow", "candlelight_reflection", "journal_writing", "breath_awareness", "temple_visit", "sound_healing", "moonlight_meditation"]
     },
     creative: {
         name: "創造・芸術",
         color: "#ffecd2",
-        themes: ["creative_flow", "art_gallery_visit", "music_discovery", "street_performance"]
+        themes: ["creative_flow", "art_gallery_visit", "music_discovery", "street_performance", "midnight_painting", "poetry_writing", "craft_workshop", "dance_expression", "photography_walk", "ceramic_creation"]
+    },
+    memory: {
+        name: "記憶・ノスタルジア",
+        color: "#b19cd9",
+        themes: ["old_photograph", "school_days", "childhood_friend", "first_apartment", "old_diary", "music_box", "hometown_station", "sunset_memory", "letter_rediscovery", "time_capsule"]
+    },
+    emotions: {
+        name: "感情・心境",
+        color: "#ff9a9e",
+        themes: ["midnight_tears", "overwhelming_joy", "quiet_anger", "sudden_loneliness", "peaceful_acceptance", "nervous_excitement", "melancholic_beauty", "hope_against_hope", "bittersweet_goodbye", "silent_understanding"]
     }
 };
 
@@ -120,6 +130,66 @@ const THEME_PRESETS = {
         vocal_type: "Female Solo",
         bpm: 90,
         key: "E Minor"
+    },
+    elevator_silence: {
+        theme: "エレベーターの中の沈黙。見知らぬ人との微妙な距離感と、短い時間に生まれる小さな人間ドラマ。現代都市生活の縮図。",
+        keywords: "エレベーター, 沈黙, 見知らぬ人, 距離感, ドラマ, 都市生活",
+        genres: ["Ambient", "Minimal", "Electronic"],
+        mood: "Contemplative",
+        energy: 2,
+        vocal_type: "Female Solo",
+        bpm: 60,
+        key: "F Minor"
+    },
+    cafe_working: {
+        theme: "カフェでのリモートワーク。コーヒーの香りとざわめきの中で集中する現代的な働き方。他人の気配を感じながらの孤独な作業。",
+        keywords: "カフェ, リモートワーク, コーヒー, ざわめき, 集中, 孤独",
+        genres: ["Lo-Fi", "Indie Pop", "Electronic"],
+        mood: "Focused",
+        energy: 3,
+        vocal_type: "Female Solo",
+        bpm: 85,
+        key: "G Major"
+    },
+    delivery_waiting: {
+        theme: "配達を待つ現代人の生活。アプリで追跡される荷物を待ちながら感じる便利さと依存への複雑な気持ち。",
+        keywords: "配達, アプリ, 追跡, 荷物, 便利さ, 依存, 複雑",
+        genres: ["Electronic", "Indie Pop", "Alternative"],
+        mood: "Restless",
+        energy: 4,
+        vocal_type: "Female Solo",
+        bpm: 100,
+        key: "C Major"
+    },
+    subway_poetry: {
+        theme: "地下鉄で見つける詩的な瞬間。車窓に映る自分の顔と、流れる地下トンネルの光が織りなす都市の美学。",
+        keywords: "地下鉄, 詩的, 車窓, 地下トンネル, 光, 都市, 美学",
+        genres: ["Ambient", "Indie Folk", "Electronic"],
+        mood: "Poetic",
+        energy: 3,
+        vocal_type: "Female Solo",
+        bpm: 75,
+        key: "A Minor"
+    },
+    neon_reflection: {
+        theme: "雨に濡れた街のネオンサインの反射。夜の都市が見せる色彩豊かな表情と、その美しさに隠された現代生活の孤独感。",
+        keywords: "雨, ネオンサイン, 反射, 夜, 色彩, 美しさ, 孤独感",
+        genres: ["Synthwave", "Electronic", "Ambient"],
+        mood: "Nostalgic",
+        energy: 4,
+        vocal_type: "Female Solo",
+        bpm: 95,
+        key: "D Minor"
+    },
+    apartment_isolation: {
+        theme: "マンションの一室での孤独。隣人の気配を感じながらも繋がりを持てない現代都市生活の矛盾と、その中で見つける小さな安らぎ。",
+        keywords: "マンション, 孤独, 隣人, 気配, 繋がり, 矛盾, 安らぎ",
+        genres: ["Ambient", "Indie Folk", "Electronic"],
+        mood: "Introspective",
+        energy: 2,
+        vocal_type: "Female Solo",
+        bpm: 70,
+        key: "B Minor"
     },
     
     // 恋愛・人間関係系
@@ -245,6 +315,46 @@ const THEME_PRESETS = {
         bpm: 125,
         key: "G Major"
     },
+    cherry_blossom_anxiety: {
+        theme: "桜の季節に感じる焦燥感。美しい花の短さが人生の儚さを思い起こさせる。新年度の始まりと共に押し寄せる変化への不安。",
+        keywords: "桜, 焦燥感, 美しい, 儚さ, 人生, 新年度, 変化, 不安",
+        genres: ["Indie Pop", "Alternative", "Folk"],
+        mood: "Bittersweet",
+        energy: 4,
+        vocal_type: "Female Solo",
+        bpm: 90,
+        key: "F Major"
+    },
+    humid_summer_lethargy: {
+        theme: "梅雨時期の怠惰な午後。湿気と暑さに包まれて動きたくない気持ち。時間がゆっくり流れる夏の昼下がりの心地よい無気力感。",
+        keywords: "梅雨, 怠惰, 湿気, 暑さ, 動きたくない, ゆっくり, 無気力感",
+        genres: ["Lo-Fi", "Ambient", "Indie Folk"],
+        mood: "Lethargic",
+        energy: 2,
+        vocal_type: "Female Solo",
+        bpm: 65,
+        key: "D Minor"
+    },
+    first_snow_magic: {
+        theme: "今冬初めての雪が降る夜。窓から見える雪景色に子供の頃の記憶がよみがえる。純白の世界が心を清めてくれる奇跡的な瞬間。",
+        keywords: "初雪, 雪景色, 子供の頃, 記憶, 純白, 清める, 奇跡",
+        genres: ["Ambient", "Neo-Classical", "Indie Folk"],
+        mood: "Wonder",
+        energy: 3,
+        vocal_type: "Female Solo",
+        bpm: 70,
+        key: "C Major"
+    },
+    typhoon_solitude: {
+        theme: "台風の夜の孤独感。強風と雨音に包まれた部屋で感じる自然の力強さと、その中で守られている安心感の矛盾した感情。",
+        keywords: "台風, 孤独感, 強風, 雨音, 自然, 力強さ, 守られている, 安心感",
+        genres: ["Ambient", "Electronic", "Indie Rock"],
+        mood: "Contemplative",
+        energy: 4,
+        vocal_type: "Female Solo",
+        bpm: 80,
+        key: "A Minor"
+    },
     
     // 成長・人生系
     coming_of_age: {
@@ -296,6 +406,86 @@ const THEME_PRESETS = {
         vocal_type: "Female Solo",
         bpm: 105,
         key: "G Major"
+    },
+    mentor_encounter: {
+        theme: "人生の師匠との出会い。年上の人からの教えが人生観を変える瞬間。経験から学ぶ知恵の価値と感謝の気持ち。",
+        keywords: "師匠, 出会い, 教え, 人生観, 経験, 知恵, 感謝",
+        genres: ["Folk", "Indie Rock", "Singer-songwriter"],
+        mood: "Grateful",
+        energy: 4,
+        vocal_type: "Female Solo",
+        bpm: 85,
+        key: "D Major"
+    },
+    comfort_zone_exit: {
+        theme: "慣れ親しんだ環境から飛び出す勇気。安全地帯を離れる不安と期待。新しい挑戦が待つ未知の世界への第一歩。",
+        keywords: "慣れ親しんだ, 飛び出す, 勇気, 安全地帯, 挑戦, 未知",
+        genres: ["Pop", "Alternative", "Electronic"],
+        mood: "Courageous",
+        energy: 6,
+        vocal_type: "Female Solo",
+        bpm: 120,
+        key: "A Major"
+    },
+    failure_recovery: {
+        theme: "挫折からの立ち直り。失敗の痛みを受け入れながら、そこから学んだ教訓を糧に再び歩き始める復活の物語。",
+        keywords: "挫折, 立ち直り, 失敗, 痛み, 教訓, 糧, 復活",
+        genres: ["Alternative", "Rock", "Indie Pop"],
+        mood: "Resilient",
+        energy: 5,
+        vocal_type: "Female Solo",
+        bpm: 110,
+        key: "F Major"
+    },
+    identity_search: {
+        theme: "本当の自分探しの旅。社会の期待と自分の気持ちの間で揺れ動く心。アイデンティティを確立していく過程の葛藤と発見。",
+        keywords: "自分探し, 社会, 期待, 気持ち, アイデンティティ, 葛藤, 発見",
+        genres: ["Indie Folk", "Alternative", "Singer-songwriter"],
+        mood: "Searching",
+        energy: 4,
+        vocal_type: "Female Solo",
+        bpm: 95,
+        key: "B Minor"
+    },
+    wisdom_gained: {
+        theme: "年を重ねて得た智慧。若い頃には分からなかった人生の深さと複雑さを理解する成熟した視点からの人生讃歌。",
+        keywords: "年を重ね, 智慧, 若い頃, 深さ, 複雑さ, 成熟, 讃歌",
+        genres: ["Folk", "Blues", "Singer-songwriter"],
+        mood: "Wise",
+        energy: 3,
+        vocal_type: "Female Solo",
+        bpm: 75,
+        key: "E Minor"
+    },
+    career_crossroads: {
+        theme: "キャリアの分岐点に立つ瞬間。安定した道か挑戦的な道か。人生を左右する決断を前にした深い内省と覚悟。",
+        keywords: "キャリア, 分岐点, 安定, 挑戦, 決断, 人生, 内省, 覚悟",
+        genres: ["Alternative", "Indie Rock", "Folk"],
+        mood: "Contemplative",
+        energy: 5,
+        vocal_type: "Female Solo",
+        bpm: 100,
+        key: "D Minor"
+    },
+    skill_mastery: {
+        theme: "長年の努力が実を結ぶ瞬間。技術を習得する喜びと、まだ見ぬ高みへの憧れ。成長し続ける人生の充実感。",
+        keywords: "努力, 実を結ぶ, 技術, 習得, 喜び, 高み, 憧れ, 充実感",
+        genres: ["Pop", "Indie Pop", "Rock"],
+        mood: "Accomplished",
+        energy: 6,
+        vocal_type: "Female Solo",
+        bpm: 115,
+        key: "A Major"
+    },
+    work_passion_discovery: {
+        theme: "仕事に情熱を見つけた日。労働が使命に変わる瞬間。やりがいを感じながら歩む新しい人生の始まり。",
+        keywords: "仕事, 情熱, 労働, 使命, やりがい, 人生, 始まり",
+        genres: ["Pop", "Alternative", "Indie Rock"],
+        mood: "Inspired",
+        energy: 7,
+        vocal_type: "Female Solo",
+        bpm: 125,
+        key: "E Major"
     },
     
     // 旅・冒険系
@@ -349,6 +539,56 @@ const THEME_PRESETS = {
         bpm: 75,
         key: "F Major"
     },
+    mountain_hiking: {
+        theme: "山道を歩く一人旅。足音と呼吸音だけが響く静寂の中で、自分自身と向き合う内なる冒険。頂上で見る景色への憧れ。",
+        keywords: "山道, 一人旅, 足音, 呼吸, 静寂, 内なる, 頂上",
+        genres: ["Folk", "Ambient", "Indie Rock"],
+        mood: "Contemplative",
+        energy: 5,
+        vocal_type: "Female Solo",
+        bpm: 90,
+        key: "C Major"
+    },
+    seaside_wandering: {
+        theme: "海岸線を歩く黄昏時。波の音と潮風に包まれながら、無限に続く水平線を眺める瞑想的な時間。",
+        keywords: "海岸線, 黄昏, 波音, 潮風, 水平線, 瞑想, 無限",
+        genres: ["Ambient", "Indie Folk", "Electronic"],
+        mood: "Peaceful",
+        energy: 3,
+        vocal_type: "Female Solo",
+        bpm: 70,
+        key: "D Major"
+    },
+    foreign_city_discovery: {
+        theme: "異国の街での迷子体験。地図を頼りに歩く石畳の道。言葉の壁を越えて出会う人々の温かさと、旅の醍醐味。",
+        keywords: "異国, 迷子, 地図, 石畳, 言葉の壁, 出会い, 醍醐味",
+        genres: ["World", "Indie Pop", "Folk"],
+        mood: "Adventurous",
+        energy: 6,
+        vocal_type: "Female Solo",
+        bpm: 115,
+        key: "G Major"
+    },
+    camping_under_stars: {
+        theme: "星空の下でのキャンプ。焚き火を囲みながら聞く虫の声と風の音。都市生活では味わえない原始的な平和と自由。",
+        keywords: "星空, キャンプ, 焚き火, 虫の声, 風音, 原始的, 平和",
+        genres: ["Folk", "Acoustic", "Ambient"],
+        mood: "Serene",
+        energy: 2,
+        vocal_type: "Female Solo",
+        bpm: 65,
+        key: "E Major"
+    },
+    road_trip_freedom: {
+        theme: "終わりのないドライブ旅行。車窓から流れる景色と、行き先を決めない自由。音楽と共に駆け抜ける青春の1ページ。",
+        keywords: "ドライブ, 車窓, 景色, 行き先, 自由, 音楽, 青春",
+        genres: ["Rock", "Indie Pop", "Alternative"],
+        mood: "Energetic",
+        energy: 7,
+        vocal_type: "Female Solo",
+        bpm: 130,
+        key: "A Major"
+    },
     
     // 夢・幻想系
     lucid_dream: {
@@ -390,6 +630,66 @@ const THEME_PRESETS = {
         vocal_type: "Female Solo",
         bpm: 105,
         key: "B Minor"
+    },
+    dream_within_dream: {
+        theme: "夢の中で夢を見る不思議な体験。どこまでが現実でどこからが夢なのか分からない境界線。意識の深い層で繰り広げられる内なる旅路。",
+        keywords: "夢, 境界線, 意識, 現実, 層, 旅路, 体験",
+        genres: ["Ambient", "Electronic", "Experimental"],
+        mood: "Mysterious",
+        energy: 2,
+        vocal_type: "Female Solo",
+        bpm: 60,
+        key: "F# Minor"
+    },
+    floating_consciousness: {
+        theme: "重力から解放された意識が宇宙空間を漂う感覚。身体を離れた魂が見つける新しい視点と自由。無重力の中で感じる究極の解放感。",
+        keywords: "意識, 宇宙, 漂う, 魂, 重力, 解放, 無重力",
+        genres: ["Ambient", "Space Rock", "Electronic"],
+        mood: "Dreamy",
+        energy: 3,
+        vocal_type: "Female Solo",
+        bpm: 70,
+        key: "C Major"
+    },
+    time_loop_escape: {
+        theme: "同じ日を何度も繰り返すタイムループからの脱出。運命を変えるために必要な小さな気づきと勇気。時間の檻を破る物語。",
+        keywords: "タイムループ, 脱出, 運命, 気づき, 勇気, 時間, 檻",
+        genres: ["Synthpop", "Electronic", "Alternative"],
+        mood: "Intense",
+        energy: 6,
+        vocal_type: "Female Solo",
+        bpm: 130,
+        key: "E Minor"
+    },
+    mirror_world: {
+        theme: "鏡の向こう側に広がる逆さまの世界。すべてが反転した不思議な空間で自分自身と向き合う内省的な旅。",
+        keywords: "鏡, 逆さま, 反転, 空間, 向き合う, 内省, 旅",
+        genres: ["Indie Pop", "Electronic", "Experimental"],
+        mood: "Mysterious",
+        energy: 4,
+        vocal_type: "Female Solo",
+        bpm: 90,
+        key: "A Minor"
+    },
+    childhood_imaginary_friend: {
+        theme: "子供の頃の空想の友達との再会。大人になって忘れていた純粋な想像力と無邪気さを取り戻す温かな物語。",
+        keywords: "子供, 空想, 友達, 再会, 想像力, 無邪気, 純粋",
+        genres: ["Indie Folk", "Acoustic", "Pop"],
+        mood: "Nostalgic",
+        energy: 4,
+        vocal_type: "Female Solo",
+        bpm: 85,
+        key: "G Major"
+    },
+    recurring_nightmare: {
+        theme: "何度も見る悪夢からの解放。恐怖と向き合い、夢の中で自分の力を取り戻していく成長の物語。闇を光に変える勇気。",
+        keywords: "悪夢, 解放, 恐怖, 向き合い, 力, 成長, 勇気",
+        genres: ["Alternative", "Electronic", "Rock"],
+        mood: "Intense",
+        energy: 7,
+        vocal_type: "Female Solo",
+        bpm: 140,
+        key: "D Minor"
     },
     
     // 社会・時代系
@@ -433,6 +733,106 @@ const THEME_PRESETS = {
         bpm: 110,
         key: "C Major"
     },
+    gig_economy_struggle: {
+        theme: "フリーランスとして働く現代人の不安定さ。案件に追われる日々と経済的不安。自由と引き換えに失った安定への複雑な思い。",
+        keywords: "フリーランス, 不安定, 案件, 経済的不安, 自由, 安定",
+        genres: ["Indie Folk", "Alternative", "Electronic"],
+        mood: "Melancholic",
+        energy: 4,
+        vocal_type: "Female Solo",
+        bpm: 95,
+        key: "F Minor"
+    },
+    subscription_fatigue: {
+        theme: "増え続けるサブスクリプション料金への疲労感。所有から利用へ変わった時代に感じる虚しさと、本当に大切なものへの渇望。",
+        keywords: "サブスク, 疲労, 所有, 利用, 虚しさ, 大切, 渇望",
+        genres: ["Indie Pop", "Electronic", "Alternative"],
+        mood: "Contemplative",
+        energy: 3,
+        vocal_type: "Female Solo",
+        bpm: 85,
+        key: "D Minor"
+    },
+    privacy_paradox: {
+        theme: "プライバシーと利便性のジレンマ。個人情報を差し出すことで得られる快適さと、監視社会への不安が入り混じる現代的な葛藤。",
+        keywords: "プライバシー, 利便性, ジレンマ, 個人情報, 監視社会, 不安",
+        genres: ["Electronic", "Synthpop", "Alternative"],
+        mood: "Mysterious",
+        energy: 5,
+        vocal_type: "Female Solo",
+        bpm: 115,
+        key: "B Minor"
+    },
+    influencer_burnout: {
+        theme: "インフルエンサーとして生きる疲労感。常に完璧な自分を演じ続ける重圧と、本当の自分を見失う恐怖。承認欲求の罠からの脱出。",
+        keywords: "インフルエンサー, 疲労, 完璧, 演じる, 重圧, 承認欲求",
+        genres: ["Pop", "Electronic", "Indie Rock"],
+        mood: "Intense",
+        energy: 6,
+        vocal_type: "Female Solo",
+        bpm: 125,
+        key: "E Minor"
+    },
+    digital_minimalism: {
+        theme: "デジタル機器に囲まれた生活からの解放。シンプルな暮らしへの憧れと、テクノロジーとの健全な距離感を見つける旅。",
+        keywords: "デジタル, 解放, シンプル, 暮らし, テクノロジー, 距離感",
+        genres: ["Acoustic", "Indie Folk", "Ambient"],
+        mood: "Peaceful",
+        energy: 2,
+        vocal_type: "Female Solo",
+        bpm: 75,
+        key: "G Major"
+    },
+    algorithm_resistance: {
+        theme: "アルゴリズムに支配される情報環境への反抗。推薦システムの檻から抜け出し、自分の意志で選択する自由を取り戻す物語。",
+        keywords: "アルゴリズム, 支配, 情報, 反抗, 推薦, 檻, 自由",
+        genres: ["Electronic", "Alternative", "Rock"],
+        mood: "Powerful",
+        energy: 7,
+        vocal_type: "Female Solo",
+        bpm: 135,
+        key: "A Minor"
+    },
+    overtime_exhaustion: {
+        theme: "残業続きの疲労感。蛍光灯の下で過ごす深夜のオフィス。家族への申し訳なさと、仕事への責任感の間で揺れる心境。",
+        keywords: "残業, 疲労感, 蛍光灯, 深夜, オフィス, 家族, 責任感",
+        genres: ["Indie Folk", "Alternative", "Lo-Fi"],
+        mood: "Exhausted",
+        energy: 2,
+        vocal_type: "Female Solo",
+        bpm: 70,
+        key: "F Minor"
+    },
+    workplace_friendship: {
+        theme: "職場で芽生えた友情。お昼休みの何気ない会話から生まれる絆。仕事の愚痴を言い合える貴重な存在への感謝。",
+        keywords: "職場, 友情, お昼休み, 会話, 絆, 愚痴, 感謝",
+        genres: ["Pop", "Indie Pop", "Folk"],
+        mood: "Warm",
+        energy: 5,
+        vocal_type: "Female Solo",
+        bpm: 110,
+        key: "C Major"
+    },
+    first_job_anxiety: {
+        theme: "初めての就職への不安。社会人としてやっていけるかという恐怖。新しいスーツを着た鏡の中の自分への複雑な思い。",
+        keywords: "初めて, 就職, 不安, 社会人, 恐怖, スーツ, 鏡, 複雑",
+        genres: ["Indie Pop", "Alternative", "Folk"],
+        mood: "Nervous",
+        energy: 4,
+        vocal_type: "Female Solo",
+        bpm: 95,
+        key: "G Minor"
+    },
+    promotion_pressure: {
+        theme: "昇進への重圧。責任の増加と期待の重さ。成功への階段を上りながらも、失うものへの不安と葛藤。",
+        keywords: "昇進, 重圧, 責任, 期待, 階段, 成功, 失う, 葛藤",
+        genres: ["Alternative", "Rock", "Electronic"],
+        mood: "Pressured",
+        energy: 6,
+        vocal_type: "Female Solo",
+        bpm: 120,
+        key: "A Minor"
+    },
     
     // 癒し・内省系
     meditation_moment: {
@@ -475,6 +875,66 @@ const THEME_PRESETS = {
         bpm: 70,
         key: "D Major"
     },
+    candlelight_reflection: {
+        theme: "キャンドルの灯りに照らされた静かな夜。ゆらめく炎を見つめながら、一日を振り返り心を整える内省の時間。",
+        keywords: "キャンドル, 灯り, ゆらめく, 炎, 振り返り, 内省, 静か",
+        genres: ["Ambient", "Neo-Classical", "Meditation"],
+        mood: "Peaceful",
+        energy: 1,
+        vocal_type: "Female Solo",
+        bpm: 55,
+        key: "F Major"
+    },
+    journal_writing: {
+        theme: "日記を書く夜の習慣。ペンで紙に思いを綴る行為が心を軽やかにする。デジタル時代に残るアナログの温かさ。",
+        keywords: "日記, ペン, 紙, 思い, 綴る, 軽やか, アナログ",
+        genres: ["Indie Folk", "Acoustic", "Lo-Fi"],
+        mood: "Contemplative",
+        energy: 2,
+        vocal_type: "Female Solo",
+        bpm: 65,
+        key: "G Major"
+    },
+    breath_awareness: {
+        theme: "呼吸に意識を向ける瞑想の時間。吸って、吐いて、繰り返す単純なリズムに心が整っていく静寂の美しさ。",
+        keywords: "呼吸, 意識, 瞑想, 吸って, 吐いて, リズム, 静寂",
+        genres: ["Ambient", "Meditation", "Drone"],
+        mood: "Serene",
+        energy: 1,
+        vocal_type: "Humming",
+        bpm: 50,
+        key: "C Major"
+    },
+    temple_visit: {
+        theme: "古いお寺での祈りの時間。線香の香りと木魚の音が心を清める。現代の喧騒から離れた神聖な空間での魂の洗濯。",
+        keywords: "お寺, 祈り, 線香, 木魚, 清める, 神聖, 魂",
+        genres: ["Traditional", "Ambient", "World"],
+        mood: "Spiritual",
+        energy: 2,
+        vocal_type: "Choir",
+        bpm: 60,
+        key: "A Minor"
+    },
+    sound_healing: {
+        theme: "ティベタンボウルやクリスタルボウルの音による癒し。振動が身体の細胞レベルまで響き、深いリラクゼーションへ導く。",
+        keywords: "ティベタンボウル, クリスタル, 音, 振動, 細胞, リラクゼーション",
+        genres: ["Healing", "Ambient", "Sound Therapy"],
+        mood: "Transcendent",
+        energy: 1,
+        vocal_type: "Instrumental",
+        bpm: 45,
+        key: "F# Major"
+    },
+    moonlight_meditation: {
+        theme: "満月の夜に行う瞑想。月の光に包まれながら宇宙のエネルギーを感じる神秘的な体験。内なる女性性の覚醒。",
+        keywords: "満月, 瞑想, 月光, 宇宙, エネルギー, 神秘的, 女性性",
+        genres: ["Ambient", "New Age", "Ethereal"],
+        mood: "Mystical",
+        energy: 2,
+        vocal_type: "Female Solo",
+        bpm: 58,
+        key: "E Major"
+    },
     
     // 創造・芸術系
     creative_flow: {
@@ -515,6 +975,66 @@ const THEME_PRESETS = {
         energy: 6,
         vocal_type: "Female Solo",
         bpm: 120,
+        key: "D Major"
+    },
+    midnight_painting: {
+        theme: "深夜に絵筆を握る芸術家。静寂の中で湧き上がるインスピレーション。キャンバスに魂を込める創造の時間。",
+        keywords: "深夜, 絵筆, 芸術家, インスピレーション, キャンバス, 魂, 創造",
+        genres: ["Ambient", "Indie Folk", "Neo-Classical"],
+        mood: "Contemplative",
+        energy: 3,
+        vocal_type: "Female Solo",
+        bpm: 75,
+        key: "A Minor"
+    },
+    poetry_writing: {
+        theme: "詩を書く静かな午後。言葉を紡ぎながら心の奥底にある感情を表現する。ペンから流れ出る魂の声。",
+        keywords: "詩, 午後, 言葉, 紡ぐ, 感情, 表現, 魂",
+        genres: ["Indie Folk", "Singer-songwriter", "Acoustic"],
+        mood: "Introspective",
+        energy: 2,
+        vocal_type: "Female Solo",
+        bpm: 70,
+        key: "F Major"
+    },
+    craft_workshop: {
+        theme: "手作りワークショップでの集中時間。粘土をこね、糸を紡ぎ、木を削る。手仕事の温かさと達成感に満ちた午後。",
+        keywords: "手作り, ワークショップ, 粘土, 糸, 木, 手仕事, 達成感",
+        genres: ["Folk", "Acoustic", "Indie Pop"],
+        mood: "Peaceful",
+        energy: 4,
+        vocal_type: "Female Solo",
+        bpm: 95,
+        key: "C Major"
+    },
+    dance_expression: {
+        theme: "身体で表現するダンスの喜び。音楽に身を委ね、感情を動きに変える。言葉を超えた表現の自由と解放感。",
+        keywords: "ダンス, 身体, 表現, 音楽, 感情, 動き, 解放感",
+        genres: ["Electronic", "Pop", "World"],
+        mood: "Joyful",
+        energy: 7,
+        vocal_type: "Female Solo",
+        bpm: 128,
+        key: "E Major"
+    },
+    photography_walk: {
+        theme: "カメラを手に街を歩く休日。何気ない瞬間に美しさを見つける眼差し。フレームに切り取る日常の詩。",
+        keywords: "カメラ, 街, 休日, 瞬間, 美しさ, フレーム, 日常",
+        genres: ["Indie Pop", "Electronic", "Lo-Fi"],
+        mood: "Curious",
+        energy: 5,
+        vocal_type: "Female Solo",
+        bpm: 105,
+        key: "G Major"
+    },
+    ceramic_creation: {
+        theme: "陶芸教室でのろくろ回し。土に触れる原始的な喜びと、形を作り上げる創造の醍醐味。手から生まれる芸術。",
+        keywords: "陶芸, ろくろ, 土, 原始的, 喜び, 形, 創造",
+        genres: ["Ambient", "Folk", "World"],
+        mood: "Meditative",
+        energy: 3,
+        vocal_type: "Female Solo",
+        bpm: 80,
         key: "D Major"
     },
     
@@ -822,6 +1342,210 @@ const THEME_PRESETS = {
         vocal_type: "Male & Female Duet",
         bpm: 90,
         key: "D Minor"
+    },
+    
+    // 記憶・ノスタルジア系
+    old_photograph: {
+        theme: "色あせた古い写真を見つめる午後。そこに写る笑顔の自分と友人たち。時間の経過と共に変わってしまった関係への複雑な思い。",
+        keywords: "古い写真, 色あせた, 笑顔, 友人, 時間, 関係, 複雑",
+        genres: ["Indie Folk", "Acoustic", "Singer-songwriter"],
+        mood: "Nostalgic",
+        energy: 3,
+        vocal_type: "Female Solo",
+        bpm: 75,
+        key: "G Major"
+    },
+    school_days: {
+        theme: "卒業アルバムをめくる夜。制服姿の自分と、あの頃夢見ていた未来。現実との違いに苦笑いしながらも、純粋だった日々への愛おしさ。",
+        keywords: "卒業アルバム, 制服, 夢, 未来, 現実, 苦笑い, 純粋",
+        genres: ["Pop", "Indie Pop", "Acoustic"],
+        mood: "Bittersweet",
+        energy: 4,
+        vocal_type: "Female Solo",
+        bpm: 95,
+        key: "C Major"
+    },
+    childhood_friend: {
+        theme: "幼馴染との久しぶりの再会。変わったところと変わらないところ。秘密基地で交わした約束を覚えているかと聞けない気持ち。",
+        keywords: "幼馴染, 再会, 変わった, 変わらない, 秘密基地, 約束, 気持ち",
+        genres: ["Folk", "Indie Pop", "Alternative"],
+        mood: "Warm",
+        energy: 4,
+        vocal_type: "Female Solo",
+        bpm: 85,
+        key: "F Major"
+    },
+    first_apartment: {
+        theme: "初めての一人暮らしのアパート。がらんとした部屋に響く足音。不安と自由が入り混じった新生活の始まり。",
+        keywords: "初めて, 一人暮らし, アパート, がらんとした, 足音, 不安, 自由",
+        genres: ["Indie Folk", "Alternative", "Lo-Fi"],
+        mood: "Contemplative",
+        energy: 3,
+        vocal_type: "Female Solo",
+        bpm: 80,
+        key: "A Minor"
+    },
+    old_diary: {
+        theme: "昔の日記を読み返す深夜。恥ずかしい思い出と一緒に、その時の純粋な感情がよみがえる。過去の自分への優しさと理解。",
+        keywords: "昔の日記, 読み返す, 深夜, 恥ずかしい, 純粋, 感情, 優しさ",
+        genres: ["Indie Folk", "Acoustic", "Lo-Fi"],
+        mood: "Introspective",
+        energy: 2,
+        vocal_type: "Female Solo",
+        bpm: 70,
+        key: "D Minor"
+    },
+    music_box: {
+        theme: "古いオルゴールが奏でる懐かしいメロディー。子供の頃に大切にしていた宝物箱。今も心の奥で鳴り続ける記憶の音色。",
+        keywords: "オルゴール, 懐かしい, メロディー, 子供の頃, 宝物箱, 記憶, 音色",
+        genres: ["Neo-Classical", "Ambient", "Indie Folk"],
+        mood: "Dreamy",
+        energy: 2,
+        vocal_type: "Female Solo",
+        bpm: 60,
+        key: "E Major"
+    },
+    hometown_station: {
+        theme: "故郷の小さな駅。電車を待つホームで感じる時間の止まったような静寂。都会に出て行った日の記憶と、今の自分への複雑な思い。",
+        keywords: "故郷, 小さな駅, ホーム, 静寂, 都会, 出て行った, 複雑",
+        genres: ["Folk", "Country", "Indie Rock"],
+        mood: "Melancholic",
+        energy: 3,
+        vocal_type: "Female Solo",
+        bpm: 85,
+        key: "B Minor"
+    },
+    sunset_memory: {
+        theme: "あの日見た夕焼けの記憶。大切な人と一緒に眺めた空の色。時間は過ぎても心に残り続ける美しい瞬間への憧憬。",
+        keywords: "あの日, 夕焼け, 記憶, 大切な人, 空の色, 美しい瞬間, 憧憬",
+        genres: ["Indie Pop", "Acoustic", "Alternative"],
+        mood: "Wistful",
+        energy: 4,
+        vocal_type: "Female Solo",
+        bpm: 90,
+        key: "D Major"
+    },
+    letter_rediscovery: {
+        theme: "引っ越しの際に見つけた古い手紙。丁寧な文字で綴られた思い。デジタル時代に失われつつあるアナログなコミュニケーションの温かさ。",
+        keywords: "引っ越し, 古い手紙, 丁寧な文字, 思い, デジタル, アナログ, 温かさ",
+        genres: ["Folk", "Singer-songwriter", "Acoustic"],
+        mood: "Tender",
+        energy: 3,
+        vocal_type: "Female Solo",
+        bpm: 75,
+        key: "G Major"
+    },
+    time_capsule: {
+        theme: "学校で埋めたタイムカプセルを開ける日。未来の自分へのメッセージと、今の現実のギャップ。それでも続いている夢への愛着。",
+        keywords: "タイムカプセル, 学校, 埋めた, 未来, メッセージ, 現実, ギャップ, 夢",
+        genres: ["Pop", "Indie Pop", "Alternative"],
+        mood: "Hopeful",
+        energy: 5,
+        vocal_type: "Female Solo",
+        bpm: 105,
+        key: "A Major"
+    },
+    
+    // 感情・心境系
+    midnight_tears: {
+        theme: "深夜にひとり流す涙。誰にも見せられない弱さと、それを受け入れる強さ。暗闇の中で見つける本当の自分との対話。",
+        keywords: "深夜, ひとり, 涙, 弱さ, 強さ, 暗闇, 本当の自分, 対話",
+        genres: ["Ballad", "Indie Folk", "Alternative"],
+        mood: "Vulnerable",
+        energy: 2,
+        vocal_type: "Female Solo",
+        bpm: 65,
+        key: "F Minor"
+    },
+    overwhelming_joy: {
+        theme: "抑えきれない喜びが心を満たす瞬間。飛び跳ねたくなるような幸せと、この気持ちを誰かと分かち合いたい衝動。",
+        keywords: "抑えきれない, 喜び, 満たす, 飛び跳ねたい, 幸せ, 分かち合い, 衝動",
+        genres: ["Pop", "Indie Pop", "Electronic"],
+        mood: "Euphoric",
+        energy: 8,
+        vocal_type: "Female Solo",
+        bpm: 140,
+        key: "C Major"
+    },
+    quiet_anger: {
+        theme: "静かに燃える怒り。声を荒げることなく心の奥で煮えたぎる感情。冷静さを保ちながらも消えない正義感への葛藤。",
+        keywords: "静かに燃える, 怒り, 声を荒げる, 煮えたぎる, 冷静さ, 正義感, 葛藤",
+        genres: ["Alternative", "Rock", "Electronic"],
+        mood: "Intense",
+        energy: 6,
+        vocal_type: "Female Solo",
+        bpm: 115,
+        key: "E Minor"
+    },
+    sudden_loneliness: {
+        theme: "突然襲ってくる孤独感。人に囲まれていても感じる心の空洞。この感情の正体を理解しようとする内なる探求。",
+        keywords: "突然, 襲ってくる, 孤独感, 人に囲まれて, 心の空洞, 正体, 内なる探求",
+        genres: ["Indie Folk", "Alternative", "Ambient"],
+        mood: "Lonely",
+        energy: 3,
+        vocal_type: "Female Solo",
+        bpm: 80,
+        key: "A Minor"
+    },
+    peaceful_acceptance: {
+        theme: "すべてを受け入れる静かな心境。抵抗することをやめて得られた平和。流れに身を任せる穏やかな悟りの境地。",
+        keywords: "受け入れる, 静かな心境, 抵抗, 平和, 流れ, 身を任せる, 悟り",
+        genres: ["Ambient", "Folk", "Meditation"],
+        mood: "Serene",
+        energy: 2,
+        vocal_type: "Female Solo",
+        bpm: 70,
+        key: "F Major"
+    },
+    nervous_excitement: {
+        theme: "緊張と興奮が入り混じる心境。新しい挑戦を前にした高鳴る鼓動。不安と期待が共存する複雑な感情の波。",
+        keywords: "緊張, 興奮, 入り混じる, 挑戦, 高鳴る鼓動, 不安, 期待, 感情の波",
+        genres: ["Pop", "Electronic", "Indie Rock"],
+        mood: "Anticipatory",
+        energy: 6,
+        vocal_type: "Female Solo",
+        bpm: 125,
+        key: "G Major"
+    },
+    melancholic_beauty: {
+        theme: "美しい憂鬱に包まれる午後。悲しみの中に見つける詩的な美しさ。痛みさえも愛おしく感じる複雑な心の状態。",
+        keywords: "美しい憂鬱, 午後, 悲しみ, 詩的, 美しさ, 痛み, 愛おしい, 複雑",
+        genres: ["Indie Folk", "Alternative", "Neo-Classical"],
+        mood: "Melancholic",
+        energy: 3,
+        vocal_type: "Female Solo",
+        bpm: 75,
+        key: "D Minor"
+    },
+    hope_against_hope: {
+        theme: "絶望的な状況でも消えない希望の光。理性では諦めるべきと分かっていても、心の奥で燃え続ける小さな炎。",
+        keywords: "絶望的, 消えない希望, 光, 理性, 諦める, 心の奥, 燃え続ける, 小さな炎",
+        genres: ["Alternative", "Rock", "Indie Pop"],
+        mood: "Determined",
+        energy: 5,
+        vocal_type: "Female Solo",
+        bpm: 100,
+        key: "A Major"
+    },
+    bittersweet_goodbye: {
+        theme: "ほろ苦い別れの瞬間。感謝と寂しさが混在する複雑な心境。新しい出発への期待と失うものへの惜別。",
+        keywords: "ほろ苦い, 別れ, 感謝, 寂しさ, 混在, 複雑, 出発, 期待, 惜別",
+        genres: ["Ballad", "Indie Folk", "Pop"],
+        mood: "Bittersweet",
+        energy: 4,
+        vocal_type: "Female Solo",
+        bpm: 85,
+        key: "E Major"
+    },
+    silent_understanding: {
+        theme: "言葉を交わさなくても伝わる深い理解。目と目で通じ合う心の繋がり。沈黙の中に宿る最も美しいコミュニケーション。",
+        keywords: "言葉を交わさない, 深い理解, 目と目, 通じ合う, 心の繋がり, 沈黙, コミュニケーション",
+        genres: ["Ambient", "Indie Folk", "Neo-Soul"],
+        mood: "Intimate",
+        energy: 3,
+        vocal_type: "Female Solo",
+        bpm: 70,
+        key: "C Major"
     }
 };
 
