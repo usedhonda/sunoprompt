@@ -11,10 +11,13 @@ class SunopromptExtension {
         this.openaiApiKey = '';
         this.debugMode = false;
         this.lastDebugData = null;
+        this.contextInvalidatedWarned = false;
+        this.saveTimer = null;
         
         // Don't auto-initialize - will be called from HTML
         this.init();
         this.setupCopyButtons();
+        this.setupPopupStability();
     }
 
     async init() {
@@ -89,7 +92,17 @@ class SunopromptExtension {
             }
         } catch (error) {
             console.error('Failed to save API key:', error);
-            this.updateKeyStatus('invalid', 'API キーの保存に失敗しました');
+            if (error.message.includes('Extension context invalidated')) {
+                this.updateKeyStatus('warning', 'API キーが設定されました（拡張機能を再読み込みしてください）');
+                
+                // 一度だけ警告を表示
+                if (!this.contextInvalidatedWarned) {
+                    this.contextInvalidatedWarned = true;
+                    this.showContextInvalidatedMessage();
+                }
+            } else {
+                this.updateKeyStatus('invalid', 'API キーの保存に失敗しました');
+            }
         }
     }
 
@@ -147,6 +160,7 @@ class SunopromptExtension {
                     this.selectedThemes = [];
                     this.updateSelectedThemesDisplay();
                     this.updateThemeButtonStates();
+                    // カスタムモードでもキーワードフィールドは有効のまま
                     document.getElementById('theme').focus();
                 }
             });
@@ -441,6 +455,7 @@ class SunopromptExtension {
         Object.entries(GENRE_CATEGORIES).forEach(([categoryId, category]) => {
             const categoryDiv = document.createElement('div');
             categoryDiv.className = 'genre-category collapsed';
+            categoryDiv.setAttribute('data-category-id', categoryId);
             
             const titleDiv = document.createElement('div');
             titleDiv.className = 'genre-category-title';
@@ -508,6 +523,7 @@ class SunopromptExtension {
         
         this.updateSelectedGenresDisplay();
         this.updateGenreButtonStates();
+        this.expandGenreCategoriesWithSelected();
         this.saveCurrentInput();
     }
 
@@ -534,7 +550,21 @@ class SunopromptExtension {
     }
 
     updateGenreButtonStates() {
+        // First, update selected states for all buttons
         const buttons = document.querySelectorAll('.genre-btn');
+        buttons.forEach(button => {
+            button.classList.remove('selected');
+        });
+        
+        // Add selected class to currently selected genres
+        this.selectedGenres.forEach(genre => {
+            const button = document.querySelector(`[data-genre-id="${genre.id}"]`);
+            if (button) {
+                button.classList.add('selected');
+            }
+        });
+        
+        // Update disabled states
         buttons.forEach(button => {
             const isSelected = button.classList.contains('selected');
             const isDisabled = this.selectedGenres.length >= 3 && !isSelected;
@@ -1162,10 +1192,12 @@ class SunopromptExtension {
             instrumentInput.addEventListener('input', () => {
                 this.saveCurrentInput();
                 this.updateInstrumentButtonStates();
+                this.updateInstrumentCategoryStates();
             });
             
             // Initial button state update
             this.updateInstrumentButtonStates();
+            this.updateInstrumentCategoryStates();
         }
     }
 
@@ -1186,6 +1218,7 @@ class SunopromptExtension {
         
         this.saveCurrentInput();
         this.updateInstrumentButtonStates();
+        this.updateInstrumentCategoryStates();
     }
 
     updateInstrumentButtonStates() {
@@ -1197,17 +1230,44 @@ class SunopromptExtension {
         
         // Update button states
         document.querySelectorAll('.instrument-btn').forEach(button => {
-            const instrument = button.textContent.trim();
+            const instrument = button.getAttribute('data-instrument');
             const isSelected = selectedInstruments.includes(instrument);
             
             if (isSelected) {
-                button.style.backgroundColor = '#ff4081';
-                button.style.color = 'white';
-                button.style.borderColor = '#ff4081';
+                button.classList.add('selected');
             } else {
-                button.style.backgroundColor = '';
-                button.style.color = '';
-                button.style.borderColor = '';
+                button.classList.remove('selected');
+            }
+        });
+    }
+
+    updateInstrumentCategoryStates() {
+        const instrumentInput = document.getElementById('instruments');
+        if (!instrumentInput) return;
+        
+        const selectedInstruments = instrumentInput.value.trim() ? 
+            instrumentInput.value.split(',').map(i => i.trim()) : [];
+        
+        if (selectedInstruments.length === 0) return;
+        
+        // Find which categories contain selected instruments
+        const categoriesToExpand = new Set();
+        
+        Object.entries(window.INSTRUMENT_CATEGORIES || {}).forEach(([categoryId, category]) => {
+            const hasSelectedInstrument = category.instruments.some(instrument => 
+                selectedInstruments.includes(instrument)
+            );
+            
+            if (hasSelectedInstrument) {
+                categoriesToExpand.add(categoryId);
+            }
+        });
+        
+        // Expand categories that contain selected instruments
+        document.querySelectorAll('.instrument-category').forEach((category, index) => {
+            const categoryId = Object.keys(window.INSTRUMENT_CATEGORIES || {})[index];
+            if (categoriesToExpand.has(categoryId)) {
+                category.classList.remove('collapsed');
             }
         });
     }
@@ -1306,12 +1366,35 @@ class SunopromptExtension {
             this.generatePrompt();
         });
         
-        // Auto-save on input changes
-        ['theme', 'keywords', 'bpm', 'key', 'default_vocal_style', 'languageRatio', 'instruments', 'apiModel'].forEach(id => {
+        // Enhanced auto-save on input changes
+        const autoSaveElements = ['theme', 'keywords', 'bpm', 'key', 'default_vocal_style', 'languageRatio', 'instruments', 'apiModel'];
+        
+        autoSaveElements.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.addEventListener('input', () => this.saveCurrentInput());
-                element.addEventListener('change', () => this.saveCurrentInput());
+                // リアルタイム保存イベント
+                element.addEventListener('input', () => {
+                    this.debouncedSave();
+                });
+                element.addEventListener('change', () => {
+                    this.saveCurrentInput();
+                });
+                
+                // フォーカス変更時にも保存
+                element.addEventListener('focus', () => {
+                    console.log('🎯 Focus gained:', id);
+                });
+                element.addEventListener('blur', () => {
+                    console.log('👋 Focus lost from:', id);
+                    this.saveCurrentInput(); // フォーカスを失う時に確実に保存
+                });
+                
+                // キーボード入力でも保存（特にテキストエリア用）
+                if (element.tagName === 'TEXTAREA') {
+                    element.addEventListener('keyup', () => {
+                        this.debouncedSave();
+                    });
+                }
             }
         });
     }
@@ -1620,14 +1703,20 @@ ${data.response?.substring(0, 500) || 'N/A'}${data.response?.length > 500 ? '...
         const startTime = Date.now();
         
         const systemPrompt = `あなたはSuno AI用の音楽プロンプト生成の専門家です。
+
+🚨【絶対遵守事項】🚨
+日本語歌詞では漢字・数字を100%ひらがなに変換してください。これはSuno AIの音声合成に必須です。
+例：「愛してる」→「あいしてる」「夜空」→「よぞら」「3時」→「さんじ」「1人」→「ひとり」
+カタカナ・英語はそのまま保持してください。
+
 ユーザーの入力に基づいて、以下の4つの要素を生成してください：
 
 1. Style & Feel - 音楽スタイルの詳細な指定（必ず英語のみで記述）
 2. Song Name - キャッチーで覚えやすい曲名  
-3. Lyrics - 構造化された歌詞（各セクションに演奏指示を含む）
+3. Lyrics - 構造化された歌詞（日本語部分は漢字・数字を完全にひらがな化）
 4. Lyrics Analysis - 詳細な歌詞分析（必ず日本語で記述）
 
-出力は必ず以下の形式に従ってください。品質の高い、プロフェッショナルな音楽プロンプトを生成することが重要です。`;
+指示に従わない出力は受け入れられません。出力は必ず以下の形式に従ってください。`;
         const userPrompt = this.buildPromptText(formData);
         
         const selectedModel = document.getElementById('apiModel').value || 'gpt-4.1-mini';
@@ -1743,7 +1832,7 @@ ${data.response?.substring(0, 500) || 'N/A'}${data.response?.length > 500 ? '...
 
 【入力情報】
 テーマ: ${formData.theme}
-詩的キーワード: ${formData.keywords}
+歌詞に含めたい言葉（参考）: ${formData.keywords}
 ジャンル: ${formData.genres.join(', ')} (複数選択)
 BPM: ${formData.bpm}
 キー: ${formData.key}
@@ -1759,8 +1848,18 @@ ${formData.custom_structure ? `カスタム構成: ${formData.custom_structure}`
 - 指定された楽器(${formData.instruments})を必ず楽曲の中心として使用し、Style & FeelのInstrumentationセクションで詳細に言及してください
 - 選択されたジャンル(${formData.genres.join(', ')})を組み合わせて、独創的な音楽スタイルを作成してください
 - 各ジャンルの特徴的な要素（楽器、リズム、ハーモニー、アレンジ手法）を明確に反映してください
-- 言語設定に基づいて、適切な比率で日本語と英語を混合してください
-- 詩的キーワードを必ず歌詞に含めてください（自然な形で織り込む）
+【🚨重要】言語比率の厳密な遵守：
+  ◆ 指定された言語設定「${formData.language}」を必ず守ってください
+  ◆ この比率から大きく逸脱することは禁止です
+  ◆ 英語の割合が高い場合は、英語歌詞を主体とし、日本語は指定比率以下に抑制してください
+  ◆ 日本語の割合が高い場合は、日本語歌詞を主体とし、英語は指定比率以下に抑制してください
+【🚨重要】日本語歌詞のひらがな変換は絶対必須：
+  ◆ 漢字は100%ひらがなに変換する（例外なし）：「愛」→「あい」「夜空」→「よぞら」「心」→「こころ」「涙」→「なみだ」
+  ◆ 数字もひらがなに変換：「3時」→「さんじ」「1人」→「ひとり」「2024年」→「にせんにじゅうよねん」
+  ◆ 英数字混じりもひらがな化：「24時間」→「にじゅうよじかん」
+  ◆ カタカナはそのまま保持：「ライト」「ハート」「ドリーム」
+  ◆ この変換を怠ると、Sunoでの音声合成が正常に機能しません
+- 参考キーワードが指定されている場合は、可能な限り自然な形で歌詞に織り込んでください
 - テーマから情景・モチーフを創造的に想起し、歌詞と楽曲の雰囲気に反映してください
 - 各パートのエネルギーレベル(1-10)に基づいて楽曲の強弱を明確に表現してください
 - 平均エネルギー値(${formData.avgEnergy}/10)に基づき、楽曲全体のムードを${formData.dynamicMood}として調整してください
@@ -1783,8 +1882,8 @@ ${formData.custom_structure ? `カスタム構成: ${formData.custom_structure}`
 【Style & Feelセクション特別指示】
 Style & Feelセクションは必ず英語のみで、Sunoの文字数制限に配慮した簡潔なリスト形式で出力してください。以下の要素を含む簡潔な記述：
 
-- BPM: ${formData.bpm}
-- Key: ${formData.key}
+- BPM: ${formData.bpm} (必須: この数値を必ず記載)
+- Key: ${formData.key} (必須: このキーを必ず記載、省略禁止)
 - Genre: [選択されたジャンル(${formData.genres.join(', ')})を基にした簡潔な音楽スタイル]
 - Mood: [${formData.dynamicMood}を基にした簡潔な雰囲気表現（3-4個の形容詞）]
 - Vocal: [${formData.default_vocal_style}を基にした簡潔なボーカル指定]
@@ -1796,8 +1895,8 @@ Style & Feelセクションは必ず英語のみで、Sunoの文字数制限に�
 必ず以下の4つのセクションを含めてください：
 
 【Style & Feel】
-- BPM: ${formData.bpm}
-- Key: ${formData.key}
+- BPM: ${formData.bpm} (この数値は絶対に省略しないでください)
+- Key: ${formData.key} (このキーは絶対に省略しないでください)
 - Genre: [簡潔なジャンル記述]
 - Mood: [簡潔なムード記述]
 - Vocal: [簡潔なボーカル記述]
@@ -1807,7 +1906,21 @@ Style & Feelセクションは必ず英語のみで、Sunoの文字数制限に�
 [テーマに基づいたキャッチーな曲名（引用符やクォーテーションマークは使用しない）]
 
 【Lyrics】
+🚨言語比率厳守：「${formData.language}」を必ず遵守🚨
+🚨注意：日本語歌詞は必ずひらがな変換が必要です🚨
 ${energyBasedStructure}
+
+【言語比率チェック】
+✓ 指定比率：${formData.language}
+✓ この比率からの逸脱は禁止です
+✓ 英語比率が高い場合：英語歌詞を主体とし、日本語は最小限に
+✓ 日本語比率が高い場合：日本語歌詞を主体とし、英語は最小限に
+
+【ひらがな変換チェックリスト】
+✓ 漢字→ひらがな：「愛」→「あい」「夜空」→「よぞら」「心」→「こころ」「風」→「かぜ」
+✓ 数字→ひらがな：「3時」→「さんじ」「1人」→「ひとり」「100」→「ひゃく」
+✓ カタカナは保持：「ライト」「ハート」「ドリーム」はそのまま
+✓ 英語は保持：「Love」「Dream」「Night」はそのまま
 
 【Lyrics Analysis】
 - 韻律・音韻: [韻を踏んだポイント、音韻の工夫、リズムパターンの解説]
@@ -1821,7 +1934,7 @@ ${energyBasedStructure}
 歌詞解析セクションは必ず日本語で記述してください。英語の専門用語や概念についても、日本語で説明するか、日本語での説明を併記してください。このページの利用者は日本語話者であるため、分かりやすい日本語での解説を心がけてください。
 
 各セクションには具体的で詳細な内容を含めてください。
-歌詞は指定された言語設定に従って作成してください。
+歌詞は指定された言語設定「${formData.language}」に厳密に従って作成してください。この比率を守ることは最優先事項です。
 選択されたジャンル(${formData.genres.join(', ')})の特徴を活かした楽曲構成にしてください。
 
 【Style & Feel出力品質管理】
@@ -1872,25 +1985,47 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
     }
 
     displayResults(result) {
-        document.getElementById('styleResult').textContent = result.style;
-        document.getElementById('songNameResult').textContent = result.songName;
-        document.getElementById('lyricsResult').textContent = result.lyrics;
-        document.getElementById('analysisResult').textContent = result.analysis;
-        
-        document.getElementById('results').classList.remove('hidden');
-        document.getElementById('errorMessage').classList.add('hidden');
-        
-        // 全てをコピーボタンを表示
-        const copyAllBtn = document.querySelector('.copy-all-btn');
-        if (copyAllBtn) {
-            copyAllBtn.style.display = 'block';
+        try {
+            console.log('🎵 Displaying results...');
+            
+            // 結果の表示
+            document.getElementById('styleResult').textContent = result.style;
+            document.getElementById('songNameResult').textContent = result.songName;
+            document.getElementById('lyricsResult').textContent = result.lyrics;
+            document.getElementById('analysisResult').textContent = result.analysis;
+            
+            document.getElementById('results').classList.remove('hidden');
+            document.getElementById('errorMessage').classList.add('hidden');
+            
+            // 全てをコピーボタンを表示
+            const copyAllBtn = document.querySelector('.copy-all-btn');
+            if (copyAllBtn) {
+                copyAllBtn.style.display = 'block';
+            }
+            
+            console.log('✅ Results displayed successfully');
+            
+            // Sunoに反映ボタンを追加（エラー処理付き）
+            try {
+                this.addSunoIntegrationButton(result);
+            } catch (error) {
+                console.warn('⚠️ Suno integration button failed:', error);
+            }
+            
+            // スクロール処理（エラー処理付き）
+            try {
+                const resultsElement = document.getElementById('results');
+                if (resultsElement) {
+                    resultsElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            } catch (error) {
+                console.warn('⚠️ Scroll to results failed:', error);
+            }
+            
+        } catch (error) {
+            console.error('❌ Error in displayResults:', error);
+            this.showError('結果の表示中にエラーが発生しました: ' + error.message);
         }
-        
-        // Sunoに反映ボタンを追加
-        this.addSunoIntegrationButton(result);
-        
-        // Scroll to results
-        document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
     }
 
     addSunoIntegrationButton(result) {
@@ -2159,8 +2294,35 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
         document.getElementById('results').classList.add('hidden');
     }
 
+    showContextInvalidatedMessage() {
+        // 非表示の警告メッセージ（ユーザーに表示しない）
+        console.warn('拡張機能のコンテキストが無効化されました。設定の自動保存が一時的に無効になっています。');
+        console.warn('拡張機能を再読み込みするか、ポップアップを閉じて再度開いてください。');
+        
+        // デバッグモードでのみユーザーに表示
+        if (this.debugMode) {
+            this.updateKeyStatus('warning', '⚠️ 拡張機能のコンテキストが無効化されました。設定保存が無効です。');
+        }
+    }
+
+    debouncedSave() {
+        // 前のタイマーをクリア
+        if (this.saveTimer) {
+            clearTimeout(this.saveTimer);
+        }
+        
+        // 500ms後に保存実行（ユーザーの入力が止まってから保存）
+        this.saveTimer = setTimeout(() => {
+            this.saveCurrentInput();
+            console.log('⚡ Debounced save executed');
+        }, 500);
+    }
+
     // ===== Data Persistence =====
     async saveCurrentInput() {
+        // フォーカス状態とカーソル位置を取得
+        const focusState = this.getCurrentFocusState();
+        
         const formData = {
             selectedThemes: this.selectedThemes,
             selectedGenres: this.selectedGenres.map(g => ({ id: g.id, name: g.name, category: g.category })),
@@ -2176,13 +2338,30 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
             default_vocal_style: document.getElementById('default_vocal_style').value,
             instruments: document.getElementById('instruments').value,
             song_structure: document.getElementById('song_structure').value,
-            apiModel: document.getElementById('apiModel').value
+            apiModel: document.getElementById('apiModel').value,
+            // フォーカス状態とUI状態を保存
+            focusState: focusState,
+            scrollPosition: window.scrollY,
+            timestamp: Date.now()
         };
         
         try {
-            await chrome.storage.local.set({ formData });
+            if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
+                await chrome.storage.local.set({ formData });
+            } else {
+                console.log('Chrome storage API not available, form data not saved');
+            }
         } catch (error) {
             console.error('Failed to save form data:', error);
+            
+            // Extension context invalidated時のユーザーフレンドリーなメッセージ
+            if (error.message && error.message.includes('Extension context invalidated')) {
+                // 一度だけ警告を表示（頻繁な表示を避ける）
+                if (!this.contextInvalidatedWarned) {
+                    this.contextInvalidatedWarned = true;
+                    this.showContextInvalidatedMessage();
+                }
+            }
         }
     }
 
@@ -2200,7 +2379,7 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
                 document.getElementById('key').value = data.key || 'C Major';
                 document.getElementById('languageRatio').value = data.languageRatio || 50;
                 document.getElementById('default_vocal_style').value = data.default_vocal_style || 'Female Solo';
-                document.getElementById('instruments').value = data.instruments || 'Piano, Guitar';
+                document.getElementById('instruments').value = data.instruments || '';
                 document.getElementById('song_structure').value = data.song_structure || 'detailed';
                 document.getElementById('apiModel').value = data.apiModel || 'gpt-4.1-mini';
                 
@@ -2266,6 +2445,26 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
                 if (data.customStructureSequence) {
                     this.customStructureSequence = data.customStructureSequence;
                 }
+                
+                // Update instrument button and category states after restoration
+                setTimeout(() => {
+                    this.updateInstrumentButtonStates();
+                    this.updateInstrumentCategoryStates();
+                }, 300);
+                
+                // フォーカス状態とスクロール位置を復元
+                setTimeout(() => {
+                    if (data.focusState) {
+                        this.restoreFocusState(data.focusState);
+                    }
+                    
+                    if (typeof data.scrollPosition === 'number') {
+                        window.scrollTo(0, data.scrollPosition);
+                        console.log('🔄 Scroll position restored:', data.scrollPosition);
+                    }
+                }, 500);
+                
+                console.log('✅ Complete form state restored, including focus and scroll position');
             }
         } catch (error) {
             console.error('Failed to load saved input:', error);
@@ -2290,6 +2489,116 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
             copyAllBtn.addEventListener('click', () => {
                 this.copyAllResults(copyAllBtn);
             });
+        }
+    }
+
+    setupPopupStability() {
+        // ポップアップの予期しない閉じを防ぐ対策
+        console.log('🔧 Setting up popup stability measures...');
+        
+        // 1. ウィンドウのbeforeunloadイベントをリッスン
+        window.addEventListener('beforeunload', (e) => {
+            console.warn('⚠️ Popup is about to close');
+            // ハートビートをクリーンアップ
+            if (this.heartbeatInterval) {
+                clearInterval(this.heartbeatInterval);
+            }
+        });
+        
+        // 2. 定期的なハートビート（ポップアップが生きていることを確認）
+        this.heartbeatInterval = setInterval(() => {
+            console.debug('💓 Popup heartbeat');
+        }, 30000); // 30秒ごと
+        
+        // 3. エラーキャッチ（予期しないエラーをキャッチ）
+        window.addEventListener('error', (e) => {
+            console.error('🚨 Popup window error:', e.error);
+            console.error('Error details:', {
+                message: e.message,
+                filename: e.filename,
+                lineno: e.lineno,
+                colno: e.colno
+            });
+        });
+        
+        // 4. 未処理のPromise拒否をキャッチ
+        window.addEventListener('unhandledrejection', (e) => {
+            console.error('🚨 Unhandled promise rejection:', e.reason);
+            e.preventDefault(); // エラーによるクラッシュを防ぐ
+        });
+        
+        // 5. フォーカス状態の監視
+        let focusLost = false;
+        window.addEventListener('blur', () => {
+            focusLost = true;
+            console.log('📉 Popup lost focus');
+        });
+        
+        window.addEventListener('focus', () => {
+            if (focusLost) {
+                console.log('📈 Popup regained focus');
+                focusLost = false;
+            }
+        });
+        
+        console.log('✅ Popup stability measures activated');
+    }
+
+    getCurrentFocusState() {
+        const activeElement = document.activeElement;
+        if (!activeElement || activeElement === document.body) {
+            return null;
+        }
+        
+        const focusState = {
+            elementId: activeElement.id,
+            tagName: activeElement.tagName,
+            className: activeElement.className
+        };
+        
+        // テキストエリアや入力フィールドの場合、カーソル位置を保存
+        if (activeElement.tagName === 'TEXTAREA' || activeElement.tagName === 'INPUT') {
+            focusState.selectionStart = activeElement.selectionStart;
+            focusState.selectionEnd = activeElement.selectionEnd;
+            focusState.value = activeElement.value; // 値も保存
+        }
+        
+        console.log('💾 Saving focus state:', focusState);
+        return focusState;
+    }
+
+    restoreFocusState(focusState) {
+        if (!focusState) return;
+        
+        console.log('🔄 Restoring focus state:', focusState);
+        
+        // 要素を見つける
+        let element = null;
+        if (focusState.elementId) {
+            element = document.getElementById(focusState.elementId);
+        }
+        
+        if (!element) {
+            // IDで見つからない場合、タグ名とクラス名で検索
+            const elements = document.querySelectorAll(`${focusState.tagName}.${focusState.className.replace(/\s+/g, '.')}`);
+            if (elements.length > 0) {
+                element = elements[0];
+            }
+        }
+        
+        if (element) {
+            // フォーカスを復元
+            setTimeout(() => {
+                element.focus();
+                
+                // カーソル位置を復元
+                if ((element.tagName === 'TEXTAREA' || element.tagName === 'INPUT') && 
+                    typeof focusState.selectionStart === 'number') {
+                    element.setSelectionRange(focusState.selectionStart, focusState.selectionEnd);
+                }
+                
+                console.log('✅ Focus restored to:', element.id || element.tagName);
+            }, 100);
         }
     }
 

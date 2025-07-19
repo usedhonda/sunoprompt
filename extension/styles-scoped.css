@@ -188,6 +188,12 @@
     border: 1px solid #f5c6cb;
 }
 
+#sunoprompt-extension-overlay .key-status.warning {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
 #sunoprompt-extension-overlay .main-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -271,9 +277,91 @@
 
 #sunoprompt-extension-overlay label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     font-weight: 600;
     color: #ffffff !important;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    padding: 6px 12px;
+    border-left: 4px solid #ff4081;
+    background: rgba(255, 64, 129, 0.1);
+    border-radius: 0 6px 6px 0;
+    cursor: help;
+    transition: all 0.2s ease;
+}
+
+#sunoprompt-extension-overlay label:hover {
+    background: rgba(255, 64, 129, 0.15);
+    border-left-color: #ff80ab;
+    transform: translateX(2px);
+}
+
+#sunoprompt-extension-overlay .help-text {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    color: #b0b0b0 !important;
+    font-weight: normal;
+    line-height: 1.4;
+}
+
+/* カスタムツールチップ */
+#sunoprompt-extension-overlay .tooltip {
+    position: relative;
+}
+
+#sunoprompt-extension-overlay h2.tooltip {
+    cursor: help;
+}
+
+#sunoprompt-extension-overlay button.tooltip {
+    cursor: help;
+}
+
+#sunoprompt-extension-overlay .tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2d2d2d;
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 1.4;
+    white-space: nowrap;
+    max-width: 300px;
+    white-space: normal;
+    word-wrap: break-word;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    border: 1px solid #ff4081;
+}
+
+#sunoprompt-extension-overlay .tooltip::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(100%);
+    border: 5px solid transparent;
+    border-top-color: #ff4081;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#sunoprompt-extension-overlay .tooltip:hover::after,
+#sunoprompt-extension-overlay .tooltip:hover::before {
+    opacity: 1;
+    visibility: visible;
 }
 
 #sunoprompt-extension-overlay input[type="text"], #sunoprompt-extension-overlay input[type="range"], #sunoprompt-extension-overlay select, #sunoprompt-extension-overlay textarea {
@@ -606,17 +694,27 @@
 
 /* 曲構成パート */
 #sunoprompt-extension-overlay .song-parts-container {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
 #sunoprompt-extension-overlay .song-part-card {
-    background: #2a2a2a !important;
-    border: 1px solid #444 !important;
-    border-radius: 8px;
-    margin-bottom: 8px;
+    background: linear-gradient(135deg, #2a2a2a 0%, #242424 100%) !important;
+    border: 2px solid #444 !important;
+    border-radius: 12px;
+    margin-bottom: 16px;
     overflow: hidden;
     transition: all 0.4s ease, transform 0.4s ease;
     position: relative;
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.4),
+        0 3px 10px rgba(0, 0, 0, 0.3),
+        0 1px 3px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
 }
 
 /* カード移動時のアニメーション */
@@ -690,24 +788,33 @@
 }
 
 #sunoprompt-extension-overlay .song-part-card:hover {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transform: translateY(-3px);
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.4),
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 64, 129, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 64, 129, 0.6) !important;
 }
 
 #sunoprompt-extension-overlay .song-part-header {
-    background: #1a1a1a !important;
-    padding: 8px 12px;
+    background: linear-gradient(135deg, #1e1e1e 0%, #1a1a1a 100%) !important;
+    padding: 12px 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #444;
+    border-bottom: 2px solid rgba(255, 64, 129, 0.2);
+    position: relative;
 }
 
 #sunoprompt-extension-overlay .song-part-title {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-weight: 600;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 15px;
     color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 #sunoprompt-extension-overlay .song-part-title span {
@@ -756,7 +863,8 @@
 }
 
 #sunoprompt-extension-overlay .song-part-content {
-    padding: 10px 12px;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.02);
 }
 
 #sunoprompt-extension-overlay .song-part-field {
@@ -794,6 +902,13 @@
     font-weight: 600;
     color: #ffffff !important;
     font-size: 0.9rem;
+    padding: 0 !important;
+    border: none !important;
+    background: none !important;
+    border-radius: 0 !important;
+    transform: none !important;
+    box-shadow: none !important;
+    letter-spacing: normal !important;
 }
 
 #sunoprompt-extension-overlay .song-part-field-inline select {
@@ -923,11 +1038,19 @@
     margin-top: 0;
 }
 
-#sunoprompt-extension-overlay .song-part-field label {
+#sunoprompt-extension-overlay .song-part-field label,
+#sunoprompt-extension-overlay .song-part-card label {
     font-size: 14px;
     font-weight: 500;
     color: #ffffff !important;
     margin-bottom: 5px;
+    padding: 0 !important;
+    border: none !important;
+    background: none !important;
+    border-radius: 0 !important;
+    transform: none !important;
+    box-shadow: none !important;
+    letter-spacing: normal !important;
 }
 
 #sunoprompt-extension-overlay .song-part-field select,
