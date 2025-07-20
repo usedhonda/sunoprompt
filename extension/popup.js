@@ -1970,11 +1970,10 @@ ${data.response?.substring(0, 500) || 'N/A'}${data.response?.length > 500 ? '...
     buildPromptText(formData) {
         // エネルギーレベルに基づく楽曲構造生成
         const energyBasedStructure = formData.songParts.map((part, i) => {
-            let structure = `[${part.name}]\n[${part.vocal.toLowerCase()}, energy level ${part.energy}/10, dynamic: ${this.getEnergyDescription(part.energy)}`;
+            let structure = `[${part.name}]\n[${part.vocal.toLowerCase()}, energy level ${part.energy}/10, dynamic: ${this.getEnergyDescription(part.energy)}]`;
             if (part.instruction) {
-                structure += `, special instruction: ${part.instruction}`;
+                structure += `\n${part.instruction}`;
             }
-            structure += `]`;
             return structure;
         }).join('\n\n');
 
@@ -2088,6 +2087,26 @@ Style & Feelセクションは必ず英語のみで、Sunoの文字数制限に�
 【Lyrics】
 🚨言語比率厳守：「${formData.language}」を必ず遵守🚨
 🚨注意：日本語歌詞は漢字のみひらがな変換・カタカナ保持🚨
+
+⚠️ 歌詞構造の必須要件 ⚠️
+• 各パートは必ず以下の形式で出力：
+
+例:
+[Intro]
+[female solo, energy level 4/10, dynamic: gentle, subdued]
+静かなビルの谷間で　そっと灯るスマホの光
+Flicker of ads, shadows creep,
+心がそっと息をつく
+
+[Verse]
+[female solo, energy level 5/10, dynamic: moderate, balanced]
+歌詞内容...
+
+• ボーカルスタイル、エネルギーレベル（X/10）、動的表現を必ず含める
+• Special Instructionsは歌詞内に適切に配置（[speak gently], [balanced]等）
+• 必ず具体的な指示タグを歌詞に織り込む
+
+【楽曲構成設計】
 ${energyBasedStructure}
 
 【🚫🚫 言語比率チェック - 翻訳禁止 🚫🚫】
