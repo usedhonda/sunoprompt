@@ -2074,40 +2074,50 @@ Style & Feelセクションは必ず英語のみで、Sunoの文字数制限に�
 各要素は必要最小限で効果的な英語表現を使用してください。
 
 【出力形式】
-必ず以下の4つのセクションを含めてください：
+必ず以下のJSON形式で出力してください：
 
-【Style & Feel】
-- BPM: ${formData.bpm} (この数値は絶対に省略しないでください)
-- Key: ${formData.key} (このキーは絶対に省略しないでください)
-- Genre: [簡潔なジャンル記述]
-- Mood: [簡潔なムード記述]
-- Vocal: [簡潔なボーカル記述]
-- Instrumentation: [簡潔な楽器構成記述]
+\`\`\`json
+{
+  "styleAndFeel": {
+    "bpm": ${formData.bpm},
+    "key": "${formData.key}",
+    "genre": "[簡潔なジャンル記述]",
+    "mood": "[簡潔なムード記述]", 
+    "vocal": "[簡潔なボーカル記述]",
+    "instrumentation": "[楽器構成記述 - Special Instructionsを反映]"
+  },
+  "songName": "[テーマに基づいたキャッチーな曲名]",
+  "lyrics": [
+    {
+      "part": "Intro",
+      "vocal": "female solo",
+      "energy": 3,
+      "dynamic": "gentle, subdued", 
+      "content": [
+        "静かなビルの谷間で　そっと灯るスマホの光",
+        "Flicker of ads, shadows creep,",
+        "心がそっと息をつく"
+      ]
+    }
+  ],
+  "analysis": {
+    "rhymePattern": "[韻律・音韻分析]",
+    "languageTechnique": "[言語技法分析]", 
+    "structure": "[構造・展開分析]",
+    "culturalElements": "[文化的要素分析]",
+    "musicalConnection": "[音楽的連動分析]",
+    "energyDesign": "[エネルギー設計分析]"
+  }
+}
+\`\`\`
 
-【Song Name】
-[テーマに基づいたキャッチーな曲名（引用符やクォーテーションマークは使用しない）]
-
-【Lyrics】
 🚨言語比率厳守：「${formData.language}」を必ず遵守🚨
 🚨注意：日本語歌詞は漢字のみひらがな変換・カタカナ保持🚨
 
-⚠️ 歌詞構造の必須要件 ⚠️
-• 各パートは必ず以下の形式で出力：
-
-例:
-[Intro]
-[female solo, energy level 4/10, dynamic: gentle, subdued]
-静かなビルの谷間で　そっと灯るスマホの光
-Flicker of ads, shadows creep,
-心がそっと息をつく
-
-[Verse]
-[female solo, energy level 5/10, dynamic: moderate, balanced]
-歌詞内容...
-
-• ボーカルスタイル、エネルギーレベル（X/10）、動的表現を必ず含める
-• 歌詞は純粋な歌詞内容のみで構成する
-• Special Instructionsの楽器指定や演奏指示は歌詞に含めず、Style & Feelで処理する
+⚠️ JSON構造の必須要件 ⚠️
+• 各パートはlyricsの配列内にオブジェクトとして格納
+• content配列には純粋な歌詞行のみを含める（楽器指定や演奏指示は一切含めない）
+• Special InstructionsはstyleAndFeel.instrumentationに反映
 
 🚨 Special Instructions処理の必須ルール 🚨
 • Special Instructionsは歌詞内容に絶対に含めない
@@ -2210,14 +2220,81 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
         return sections;
     }
 
+    parseJsonResult(result) {
+        try {
+            // JSON部分を抽出（```json と ``` の間）
+            const jsonMatch = result.match(/```json\s*([\s\S]*?)\s*```/);
+            if (!jsonMatch) {
+                // JSON形式でない場合は従来通り
+                return this.parseLegacyResult(result);
+            }
+
+            const jsonData = JSON.parse(jsonMatch[1]);
+            
+            // Style & Feel を再構成
+            const styleAndFeel = jsonData.styleAndFeel;
+            const style = `BPM: ${styleAndFeel.bpm}
+Key: ${styleAndFeel.key}
+Genre: ${styleAndFeel.genre}
+Mood: ${styleAndFeel.mood}
+Vocal: ${styleAndFeel.vocal}
+Instrumentation: ${styleAndFeel.instrumentation}`;
+
+            // 歌詞を再構成
+            const lyrics = jsonData.lyrics.map(part => {
+                const header = `[${part.part}]
+[${part.vocal}, energy level ${part.energy}/10, dynamic: ${part.dynamic}]`;
+                const content = part.content.join('\n');
+                return `${header}\n${content}`;
+            }).join('\n\n');
+
+            // 分析を再構成
+            const analysis = Object.entries(jsonData.analysis).map(([key, value]) => {
+                const titles = {
+                    rhymePattern: '韻律・音韻',
+                    languageTechnique: '言語技法',
+                    structure: '構造・展開',
+                    culturalElements: '文化的要素',
+                    musicalConnection: '音楽的連動',
+                    energyDesign: 'エネルギー設計'
+                };
+                return `${titles[key] || key}: ${value}`;
+            }).join('\n\n');
+
+            return {
+                style: style,
+                songName: jsonData.songName,
+                lyrics: lyrics,
+                analysis: analysis
+            };
+
+        } catch (error) {
+            console.warn('JSON parsing failed, falling back to legacy parsing:', error);
+            return this.parseLegacyResult(result);
+        }
+    }
+
+    parseLegacyResult(result) {
+        // 従来の解析方法（バックアップ）
+        const sections = this.parseResultSections(result);
+        return {
+            style: sections['Style & Feel'] || '',
+            songName: sections['Song Name'] || '',
+            lyrics: sections['Lyrics'] || '',
+            analysis: sections['Lyrics Analysis'] || ''
+        };
+    }
+
     displayResults(result) {
         try {
+            // JSON形式の結果をパースして歌詞を再構成
+            let parsedResult = this.parseJsonResult(result);
             
             // 結果の表示
-            document.getElementById('styleResult').textContent = result.style;
-            document.getElementById('songNameResult').textContent = result.songName;
-            document.getElementById('lyricsResult').textContent = result.lyrics;
-            document.getElementById('analysisResult').textContent = result.analysis;
+            document.getElementById('styleResult').textContent = parsedResult.style;
+            document.getElementById('songNameResult').textContent = parsedResult.songName;
+            document.getElementById('lyricsResult').textContent = parsedResult.lyrics;
+            document.getElementById('analysisResult').textContent = parsedResult.analysis;
             
             document.getElementById('results').classList.remove('hidden');
             document.getElementById('errorMessage').classList.add('hidden');
