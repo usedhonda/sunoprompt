@@ -1978,6 +1978,9 @@ ${data.response?.substring(0, 500) || 'N/A'}${data.response?.length > 500 ? '...
             .filter(part => part.instruction && part.instruction.trim())
             .map(part => `${part.name}: ${part.instruction}`)
             .join('\n');
+        
+        console.log('🎵 Special Instructions found:', specialInstructions);
+        console.log('🎵 Song Parts with instructions:', formData.songParts.filter(part => part.instruction));
 
         const prompt = `
 以下の情報に基づいて、Suno AI用の音楽プロンプトを生成してください：
@@ -2084,7 +2087,7 @@ Style & Feelセクションは必ず英語のみで、Sunoの文字数制限に�
     "genre": "[簡潔なジャンル記述]",
     "mood": "[簡潔なムード記述]", 
     "vocal": "[簡潔なボーカル記述]",
-    "instrumentation": "[楽器構成記述 - Special Instructionsを反映]"
+    "instrumentation": "[指定楽器と Special Instructions を統合した楽器構成記述]"
   },
   "songName": "[テーマに基づいたキャッチーな曲名]",
   "lyrics": [
@@ -2092,7 +2095,8 @@ Style & Feelセクションは必ず英語のみで、Sunoの文字数制限に�
       "part": "Intro",
       "vocal": "female solo",
       "energy": 3,
-      "dynamic": "gentle, subdued", 
+      "dynamic": "gentle, subdued",
+      "specialInstructions": "[piano solo intro with vocals]",
       "content": [
         "静かなビルの谷間で　そっと灯るスマホの光",
         "Flicker of ads, shadows creep,",
@@ -2117,7 +2121,9 @@ Style & Feelセクションは必ず英語のみで、Sunoの文字数制限に�
 ⚠️ JSON構造の必須要件 ⚠️
 • 各パートはlyricsの配列内にオブジェクトとして格納
 • content配列には純粋な歌詞行のみを含める（楽器指定や演奏指示は一切含めない）
-• Special InstructionsはstyleAndFeel.instrumentationに反映
+• パートごとのSpecial Instructionsは各パートの"specialInstructions"フィールドに英語directive形式で記載
+• 例：「Rhodesソロと歌で」→ "specialInstructions": "[piano solo intro with vocals]"
+• Special Instructionsがないパートでは"specialInstructions"フィールドは空文字または省略
 
 🚨 Special Instructions処理の必須ルール 🚨
 • Special Instructionsは歌詞内容に絶対に含めない
@@ -2168,10 +2174,11 @@ ${energyBasedStructure}
 選択されたジャンル(${formData.genres.join(', ')})の特徴を活かした楽曲構成にしてください。
 
 🚨🚨 Special Instructions 必須実装ルール 🚨🚨
-• Special Instructionsは楽曲制作情報として【Special Instructions - 楽器編成・演奏指示】セクションで提供される
-• これらの指示はStyle & Feelセクションで楽器編成・演奏スタイルとして反映する
-• 歌詞セクションには絶対に楽器指定や演奏指示を含めない
-• 歌詞は純粋な歌詞内容のみで構成し、技術的指示とは完全分離する
+• 【Special Instructions - 楽器編成・演奏指示】セクションの指示は絶対に無視してはいけない
+• styleAndFeel.instrumentationで必ずSpecial Instructionsの内容を反映する
+• 例：「Rhodesソロと歌で」→ instrumentation: "Features Rhodes piano prominently with vocal harmony"
+• 例：「ギター中心で」→ instrumentation: "Guitar-driven arrangement with..."
+• Special Instructionsが空でない場合、instrumentationに必ず具体的に記述する
 
 【Style & Feel出力品質管理】
 Style & Feelセクションの出力は以下の条件を満たしてください：
@@ -2250,8 +2257,9 @@ Instrumentation: ${styleAndFeel.instrumentation}`;
             const lyrics = jsonData.lyrics.map(part => {
                 const header = `[${part.part}]
 [${part.vocal}, energy level ${part.energy}/10, dynamic: ${part.dynamic}]`;
+                const specialInstr = part.specialInstructions ? `${part.specialInstructions}\n` : '';
                 const content = part.content.join('\n');
-                return `${header}\n${content}`;
+                return `${header}\n${specialInstr}${content}`;
             }).join('\n\n');
 
             // 分析を再構成
@@ -2293,7 +2301,8 @@ Instrumentation: ${styleAndFeel.instrumentation}`;
 
     displayResults(result) {
         try {
-            console.log('displayResults received:', typeof result, result);
+            console.log('🎯 displayResults received:', typeof result);
+        console.log('🎯 Full API response:', result);
             // JSON形式の結果をパースして歌詞を再構成
             let parsedResult = this.parseJsonResult(result);
             
