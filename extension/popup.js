@@ -2222,6 +2222,12 @@ Style & Feelセクションの出力は以下の条件を満たしてくださ�
 
     parseJsonResult(result) {
         try {
+            // resultが文字列でない場合
+            if (typeof result !== 'string') {
+                console.warn('Result is not a string, falling back to legacy parsing');
+                return this.parseLegacyResult(String(result));
+            }
+            
             // JSON部分を抽出（```json と ``` の間）
             const jsonMatch = result.match(/```json\s*([\s\S]*?)\s*```/);
             if (!jsonMatch) {
@@ -2276,12 +2282,12 @@ Instrumentation: ${styleAndFeel.instrumentation}`;
 
     parseLegacyResult(result) {
         // 従来の解析方法（バックアップ）
-        const sections = this.parseResultSections(result);
+        const sections = this.parseOpenAIResponse(result);
         return {
-            style: sections['Style & Feel'] || '',
-            songName: sections['Song Name'] || '',
-            lyrics: sections['Lyrics'] || '',
-            analysis: sections['Lyrics Analysis'] || ''
+            style: sections.style || '',
+            songName: sections.songName || '',
+            lyrics: sections.lyrics || '',
+            analysis: sections.analysis || ''
         };
     }
 
