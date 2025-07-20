@@ -1979,8 +1979,8 @@ ${data.response?.substring(0, 500) || 'N/A'}${data.response?.length > 500 ? '...
             .map(part => `${part.name}: ${part.instruction}`)
             .join('\n');
         
-        console.log('🎵 Special Instructions found:', specialInstructions);
-        console.log('🎵 Song Parts with instructions:', formData.songParts.filter(part => part.instruction));
+        // console.log('🎵 Special Instructions found:', specialInstructions);
+        // console.log('🎵 Song Parts with instructions:', formData.songParts.filter(part => part.instruction));
 
         const prompt = `
 以下の情報に基づいて、Suno AI用の音楽プロンプトを生成してください：
@@ -2303,8 +2303,8 @@ Instrumentation: ${styleAndFeel.instrumentation}`;
 
     displayResults(result) {
         try {
-            console.log('🎯 displayResults received:', typeof result);
-        console.log('🎯 Full API response:', result);
+            // console.log('🎯 displayResults received:', typeof result);
+        // console.log('🎯 Full API response:', result);
             // JSON形式の結果をパースして歌詞を再構成
             let parsedResult = this.parseJsonResult(result);
             

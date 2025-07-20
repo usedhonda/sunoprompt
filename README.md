@@ -141,13 +141,22 @@ Suno AIで**高品質な音楽**を作るための、プロフェッショナル
 - **最小限通信**: OpenAI API以外には一切送信しません
 - **透明性**: ソースコードは公開されています
 
-## 🆕 最新バージョン: v1.3.0
+## 🆕 最新バージョン: v1.4.0
 
-### 新機能・改善点
-- データファースト初期化による高速化
-- ジャンルカテゴリーの自動展開
-- 重複コードの削除（186行の簡素化）
-- デバッグログの最適化
+### ✨ v1.4.0 (2025-01-20) - JSON出力とSpecial Instructions完全分離
+#### 🎯 Major Features
+- **JSON形式出力**: 構造化されたJSON形式での結果出力により歌詞とSpecial Instructionsの完全分離
+- **パート別Special Instructions**: 各パートごとに個別のSpecial Instructionsを設定・反映
+- **正確な楽器指定翻訳**: 「Rhodesソロと歌で」→「[Rhodes piano solo with vocals]」など具体的な翻訳
+
+#### 🐛 Bug Fixes
+- Special Instructionsが歌詞内容に混入する問題を解決
+- Extension context invalidated エラーの改善
+- 起動時にSpecial Instructions内容がある場合の自動展開対応
+
+#### 🎨 UI/UX Improvements
+- Special Instructions自動展開機能
+- エラーハンドリングの強化
 
 ## 🤝 フィードバック・サポート
 
