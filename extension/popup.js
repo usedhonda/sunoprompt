@@ -1132,9 +1132,9 @@ class SunopromptExtension {
                     <div class="song-part-instruction">
                         <label class="instruction-toggle" data-part-id="${part.id}">
                             <span>Special Instructions</span>
-                            <span class="toggle-icon">▼</span>
+                            <span class="toggle-icon">${part.instruction && part.instruction.trim() ? '▲' : '▼'}</span>
                         </label>
-                        <textarea class="instruction-field collapsed" placeholder="このパートに対する特別な指示を入力してください..." 
+                        <textarea class="instruction-field ${part.instruction && part.instruction.trim() ? '' : 'collapsed'}" placeholder="このパートに対する特別な指示を入力してください..." 
                                   data-part-id="${part.id}" data-action="updatePartInstruction">${part.instruction}</textarea>
                     </div>
                 </div>
