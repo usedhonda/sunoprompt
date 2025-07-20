@@ -2121,8 +2121,10 @@ Style & Feelセクションは必ず英語のみで、Sunoの文字数制限に�
 ⚠️ JSON構造の必須要件 ⚠️
 • 各パートはlyricsの配列内にオブジェクトとして格納
 • content配列には純粋な歌詞行のみを含める（楽器指定や演奏指示は一切含めない）
-• パートごとのSpecial Instructionsは各パートの"specialInstructions"フィールドに英語directive形式で記載
-• 例：「Rhodesソロと歌で」→ "specialInstructions": "[piano solo intro with vocals]"
+• パートごとのSpecial Instructionsは各パートの"specialInstructions"フィールドに正確に翻訳して記載
+• 指示内容を正確に反映し、楽器名や演奏スタイルを具体的に記述する
+• 例：「Rhodesソロと歌で」→ "specialInstructions": "[Rhodes piano solo with vocals]"
+• 例：「ギター中心で」→ "specialInstructions": "[guitar-centered arrangement]"
 • Special Instructionsがないパートでは"specialInstructions"フィールドは空文字または省略
 
 🚨 Special Instructions処理の必須ルール 🚨
@@ -2175,10 +2177,10 @@ ${energyBasedStructure}
 
 🚨🚨 Special Instructions 必須実装ルール 🚨🚨
 • 【Special Instructions - 楽器編成・演奏指示】セクションの指示は絶対に無視してはいけない
-• styleAndFeel.instrumentationで必ずSpecial Instructionsの内容を反映する
-• 例：「Rhodesソロと歌で」→ instrumentation: "Features Rhodes piano prominently with vocal harmony"
-• 例：「ギター中心で」→ instrumentation: "Guitar-driven arrangement with..."
-• Special Instructionsが空でない場合、instrumentationに必ず具体的に記述する
+• 各パートのSpecial Instructionsを正確に英語directiveに翻訳する
+• 楽器名は正確に翻訳する：「Rhodes」→「Rhodes piano」、「ギター」→「guitar」
+• 演奏スタイルも正確に翻訳する：「ソロと歌で」→「solo with vocals」
+• 一般化せず、具体的な指示内容をそのまま反映する
 
 【Style & Feel出力品質管理】
 Style & Feelセクションの出力は以下の条件を満たしてください：
