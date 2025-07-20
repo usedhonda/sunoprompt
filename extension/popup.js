@@ -1968,14 +1968,16 @@ ${data.response?.substring(0, 500) || 'N/A'}${data.response?.length > 500 ? '...
     }
 
     buildPromptText(formData) {
-        // エネルギーレベルに基づく楽曲構造生成
+        // エネルギーレベルに基づく楽曲構造生成（指示なし）
         const energyBasedStructure = formData.songParts.map((part, i) => {
-            let structure = `[${part.name}]\n[${part.vocal.toLowerCase()}, energy level ${part.energy}/10, dynamic: ${this.getEnergyDescription(part.energy)}]`;
-            if (part.instruction) {
-                structure += `\n${part.instruction}`;
-            }
-            return structure;
+            return `[${part.name}]\n[${part.vocal.toLowerCase()}, energy level ${part.energy}/10, dynamic: ${this.getEnergyDescription(part.energy)}]`;
         }).join('\n\n');
+        
+        // Special Instructions を別途整理
+        const specialInstructions = formData.songParts
+            .filter(part => part.instruction && part.instruction.trim())
+            .map(part => `${part.name}: ${part.instruction}`)
+            .join('\n');
 
         const prompt = `
 以下の情報に基づいて、Suno AI用の音楽プロンプトを生成してください：
@@ -1993,6 +1995,7 @@ BPM: ${formData.bpm}
 指定楽器: ${formData.instruments} (必須: これらの楽器を中心とした楽曲構成)
 デフォルトボーカルスタイル: ${formData.default_vocal_style}
 ${formData.custom_structure ? `カスタム構成: ${formData.custom_structure}` : ''}
+${specialInstructions ? `\n【Special Instructions - 楽器編成・演奏指示】\n${specialInstructions}` : ''}
 
 【重要な指示】
 - 指定された楽器(${formData.instruments})を必ず楽曲の中心として使用し、Style & FeelのInstrumentationセクションで詳細に言及してください
@@ -2103,15 +2106,15 @@ Flicker of ads, shadows creep,
 歌詞内容...
 
 • ボーカルスタイル、エネルギーレベル（X/10）、動的表現を必ず含める
-• Special Instructionsは歌詞内に適切に配置（[speak gently], [balanced]等）
-• 各パートのSpecial Instructionがある場合は、必ず歌詞内に反映させる
+• 歌詞は純粋な歌詞内容のみで構成する
+• Special Instructionsの楽器指定や演奏指示は歌詞に含めず、Style & Feelで処理する
 
 🚨 Special Instructions処理の必須ルール 🚨
-• Special Instructionsは歌詞内容ではなく、音楽制作指示として処理する
-• 指示内容をStyle & Feelセクションまたは楽器編成情報に反映させる
-• 歌詞として出力せず、音楽的な指示として解釈する
-• 例：「Rhodesソロと歌で」→ Style & Feelで楽器編成を記述、歌詞には含めない
-• Special Instructionsは楽曲制作の技術的指示であり、歌詞の一部ではない
+• Special Instructionsは歌詞内容に絶対に含めない
+• 「【Special Instructions - 楽器編成・演奏指示】」セクションの指示をStyle & Feelに反映
+• 歌詞は純粋に歌詞内容のみで構成し、楽器指定や演奏指示は一切含めない
+• 例：「Rhodesソロと歌で」の指示 → Style & Feelで「Features Rhodes piano prominently」と記述
+• 歌詞内に楽器名や演奏指示が出現することを絶対に禁止
 
 【楽曲構成設計】
 ${energyBasedStructure}
@@ -2155,10 +2158,10 @@ ${energyBasedStructure}
 選択されたジャンル(${formData.genres.join(', ')})の特徴を活かした楽曲構成にしてください。
 
 🚨🚨 Special Instructions 必須実装ルール 🚨🚨
-• Special Instructionsは楽曲制作の技術的指示として扱い、歌詞内容に混入させない
-• 指示内容をStyle & Feelセクションの楽器編成や演奏スタイルに反映させる
-• 楽器指定や演奏指示は音楽制作情報として処理し、歌詞とは分離する
-• 指示を無視することは禁止だが、歌詞として出力することも禁止
+• Special Instructionsは楽曲制作情報として【Special Instructions - 楽器編成・演奏指示】セクションで提供される
+• これらの指示はStyle & Feelセクションで楽器編成・演奏スタイルとして反映する
+• 歌詞セクションには絶対に楽器指定や演奏指示を含めない
+• 歌詞は純粋な歌詞内容のみで構成し、技術的指示とは完全分離する
 
 【Style & Feel出力品質管理】
 Style & Feelセクションの出力は以下の条件を満たしてください：
