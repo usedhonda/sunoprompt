@@ -2021,9 +2021,9 @@ ${formData.custom_structure ? `カスタム構成: ${formData.custom_structure}`
   ◆ 英数字はそのまま保持：「24時間」
   ◆ 🚨 カタカナ→ひらがな変換は禁止：「ドリーム」を「どりーむ」にしてはいけない
 - 🚨 Special Instructions日本語翻訳（超重要）：
-  ◆ 各パートのSpecial Instructionsが日本語で書かれている場合：必ず英語に翻訳してからStyle & Feelセクションに反映
-  ◆ 翻訳例：「激しく」→「intense」、「静かに」→「quietly」、「力強く」→「powerful」、「優しく」→「gentle」
-  ◆ 日本語のSpecial Instructionsをそのまま使用せず、英語に変換してから音楽指示として処理する
+  ◆ 各パートのSpecial Instructionsが日本語で書かれている場合：必ず英語に翻訳してから該当パートの歌詞生成に反映
+  ◆ 翻訳例：「激しく歌う」→「sing intensely」、「静かに囁く」→「whisper quietly」、「力強いメロディ」→「powerful melody」
+  ◆ 日本語のSpecial Instructionsをそのまま歌詞に入れず、英語に変換してから歌詞生成の指示として処理する
 - 参考キーワードが指定されている場合は、可能な限り自然な形で歌詞に織り込んでください
 - テーマから情景・モチーフを創造的に想起し、歌詞と楽曲の雰囲気に反映してください
 - 各パートのエネルギーレベル(1-10)に基づいて楽曲の強弱を明確に表現してください
