@@ -1969,9 +1969,14 @@ ${data.response?.substring(0, 500) || 'N/A'}${data.response?.length > 500 ? '...
 
     buildPromptText(formData) {
         // エネルギーレベルに基づく楽曲構造生成
-        const energyBasedStructure = formData.songParts.map((part, i) => 
-            `[${part.name}]\n[${part.vocal.toLowerCase()}, energy level ${part.energy}/10, dynamic: ${this.getEnergyDescription(part.energy)}${part.instruction ? ', ' + part.instruction : ''}]`
-        ).join('\n\n');
+        const energyBasedStructure = formData.songParts.map((part, i) => {
+            let structure = `[${part.name}]\n[${part.vocal.toLowerCase()}, energy level ${part.energy}/10, dynamic: ${this.getEnergyDescription(part.energy)}`;
+            if (part.instruction) {
+                structure += `, special instruction: ${part.instruction}`;
+            }
+            structure += `]`;
+            return structure;
+        }).join('\n\n');
 
         const prompt = `
 以下の情報に基づいて、Suno AI用の音楽プロンプトを生成してください：
@@ -2020,10 +2025,11 @@ ${formData.custom_structure ? `カスタム構成: ${formData.custom_structure}`
   ◆ 数字はそのまま保持：「3時」「1人」「2024年」
   ◆ 英数字はそのまま保持：「24時間」
   ◆ 🚨 カタカナ→ひらがな変換は禁止：「ドリーム」を「どりーむ」にしてはいけない
-- 🚨 Special Instructions日本語翻訳（超重要）：
-  ◆ 各パートのSpecial Instructionsが日本語で書かれている場合：必ず英語に翻訳してから[]で囲まれた歌詞指示として処理
-  ◆ 翻訳例：「激しく歌う」→「[sing intensely]」、「静かに囁く」→「[whisper quietly]」、「力強く」→「[powerful]」
-  ◆ 日本語のSpecial Instructionsをそのまま[激しく歌う]として使用せず、英語に変換してから[sing intensely]として歌詞に配置する
+- 🚨 Special Instructions実装（超重要）：
+  ◆ 各パートにSpecial Instructionsが指定されている場合：必ずそのパートの歌詞内に[]で囲まれた指示として配置する
+  ◆ 日本語のSpecial Instructionsは英語に翻訳してから使用：「激しく歌う」→「[sing intensely]」、「静かに囁く」→「[whisper quietly]」
+  ◆ Special Instructionsが空でないパートでは、歌詞の適切な位置（通常はパートの冒頭や重要な箇所）に[]指示を必ず挿入する
+  ◆ 例：Verseに「力強く」の指示がある場合 → Verse歌詞内に[powerful]を配置する
 - 参考キーワードが指定されている場合は、可能な限り自然な形で歌詞に織り込んでください
 - テーマから情景・モチーフを創造的に想起し、歌詞と楽曲の雰囲気に反映してください
 - 各パートのエネルギーレベル(1-10)に基づいて楽曲の強弱を明確に表現してください
