@@ -2107,11 +2107,11 @@ Flicker of ads, shadows creep,
 • 各パートのSpecial Instructionがある場合は、必ず歌詞内に反映させる
 
 🚨 Special Instructions処理の必須ルール 🚨
-• 日本語Special Instructions → 英語の[directive]形式に変換して歌詞に配置
-• 例：「ピアノソロから」→ [piano solo intro] または [starting with piano solo]
-• 例：「ささやくように」→ [whisper gently] または [whispered]
-• 例：「力強く」→ [powerfully] または [with strength]
-• Special Instructionsは歌詞の意味に合う場所に自然に配置する
+• 各パートのSpecial Instructionの内容を理解し、適切な英語[directive]に変換
+• 楽器指定: 「ピアノソロから」「ギター中心で」「ドラムから」など → 対応する楽器directive
+• 表現指定: 「ささやくように」「力強く」「優しく」など → 対応する表現directive  
+• 演奏指定: 「静かに始まる」「徐々に盛り上がる」など → 対応する演奏directive
+• 指示内容を直訳せず、音楽的に適切な英語directiveに変換する
 
 【楽曲構成設計】
 ${energyBasedStructure}
@@ -2155,10 +2155,10 @@ ${energyBasedStructure}
 選択されたジャンル(${formData.genres.join(', ')})の特徴を活かした楽曲構成にしてください。
 
 🚨🚨 Special Instructions 必須実装ルール 🚨🚨
-• 楽曲構成設計でSpecial Instructionが指定されているパートでは、必ずその指示を歌詞内に反映する
-• 日本語の指示は英語の[directive]形式に変換する
+• 楽曲構成設計でSpecial Instructionが指定されているパートでは、必ずその指示内容を理解して歌詞内に反映する
+• 日本語の指示内容を音楽的に適切な英語[directive]形式に変換する
 • 指示を無視したり省略することは絶対に禁止
-• 例：「ピアノソロから」が指定 → 必ず[piano solo intro]や[starting with piano solo]を歌詞に含める
+• 指示内容に応じて動的に適切なdirectiveを生成する（固定の文言を使わない）
 
 【Style & Feel出力品質管理】
 Style & Feelセクションの出力は以下の条件を満たしてください：
