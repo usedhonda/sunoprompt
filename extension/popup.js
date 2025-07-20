@@ -2104,7 +2104,14 @@ Flicker of ads, shadows creep,
 
 • ボーカルスタイル、エネルギーレベル（X/10）、動的表現を必ず含める
 • Special Instructionsは歌詞内に適切に配置（[speak gently], [balanced]等）
-• 必ず具体的な指示タグを歌詞に織り込む
+• 各パートのSpecial Instructionがある場合は、必ず歌詞内に反映させる
+
+🚨 Special Instructions処理の必須ルール 🚨
+• 日本語Special Instructions → 英語の[directive]形式に変換して歌詞に配置
+• 例：「ピアノソロから」→ [piano solo intro] または [starting with piano solo]
+• 例：「ささやくように」→ [whisper gently] または [whispered]
+• 例：「力強く」→ [powerfully] または [with strength]
+• Special Instructionsは歌詞の意味に合う場所に自然に配置する
 
 【楽曲構成設計】
 ${energyBasedStructure}
@@ -2146,6 +2153,12 @@ ${energyBasedStructure}
 各セクションには具体的で詳細な内容を含めてください。
 歌詞は指定された言語設定「${formData.language}」に厳密に従って作成してください。この比率を守ることは最優先事項です。
 選択されたジャンル(${formData.genres.join(', ')})の特徴を活かした楽曲構成にしてください。
+
+🚨🚨 Special Instructions 必須実装ルール 🚨🚨
+• 楽曲構成設計でSpecial Instructionが指定されているパートでは、必ずその指示を歌詞内に反映する
+• 日本語の指示は英語の[directive]形式に変換する
+• 指示を無視したり省略することは絶対に禁止
+• 例：「ピアノソロから」が指定 → 必ず[piano solo intro]や[starting with piano solo]を歌詞に含める
 
 【Style & Feel出力品質管理】
 Style & Feelセクションの出力は以下の条件を満たしてください：
