@@ -1932,7 +1932,7 @@ ${data.response?.substring(0, 500) || 'N/A'}${data.response?.length > 500 ? '...
             this.showDebugPanel();
         }
         
-        return this.parseOpenAIResponse(responseContent);
+        return responseContent;
     }
 
     getLyricsLengthGuidance(genres) {
@@ -2293,6 +2293,7 @@ Instrumentation: ${styleAndFeel.instrumentation}`;
 
     displayResults(result) {
         try {
+            console.log('displayResults received:', typeof result, result);
             // JSON形式の結果をパースして歌詞を再構成
             let parsedResult = this.parseJsonResult(result);
             
